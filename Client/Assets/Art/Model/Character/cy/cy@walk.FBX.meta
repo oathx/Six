@@ -1,6 +1,6 @@
 fileFormatVersion: 2
-guid: ae63c0a484313ac47aa857608beb3bb5
-timeCreated: 1443063814
+guid: c0f7f452db373294eb979d0291fbdd8b
+timeCreated: 1443440874
 licenseType: Free
 ModelImporter:
   serializedVersion: 18
@@ -155,7 +155,7 @@ ModelImporter:
     400144: Bone19
     400146: Bone20
     400148: //RootNode
-    7400000: stand
+    7400000: walk
     9500000: //RootNode
   materials:
     importMaterials: 1
@@ -178,10 +178,10 @@ ModelImporter:
     extraExposedTransformPaths: []
     clipAnimations:
     - serializedVersion: 16
-      name: stand
+      name: walk
       takeName: Take 001
       firstFrame: 0
-      lastFrame: 75
+      lastFrame: 32
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -463,5 +463,5 @@ ModelImporter:
   animationType: 2
   additionalBone: 0
   userData: 
-  assetBundleName: ae63c0a484313ac47aa857608beb3bb5
+  assetBundleName: c0f7f452db373294eb979d0291fbdd8b
   assetBundleVariant: 

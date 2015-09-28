@@ -114,6 +114,9 @@ ModelImporter:
     100212: "HH_\u811A\u5DE6"
     100214: "HH_\u8EAF\u5E721"
     100216: "HH_\u8EAF\u5E722"
+    100218: "\u7A0B\u82F1"
+    100220: "\u7B1B\u5B50"
+    100222: Bip01 Footsteps
     400000: 000
     400002: arm
     400004: Bip01
@@ -223,11 +226,18 @@ ModelImporter:
     400212: "HH_\u811A\u5DE6"
     400214: "HH_\u8EAF\u5E721"
     400216: "HH_\u8EAF\u5E722"
+    400218: "\u7A0B\u82F1"
+    400220: "\u7B1B\u5B50"
+    400222: Bip01 Footsteps
     4300000: body
     4300002: arm
+    4300004: "\u7A0B\u82F1"
+    4300006: "\u7B1B\u5B50"
     9500000: //RootNode
     13700000: arm
     13700002: body
+    13700004: "\u7A0B\u82F1"
+    13700006: "\u7B1B\u5B50"
   materials:
     importMaterials: 1
     materialName: 0
@@ -251,7 +261,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 1
+    globalScale: 100
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
