@@ -2,6 +2,7 @@
 using System.Collections;
 using UnityThreading;
 using System.IO;
+using ICSharpCode.SharpZipLib.Zip;
 
 /// <summary>
 /// Version.
@@ -30,28 +31,12 @@ public class AppMain : MonoBehaviour {
 	{
 		GameEngine.GetSingleton().Startup();
 	}
+	
 
 	// Use this for initialization
 	void Start () 
 	{
-		string szAssetbundlePath = string.Format("{0}/{1}.pkg", 
-		                                         Application.dataPath, typeof(AssetBundle).Name);
-		if (File.Exists(szAssetbundlePath))
-		{
-			WorkState curState = HttpDownloadManager.GetSingleton().Decompression(szAssetbundlePath, Application.persistentDataPath,
-			                                                                      new HttpWorkEvent(OnDecompressFinished), Version.GetVersion());
-			if (curState == WorkState.HS_SUCCESS)
-			{
-				string szDBPath = string.Format("{0}/Design.db", Application.persistentDataPath);
-				if (!File.Exists(szDBPath))
-				{
-					File.Copy(
-						string.Format("{0}/Design/Design.db", Application.dataPath), szDBPath);
-				}
-
-				GameSqlLite.GetSingleton().OpenDB(szDBPath, true);
-			}
-		}
+		Install();
 	}
 	
 	// Update is called once per frame
@@ -60,6 +45,40 @@ public class AppMain : MonoBehaviour {
 	
 	}
 
+	/// <summary>
+	/// Installs the resource.
+	/// </summary>
+	protected void Install()
+	{
+		DoThreadDecompression(
+			string.Format("{0}/{1}.pkg", WUrl.Url, typeof(AssetBundle).Name), Application.persistentDataPath
+		);
+	}
+
+	/// <summary>
+	/// Decompression this instance.
+	/// </summary>
+	protected void DoThreadDecompression(string szSourcePath, string szTargetPath)
+	{
+		UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread(() => {
+			// packag file path
+			string szAssetbundlPath = szSourcePath;
+
+			string[] arySplit = szSourcePath.Split(':');
+			if (arySplit.Length >= 2)
+				szAssetbundlPath = arySplit[arySplit.Length - 1];
+			
+			WorkState curState = HttpDownloadManager.GetSingleton().Decompression(szAssetbundlPath, szTargetPath, 
+			                                                                      new HttpWorkEvent(OnDecompressFinished), string.Empty);
+			if (curState == WorkState.HS_SUCCESS)
+			{
+				UnityThreadHelper.Dispatcher.Dispatch( () => {
+					Startup();
+				});
+			}
+		});
+
+	}
 
 	/// <summary>
 	/// Raises the decompress finished event.
@@ -72,12 +91,45 @@ public class AppMain : MonoBehaviour {
 	/// <param name="nFilength">N filength.</param>
 	/// <param name="szVersion">Size version.</param>
 	protected bool OnDecompressFinished(WorkState curState, string szUrl, string szPath,
-	                          int nPosition, int nReadSpeed, int nFilength, string szVersion)
+	                                    int nPosition, int nReadSpeed, int nFilength, string szVersion)
 	{
 		if (curState == WorkState.HS_DECOMPRESS)
 		{
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Registers the resource package.
+	/// </summary>
+	protected void RegisterResourcePackage()
+	{
+		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
+		if (resMgr)
+		{
+			string szPath = WUrl.PersistentDataURL.Substring(7, WUrl.PersistentDataURL.Length - 7);
+	
+			resMgr.RegisterAssetBundlePackage(
+				string.Format("{0}/{1}/{2}", szPath, typeof(AssetBundle).Name, typeof(AssetBundle).Name)
+				);
+
+			resMgr.LoadFromFile("cy", ResourceLoadFlag.RLF_UNITY, delegate(string szUrl, AssetBundle abFile) {
+				GameObject o = abFile.LoadAsset("cy", typeof(GameObject)) as GameObject;
+
+				GameObject.Instantiate(o);
+				return true;
+			});
+		}
+	}
+
+	/// <summary>
+	/// Startup this instance.
+	/// </summary>
+	protected void Startup()
+	{
+		RegisterResourcePackage();
+
+
 	}
 }

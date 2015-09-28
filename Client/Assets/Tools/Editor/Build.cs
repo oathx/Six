@@ -6,22 +6,39 @@ using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 
 public class Build {
-	[MenuItem("Build/Zip")]
+	[MenuItem("Build/Build all resource to zip")]
 	static void 	BuildZipFileToStreamasset()
 	{
-		BuildZipFile(Application.dataPath + "/Assetbundle", 
-		             Application.dataPath + "/Art/Model/Character");
-	}
+		string[,] aryPackage = new string[,]{
+			{"AssetBundle", "*.prefab"},
+		};
 
+		for(int i=0; i<aryPackage.GetLength(0); i++)
+		{
+			BuildFile(aryPackage[i, 0], aryPackage[i, 1], true, Application.dataPath + "/Art");
+		}
+	}
+	
 	/// <summary>
 	/// Builds the zip file.
 	/// </summary>
 	/// <param name="aryPath">Ary path.</param>
-	static void 	BuildZipFile(string szOutPath, params string[] aryDirectory)
+	static void 	BuildFile(string szPackageName, string pattern, bool outZipFile, params string[] aryDirectory)
 	{
+#if UNITY_EDITOR_WIN
+		string szOutPath = string.Format("{0}/Temp/Win/{1}", 
+		                                 Application.dataPath, szPackageName);
+#elif UNITY_ANDROID
+		string szOutPath = string.Format("{0}/Temp/Android/{1}", 
+		                                 Application.dataPath, szPackageName);
+#elif UNITY_IOS
+		string szOutPath = string.Format("{0}/Temp/iOS/{1}", 
+		                                 Application.dataPath, szPackageName);
+#endif
+
 		foreach(string directory in aryDirectory)
 		{
-			string[] aryFile = System.IO.Directory.GetFiles(directory, "*.prefab", System.IO.SearchOption.AllDirectories);
+			string[] aryFile = System.IO.Directory.GetFiles(directory, pattern, System.IO.SearchOption.AllDirectories);
 			foreach(string path in aryFile)
 			{
 				string szFilePath	= path.Replace("\\", "/");
@@ -30,9 +47,7 @@ public class Build {
 				string szAssetPath 	= szFilePath.Substring(
 					Application.dataPath.Length - 6, szFilePath.Length - Application.dataPath.Length + 6
 					);
-#if UNITY_EDITOR
-				Debug.Log("Build asset path " + szAssetPath);
-#endif
+
 				string szFileName = GetFileName(szAssetPath);
 				AssetImporter imp = AssetImporter.GetAtPath(szAssetPath);
 				imp.assetBundleName = szFileName.Split('.')[0];
@@ -45,6 +60,10 @@ public class Build {
 					{
 						ai.assetBundleName = AssetDatabase.AssetPathToGUID(depend);
 					}
+
+#if UNITY_EDITOR
+					Debug.Log(" >> depend : " + depend);
+#endif 
 				}
 			}
 
@@ -57,9 +76,34 @@ public class Build {
 #if UNITY_EDITOR_WIN
 			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
 			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.StandaloneWindows);
+
+#elif UNITY_ANDROID
+			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
+			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.Android);
+#elif UNITY_IOS
+			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
+			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.iOS);
 #endif
 
-			CreateZipFile(szTargetDirectory);
+			if (outZipFile)
+			{
+#if UNITY_EDITOR_WIN
+				string szPackagePath = string.Format("{0}/Win", 
+				                                 Application.streamingAssetsPath);
+#elif UNITY_ANDROID
+				string szPackagePath = string.Format("{0}/Android", 
+				                                 Application.streamingAssetsPath);
+#elif UNITY_IOS
+				string szPackagePath = string.Format("{0}/iOS", 
+				                                 Application.streamingAssetsPath);
+#endif
+				if (!Directory.Exists(szPackagePath))
+					Directory.CreateDirectory(szPackagePath);
+
+				string zipOutPath = string.Format("{0}/{1}.pkg", szPackagePath, szPackageName);
+				// create zip file
+				CreateZipFile(szTargetDirectory, zipOutPath);
+			}
 		}
 	}
 
@@ -67,13 +111,12 @@ public class Build {
 	/// Creates the zip file.
 	/// </summary>
 	/// <param name="szOutDirectory">Size out directory.</param>
-	static void 	CreateZipFile(string szInputDirectory)
+	static void 	CreateZipFile(string szInputDirectory, string szOutPath)
 	{
-		string szZipFilePath = string.Format("{0}/{1}.pkg", Application.dataPath, typeof(AssetBundle).Name);
-		if (File.Exists(szZipFilePath))
-			File.Delete(szZipFilePath);
+		if (File.Exists(szOutPath))
+			File.Delete(szOutPath);
 
-		FileStream zipFileStream = File.Open(szZipFilePath, FileMode.OpenOrCreate);
+		FileStream zipFileStream = File.Open(szOutPath, FileMode.OpenOrCreate);
 		if (zipFileStream.CanWrite)
 		{
 			using(ZipOutputStream stream = new ZipOutputStream(zipFileStream))
@@ -86,8 +129,8 @@ public class Build {
 				{
 					if (!file.Contains(".meta"))
 					{
-						string szZipEntryName = file.Substring(Application.dataPath.Length + 1,
-						                                      file.Length - Application.dataPath.Length - 1);
+						string szZipEntryName = file.Substring(Application.dataPath.Length + 5,
+						                                      file.Length - Application.dataPath.Length - 5);
 
 						ZipEntry entry = new ZipEntry(szZipEntryName);
 						stream.PutNextEntry(entry);
@@ -106,7 +149,7 @@ public class Build {
 						}
 
 #if UNITY_EDITOR
-						Debug.Log("Make zip " + szInputDirectory + " >> " + szZipEntryName);
+						Debug.Log("Add file to pkg " + szInputDirectory + " >> " + szZipEntryName);
 #endif
 					}
 				}

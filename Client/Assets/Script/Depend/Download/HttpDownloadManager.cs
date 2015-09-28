@@ -330,7 +330,7 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 				}
 			}
 
-			s.Close();
+			zipFile.Close();
 		}
 		
 		return WorkState.HS_SUCCESS;

@@ -201,7 +201,7 @@ public class IResourceManager : IGamePlugin
 	/// <value>The file path.</value>
 	public string		FilePath {
 		get{
-			return Application.persistentDataPath;
+			return WUrl.PersistentDataURL;
 		}
 	} 
 	
@@ -210,39 +210,7 @@ public class IResourceManager : IGamePlugin
 	/// </summary>
 	public override void Install()
 	{
-		try{
-			string szManifestPath = string.Format("{0}/{1}/{2}", 
-			                                      FilePath, typeof(AssetBundle).Name, typeof(AssetBundle).Name);
-			
-#if OPEN_DEBUG_LOG
-			Debug.Log("Load resource manifest " + szManifestPath);
-#endif
-			using (FileStream stream = File.OpenRead(szManifestPath))
-			{
-				if (stream.CanRead)
-				{
-					byte[] binary = new byte[stream.Length];
 
-					int nReadLength = stream.Read(binary, 0, binary.Length);
-					if (nReadLength == binary.Length)
-					{
-						Manifest = new ResourceManifest(
-							AssetBundle.CreateFromMemoryImmediate(binary)
-							);
-					}
-				}
-
-				stream.Close();
-			}
-	
-#if OPEN_DEBUG_LOG
-			Manifest.Dump();
-#endif
-		}
-		catch(System.Exception e)
-		{
-			Debug.LogException(e);
-		}
 	}
 	
 	/// <summary>
@@ -270,13 +238,52 @@ public class IResourceManager : IGamePlugin
 	}
 
 	/// <summary>
+	/// Loads the archive.
+	/// </summary>
+	/// <param name="szArchiveName">Size archive name.</param>
+	public void 	RegisterAssetBundlePackage(string szPackagePath)
+	{
+		try{
+			using (FileStream stream = File.OpenRead(szPackagePath))
+			{
+				if (stream.CanRead)
+				{
+					byte[] binary = new byte[stream.Length];
+					
+					int nReadLength = stream.Read(binary, 0, binary.Length);
+					if (nReadLength == binary.Length)
+					{
+#if OPEN_DEBUG_LOG
+						Debug.Log("register assetbundle resource manifest " + szPackagePath);
+#endif
+
+						Manifest = new ResourceManifest(
+							AssetBundle.CreateFromMemoryImmediate(binary)
+							);
+					}
+				}
+				
+				stream.Close();
+			}
+			
+#if OPEN_DEBUG_LOG
+			Manifest.Dump();
+#endif
+		}
+		catch(System.Exception e)
+		{
+			Debug.LogException(e);
+		}
+	}
+
+	/// <summary>
 	/// Gets the file path.
 	/// </summary>
 	/// <returns>The file path.</returns>
 	/// <param name="szAssetName">Size asset name.</param>
 	public string GetFilePath(string szAssetName)
 	{
-		return string.Format("file://{0}/{1}/{2}",
+		return string.Format("{0}/{1}/{2}",
 		                             FilePath, typeof(AssetBundle).Name, szAssetName);
 	}
 
@@ -325,6 +332,9 @@ public class IResourceManager : IGamePlugin
 				                                          Manifest.GetAssetBundleHash(depend));
 				yield return wDepend;
 
+#if OPEN_DEBUG_LOG
+				Debug.Log("Load resource depend url : " + szDependURL);
+#endif
 				RefResource.Add(
 					szDependURL, new AssetBundleRefResource(wDepend.assetBundle)
 					);
