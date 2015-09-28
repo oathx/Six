@@ -13,6 +13,10 @@ public class Version
 	public static int	PkgVersion		= 0;
 	public static int	CfgVersion		= 0;
 
+	/// <summary>
+	/// Gets the version.
+	/// </summary>
+	/// <returns>The version.</returns>
 	public static string	GetVersion()
 	{
 		return string.Format("{0}.{1}.{0}", MainVersion, PkgVersion, CfgVersion);
