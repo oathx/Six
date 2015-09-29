@@ -36,4 +36,26 @@ public class MathfEx
 		
 		return Color.white;
 	}
+
+	/// <summary>
+	/// Direction2s the angle.
+	/// </summary>
+	/// <returns>The angle.</returns>
+	/// <param name="direction">Direction.</param>
+	public static float 	Direction2Angle(Vector3 direction)
+	{
+		direction.Normalize();
+		return 90 - ((float)System.Math.Atan2(direction.z, direction.x) * Mathf.Rad2Deg);
+	}
+
+	/// <summary>
+	/// Angle2s the forward.
+	/// </summary>
+	/// <returns>The forward.</returns>
+	/// <param name="angle">Angle.</param>
+	public static Vector3 	Angle2Forward(float angle)
+	{
+		angle = (angle + 90) * Mathf.Deg2Rad;
+		return new Vector3(-Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
+	}
 }
