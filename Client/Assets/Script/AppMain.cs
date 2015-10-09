@@ -38,12 +38,18 @@ public class AppMain : MonoBehaviour {
 	
 
 	// Use this for initialization
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
 	void Start () 
 	{
 		Install();
 	}
 	
 	// Update is called once per frame
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
 	void Update () 
 	{
 	
@@ -54,34 +60,62 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	protected void Install()
 	{
-		DoThreadDecompression(
-			string.Format("{0}/{1}.pkg", WUrl.Url, typeof(AssetBundle).Name), Application.persistentDataPath
-		);
+		string szResourceFilePath = string.Format("{0}/{1}.pkg", WUrl.Url, typeof(AssetBundle).Name);
+
+		// decompress all resource
+		DoResourceDecompress(
+			szResourceFilePath, Application.persistentDataPath
+			);
+
+#if UNITY_EDITOR
+		// open sqlite and register database parse factory
+		OnOpenAndRegisterSqlFactory ();
+#endif
 	}
 
 	/// <summary>
 	/// Decompression this instance.
 	/// </summary>
-	protected void DoThreadDecompression(string szSourcePath, string szTargetPath)
+	protected void DoResourceDecompress(string szSourcePath, string szTargetPath)
 	{
 		UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread(() => {
-			// packag file path
 			string szAssetbundlPath = szSourcePath;
 
 			string[] arySplit = szSourcePath.Split(':');
 			if (arySplit.Length >= 2)
 				szAssetbundlPath = arySplit[arySplit.Length - 1];
-			
+
+			// execute decompress resource
 			WorkState curState = HttpDownloadManager.GetSingleton().Decompression(szAssetbundlPath, szTargetPath, 
 			                                                                      new HttpWorkEvent(OnDecompressFinished), string.Empty);
 			if (curState == WorkState.HS_SUCCESS)
 			{
 				UnityThreadHelper.Dispatcher.Dispatch( () => {
+
+					// start game
 					Startup();
 				});
 			}
 		});
 
+	}
+
+	/// <summary>
+	/// Raises the register sql factory event.
+	/// </summary>
+	protected void OnOpenAndRegisterSqlFactory()
+	{
+		Debug.Log (WUrl.SqlitePathWin32);
+		
+#if UNITY_EDITOR_WIN
+		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePathWin32, true);
+#else
+		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePath, true);
+#endif
+
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
+			);
 	}
 
 	/// <summary>
@@ -97,10 +131,6 @@ public class AppMain : MonoBehaviour {
 	protected bool OnDecompressFinished(WorkState curState, string szUrl, string szPath,
 	                                    int nPosition, int nReadSpeed, int nFilength, string szVersion)
 	{
-		if (curState == WorkState.HS_DECOMPRESS)
-		{
-		}
-
 		return true;
 	}
 
@@ -113,17 +143,11 @@ public class AppMain : MonoBehaviour {
 		if (resMgr)
 		{
 			string szPath = WUrl.PersistentDataURL.Substring(7, WUrl.PersistentDataURL.Length - 7);
-	
+			string szName = typeof(AssetBundle).Name;
+
 			resMgr.RegisterAssetBundlePackage(
-				string.Format("{0}/{1}/{2}", szPath, typeof(AssetBundle).Name, typeof(AssetBundle).Name)
+				string.Format("{0}/{1}/{2}", szPath, szName, szName)
 				);
-
-			resMgr.LoadFromFile("cy", ResourceLoadFlag.RLF_UNITY, delegate(string szUrl, AssetBundle abFile) {
-				GameObject o = abFile.LoadAsset("cy", typeof(GameObject)) as GameObject;
-
-				GameObject.Instantiate(o);
-				return true;
-			});
 		}
 	}
 
@@ -134,6 +158,15 @@ public class AppMain : MonoBehaviour {
 	{
 		RegisterResourcePackage();
 
+		EntityShapeFactoryManager.GetSingleton().RegisterFactory<DefaultShapeFactory>( new DefaultShapeFactory() );
 
+		IEntityManager mgr = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
+		if (mgr)
+		{
+			mgr.RegisterEntityFactory(typeof(HumanEntityFactory).Name, new HumanEntityFactory());
+
+			mgr.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, "test", 
+			                 Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 0);
+		}
 	}
 }

@@ -1,19 +1,19 @@
 using UnityEngine;
 using System.Collections;
 
-public enum EntityStyle
+public class EntityStyle
 {
-	ES_NAME			= 1 << 1,
-	ES_LEVEL		= 1 << 2,
-	ES_TASK			= 1 << 3,
-	ES_FNISHTASK	= 1 << 4,
-	ES_LIFE			= 1 << 5,
-	ES_PING			= 1 << 6,
-	ES_BOSS			= 1 << 7,
+	public const int ES_NAME		= 1 << 1;
+	public const int ES_LEVEL		= 1 << 2;
+	public const int ES_TASK		= 1 << 3;
+	public const int ES_FNISHTASK	= 1 << 4;
+	public const int ES_LIFE		= 1 << 5;
+	public const int ES_PING		= 1 << 6;
+	public const int ES_BOSS		= 1 << 7;
 	
-	ES_NPC			= ES_NAME|ES_TASK,
-	ES_MONSTER		= ES_NAME|ES_LIFE,
-	ES_PLAYER		= ES_NAME|ES_LIFE|ES_LEVEL,
+	public const int ES_NPC			= ES_NAME|ES_TASK;
+	public const int ES_MONSTER		= ES_NAME|ES_LIFE;
+	public const int ES_PLAYER		= ES_NAME|ES_LIFE|ES_LEVEL;
 }
 
 public enum EntityType
@@ -40,5 +40,5 @@ public class IEntityProperty : MonoBehaviour
 	public int 				ID;
 	public string			Name;
 	public EntityType		Type;
-	public EntityStyle		Style;
+	public int				Style;
 }

@@ -2,8 +2,18 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum MountType {
+public enum MountType
+{
 	HH_NONE,
+	HH_WAIST,
+	HH_WEAPON,
+	HH_CHEST,
+	HH_L_FOOT,
+	HH_R_FOOT,
+	HH_L_SHOULDER,
+	HH_R_SHOULDER,
+	HH_L_HAND,
+	HH_R_HAND,
 }
 
 /// <summary>
@@ -12,48 +22,42 @@ public enum MountType {
 public class IEntityShape : MonoBehaviour
 {
 	/// <summary>
-	/// The character mount type
+	/// The mount.
 	/// </summary>
-	protected Dictionary<MountType, 
-		Transform> m_dMount = new Dictionary<MountType, Transform> ();
-	
+	protected Dictionary<MountType, Transform> m_dMount = new Dictionary<MountType, Transform>();
+
 	/// <summary>
-	/// The animator.
+	/// Sets the enabled.
 	/// </summary>
-	protected Animator			m_Animator;
-	
-	/// <summary>
-	/// Awake this instance.
-	/// </summary>
-	protected virtual void 		Awake()
+	/// <param name="bEnabled">If set to <c>true</c> b enabled.</param>
+	public virtual void		SetEnabled(bool bEnabled)
 	{
-		m_Animator 	= GetComponent<Animator> ();
-		if (m_Animator)
-			m_Animator.applyRootMotion = true;
+		gameObject.SetActive(bEnabled);
 	}
-	
+
 	/// <summary>
-	/// Update this instance.
+	/// Gets the enabled.
 	/// </summary>
-	protected virtual void 		Update()
+	/// <returns><c>true</c>, if enabled was gotten, <c>false</c> otherwise.</returns>
+	public bool				GetEnabled()
 	{
-		
+		return gameObject.activeSelf;
 	}
-	
+
 	/// <summary>
-	/// Applies the root motion.
+	/// Sets the scale.
 	/// </summary>
-	/// <param name="bFlag">If set to <c>true</c> b flag.</param>
-	public virtual void 			ApplyRootMotion(bool bFlag)
+	/// <param name="fScale">F scale.</param>
+	public virtual	void 	SetScale(float fScale)
 	{
-		m_Animator.applyRootMotion = bFlag;
+		transform.localScale = Vector3.one * fScale;
 	}
-	
+
 	/// <summary>
 	/// Installs the mount.
 	/// </summary>
-	/// <param name="dmt">Dmt.</param>
-	public virtual void 			InstallMount(Dictionary<MountType, string> dmt)
+	/// <param name="aryMountName">Ary mount name.</param>
+	public void 			InstallMount(Dictionary<MountType, string> dmt)
 	{
 		Transform[] aryTransform = GetComponentsInChildren<Transform> ();
 		foreach(KeyValuePair<MountType, string> it in dmt)
@@ -67,129 +71,88 @@ public class IEntityShape : MonoBehaviour
 			}
 		}
 	}
-	
+
 	/// <summary>
 	/// Gets the mount.
 	/// </summary>
 	/// <returns>The mount.</returns>
-	/// <param name="szName">Size name.</param>
-	public virtual Transform	GetMount(MountType type)
+	/// <param name="type">Type.</param>
+	public Transform		GetMount(MountType type)
 	{
-		if (type == MountType.HH_NONE || !m_dMount.ContainsKey(type))
+		if (type == MountType.HH_NONE)
 			return transform;
-		
-		return m_dMount [type];
+
+		return m_dMount[type];
 	}
-	
+
 	/// <summary>
-	/// Gets the state info.
+	/// Bind the specified type and bind.
 	/// </summary>
-	/// <returns>The state info.</returns>
-	public AnimatorStateInfo	GetStateInfo()
+	/// <param name="type">Type.</param>
+	/// <param name="bind">Bind.</param>
+	public void 			Bind(MountType type, Object resource, float fDuration,  bool bFollow, string szBindName)
 	{
-		return m_Animator.IsInTransition (0) ? m_Animator.GetNextAnimatorStateInfo (0) : m_Animator.GetCurrentAnimatorStateInfo (0);
-	}
-	
-	/// <summary>
-	/// Play the specified name, transition and replay.
-	/// </summary>
-	/// <param name="name">Name.</param>
-	/// <param name="transition">Transition.</param>
-	/// <param name="replay">If set to <c>true</c> replay.</param>
-	public virtual void 		Play(string szClipName, float fTransition, bool bReplay)
-	{
-		try{
-			if (m_Animator && !string.IsNullOrEmpty(szClipName))
-			{
-#if OPEN_DEBUG_LOG
-				Debug.Log("Play animation name " + name + " clip " + szClipName);
-#endif
-				
-				if (fTransition > 0)
-				{
-					AnimatorStateInfo state = GetStateInfo();
-					m_Animator.CrossFade(szClipName, fTransition / state.length, 0, 0);
-				}
-				else
-				{	
-					m_Animator.Play(szClipName, 0, 0);
-				}
-			}
-		}
-		catch(System.Exception e)
+		Transform mount = GetMount(type);
+		if (mount)
 		{
-			Debug.Log("State could not be found " + szClipName + " Message " + e.Message);
+			string szAppBindName = string.IsNullOrEmpty(szBindName) ? resource.name : szBindName;
+
+			// destroy old bind object
+			Transform bind = mount.FindChild(szAppBindName);
+			if (bind)
+				GameObject.Destroy(bind);
+
+			// create a new bind object
+			GameObject goBind = GameObject.Instantiate(resource) as GameObject;
+			if (!goBind)
+				throw new System.NullReferenceException("Can't instantiate resource " + resource.name);
+
+			goBind.transform.name		= szAppBindName;
+			goBind.transform.position	= mount.position;
+			goBind.transform.rotation	= mount.rotation;
+			
+			if (bFollow)
+				goBind.transform.parent = mount;
+
+			// wait destroy
+			if (fDuration > 0.0f)
+			{
+				StartCoroutine(OnAppBind(goBind, fDuration));
+			}
 		}
 	}
 
 	/// <summary>
-	/// Is current animation clip loop.
+	/// Raises the app bind event.
 	/// </summary>
-	public bool 	IsLoop 
+	/// <param name="goBind">Go bind.</param>
+	/// <param name="fWaitTime">F wait time.</param>
+	IEnumerator			OnAppBind(GameObject goBind, float fWaitTime)
 	{
-		get {
-			AnimatorStateInfo state = GetStateInfo();
-			return state.loop;
-		} 
-	}
-	
-	/// <summary>
-	/// Gets the normalized time.
-	/// </summary>
-	/// <value>The normalized time.</value>
-	public float 	NormalizedTime
-	{
-		get { 
-			AnimatorStateInfo state = GetStateInfo();
-			return state.normalizedTime;
-		} 
-	}
-	
-	/// <summary>
-	/// Gets a value indicating whether this instance is playing.
-	/// </summary>
-	/// <value><c>true</c> if this instance is playing; otherwise, <c>false</c>.</value>
-	public bool 	IsPlaying 
-	{
-		get { 
-			return IsLoop ? true : (NormalizedTime < 1);
-		} 
-	}
-	
-	/// <summary>
-	/// Gets or sets the animation time.
-	/// </summary>
-	/// <value>The animation time.</value>
-	public float 	AnimationTime
-	{
-		get{
-			return NormalizedTime * AnimationLength;
-		}
-		set{
-			m_Animator.ForceStateNormalizedTime(value / AnimationLength);
+		yield return new WaitForSeconds (fWaitTime);
+		
+		if (goBind)
+		{
+			GameObject.Destroy(goBind);
 		}
 	}
-	
-	/// Current animation clip length
-	/// </summary>
-	public float 	AnimationLength 
-	{ 
-		get { 
-			AnimatorStateInfo info = GetStateInfo();
-			return info.length;
-		}
-	}
-	
+
 	/// <summary>
-	/// Current animator play speed.
+	/// Determines whether this instance cancel bind the specified type szBindName.
 	/// </summary>
-	public float 	AnimationSpeed 
-	{ 
-		get { 
-			return m_Animator.speed; 
-		} 
-		set { 
-			m_Animator.speed = value; 
-		} 
+	/// <returns><c>true</c> if this instance cancel bind the specified type szBindName; otherwise, <c>false</c>.</returns>
+	/// <param name="type">Type.</param>
+	/// <param name="szBindName">Size bind name.</param>
+	public void 		CancelBind(MountType type, string szBindName)
+	{
+		Transform mount = GetMount (type);
+		if (mount)
+		{
+			Transform bind = mount.FindChild(szBindName);
+			if (bind)
+			{
+				GameObject.Destroy(bind.gameObject);
+			}
+		}
 	}
 }

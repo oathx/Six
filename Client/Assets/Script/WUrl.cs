@@ -51,4 +51,11 @@ public class WUrl
 			return string.Format("{0}/{1}.pkg", Url, typeof(AssetBundle).Name);
 		}
 	}
+
+	public static string	SqlitePathWin32
+	{
+		get{
+			return string.Format("{0}/Design/Design.db", Application.dataPath);
+		}
+	}
 }

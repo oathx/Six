@@ -304,6 +304,21 @@ public class IResourceManager : IGamePlugin
 				break;
 			}
 		}
+		else
+		{
+			callback(szUrl, RefResource[szUrl].Handle);
+		}
+	}
+
+	/// <summary>
+	/// Query the specified szAssetName.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	public AssetBundleRefResource	Query(string szAssetName)
+	{
+		string szUrl = GetFilePath(szAssetName);
+
+		return RefResource[szUrl];
 	}
 
 	/// <summary>
@@ -355,8 +370,8 @@ public class IResourceManager : IGamePlugin
 			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
 			);
 
-		if (callback != null)
-			callback(szAssetURL, ws.assetBundle);
+		// execute call back
+		callback(szAssetURL, ws.assetBundle);
 	}
 }
 

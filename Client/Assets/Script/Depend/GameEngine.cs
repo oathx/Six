@@ -19,6 +19,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	public void 	Startup()
 	{
 		LoadPlugin<IResourceManager>();
+		LoadPlugin<IEntityManager>();
 	}
 
 	/// <summary>
@@ -27,6 +28,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	public void 	Shutdown()
 	{
 		UnloadPlugin<IResourceManager>();
+		UnloadPlugin<IEntityManager>();
 	}
 
 	/// <summary>
