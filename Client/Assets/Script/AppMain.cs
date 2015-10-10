@@ -43,6 +43,12 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
+		
+#if UNITY_EDITOR
+		// open sqlite and register database parse factory
+		OnOpenAndRegisterSqlFactory ();
+#endif
+
 		Install();
 	}
 	
@@ -67,10 +73,6 @@ public class AppMain : MonoBehaviour {
 			szResourceFilePath, Application.persistentDataPath
 			);
 
-#if UNITY_EDITOR
-		// open sqlite and register database parse factory
-		OnOpenAndRegisterSqlFactory ();
-#endif
 	}
 
 	/// <summary>
@@ -116,6 +118,7 @@ public class AppMain : MonoBehaviour {
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
 			);
+
 	}
 
 	/// <summary>
@@ -152,21 +155,35 @@ public class AppMain : MonoBehaviour {
 	}
 
 	/// <summary>
+	/// Registers the factory.
+	/// </summary>
+	protected void RegisterFactory()
+	{
+		EntityShapeFactoryManager.GetSingleton().RegisterFactory<DefaultShapeFactory>(new DefaultShapeFactory());
+
+		IEntityManager entityManager = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
+		if (!entityManager)
+			throw new System.NullReferenceException();
+
+		entityManager.RegisterEntityFactory(
+			typeof(HumanEntityFactory).Name, new HumanEntityFactory()
+			);
+	}
+
+	/// <summary>
 	/// Startup this instance.
 	/// </summary>
 	protected void Startup()
 	{
 		RegisterResourcePackage();
+		RegisterFactory();
 
-		EntityShapeFactoryManager.GetSingleton().RegisterFactory<DefaultShapeFactory>( new DefaultShapeFactory() );
+		IEntityManager entityManager = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
+		if (!entityManager)
+			throw new System.NullReferenceException();
 
-		IEntityManager mgr = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
-		if (mgr)
-		{
-			mgr.RegisterEntityFactory(typeof(HumanEntityFactory).Name, new HumanEntityFactory());
-
-			mgr.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, "test", 
-			                 Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 0);
-		}
+		entityManager.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, "test", 
+		                           Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 10000); 
 	}
+
 }

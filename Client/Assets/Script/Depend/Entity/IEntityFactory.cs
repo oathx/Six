@@ -22,6 +22,8 @@ public abstract class IEntityFactory
 	                                     Vector3 vPos, Vector3 vScale, Vector3 vEuler, object args, int nStyle, Transform parent);
 }
 
+public delegate void	CreateShapeFactoryCallback(IEntityShape entityShape);
+
 /// <summary>
 /// I entity shape factory.
 /// </summary>
@@ -43,7 +45,7 @@ public abstract class IEntityShapeFactory
 	/// Creates the shape.
 	/// </summary>
 	/// <returns>The shape.</returns>
-	public abstract IEntityShape	CreateShape(int nShapeID);
+	public abstract void	CreateShape(int nShapeID, CreateShapeFactoryCallback callback);
 }
 
 /// <summary>
@@ -56,38 +58,35 @@ public class DefaultShapeFactory : IEntityShapeFactory
 	/// </summary>
 	/// <returns>The shape.</returns>
 	/// <param name="nShapeID">N shape I.</param>
-	public override IEntityShape	CreateShape(int nShapeID)
+	public override void	CreateShape(int nShapeID, CreateShapeFactoryCallback callback)
 	{
-		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>(typeof(SqlShape).Name, nShapeID);
+		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>(nShapeID);
 		if (!sqlShape)
 			throw new System.NullReferenceException();
 
-		IEntityShape entityShape = default(IEntityShape);
+		m_ResourceManager.LoadFromFile(sqlShape.Skeleton, ResourceLoadFlag.RLF_UNITY, 
+		                               delegate(string szUrl, AssetBundle abFile) {
 
-		if (!string.IsNullOrEmpty(sqlShape.Skeleton))
-		{
-			AssetBundleRefResource abResource = m_ResourceManager.Query(sqlShape.Skeleton);
-			if (abResource.RefCount > 0 && abResource.Handle)
+			GameObject resource = abFile.LoadAsset(sqlShape.Skeleton, typeof(GameObject)) as GameObject;
+			if (!resource)
+				throw new System.NullReferenceException();
+
+			GameObject shape = GameObject.Instantiate(resource) as GameObject;
+			if (shape)
 			{
-				GameObject resource = abResource.Handle.LoadAsset(sqlShape.Skeleton, typeof(GameObject)) as GameObject;
-				if (!resource)
+				shape.transform.position 			= Vector3.zero;
+				shape.transform.localScale			= Vector3.one;
+				shape.transform.localEulerAngles 	= Vector3.zero;
+				
+				IEntityShape entityShape = shape.AddComponent<IEntityShape>();
+				if (!entityShape)
 					throw new System.NullReferenceException();
 
-				GameObject shape = GameObject.Instantiate(resource) as GameObject;
-				if (shape)
-				{
-					shape.transform.position 			= Vector3.zero;
-					shape.transform.localScale			= Vector3.one;
-					shape.transform.localEulerAngles 	= Vector3.zero;
-					
-					entityShape = shape.AddComponent<IEntityShape>();
-					if (!entityShape)
-						throw new System.NullReferenceException();
-				}
+				callback(entityShape);
 			}
-		}
 
-		return entityShape;
+			return true;
+		});
 	}
 }
 

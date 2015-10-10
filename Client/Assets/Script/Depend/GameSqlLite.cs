@@ -381,6 +381,16 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 		
 		return package;
 	}
+
+	/// <summary>
+	/// Query the specified nID.
+	/// </summary>
+	/// <param name="nID">N I.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	public T					Query<T>(int nID) where T : ISqlPackage
+	{
+		return Query<T>(typeof(T).Name, nID);
+	}
 	
 	/// <summary>
 	/// Update the specified szTableName and val.

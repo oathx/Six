@@ -43,8 +43,17 @@ public class HumanEntityFactory : IEntityFactory
 		entity.Style 	= nStyle;
 		entity.Type 	= type;
 
-		IEntityShapeFactory factory = EntityShapeFactoryManager.GetSingleton().GetShapeFactory(typeof(DefaultShapeFactory).Name);
-		factory.CreateShape(10000);
+		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>((int)args);
+		if (sqlShape)
+		{
+			IEntityShapeFactory factory = EntityShapeFactoryManager.GetSingleton().GetShapeFactory(
+				typeof(DefaultShapeFactory).Name
+				);
+
+			factory.CreateShape(sqlShape.ID, delegate(IEntityShape entityShape) {
+				entity.SetShape(entityShape);
+			});
+		}
 
 		return entity;
 	}
