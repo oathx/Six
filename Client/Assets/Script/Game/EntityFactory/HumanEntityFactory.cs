@@ -53,6 +53,9 @@ public class HumanEntityFactory : IEntityFactory
 			factory.CreateShape(sqlShape.ID, delegate(IEntityShape entityShape) {
 				entity.SetShape(entityShape);
 			});
+
+			if (!string.IsNullOrEmpty(sqlShape.Name))
+				entity.Name = sqlShape.Name;
 		}
 
 		return entity;

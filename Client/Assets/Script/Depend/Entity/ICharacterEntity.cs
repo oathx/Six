@@ -27,12 +27,7 @@ public class ICharacterEntity : IEntityMovable
 		// apply new entity shape
 		if (m_EntityShape)
 		{
-			m_EntityShape.transform.parent 		= transform;
-			m_EntityShape.transform.localPosition = Vector3.zero;
-			m_EntityShape.transform.position	= Vector3.zero;
-
-			m_EntityShape.transform.eulerAngles	= transform.eulerAngles;
-			m_EntityShape.transform.localScale	= transform.localScale;
+			m_EntityShape.SetParent(transform);
 		}
 	}
 

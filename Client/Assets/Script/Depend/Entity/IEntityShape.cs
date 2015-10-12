@@ -54,6 +54,15 @@ public class IEntityShape : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Sets the parent.
+	/// </summary>
+	/// <param name="parent">Parent.</param>
+	public virtual void 	SetParent(Transform parent)
+	{
+		transform.SetParent(parent);
+	}
+
+	/// <summary>
 	/// Installs the mount.
 	/// </summary>
 	/// <param name="aryMountName">Ary mount name.</param>

@@ -3,6 +3,7 @@ using System.Collections;
 using UnityThreading;
 using System.IO;
 using ICSharpCode.SharpZipLib.Zip;
+using UnityEngine.UI;
 
 /// <summary>
 /// Version.
@@ -75,6 +76,7 @@ public class AppMain : MonoBehaviour {
 
 		RegisterEntityCreateFactory ();
 
+		UISystem.GetSingleton().LoadWidget<UIVersion>("Panel");
 		return true;
 	}
 
@@ -92,7 +94,6 @@ public class AppMain : MonoBehaviour {
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
 			);
-
 	}
 
 	/// <summary>
