@@ -30,7 +30,7 @@ public delegate void	CreateShapeFactoryCallback(IEntityShape entityShape);
 public abstract class IEntityShapeFactory
 {
 	protected IResourceManager		m_ResourceManager;
-
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IEntityShapeFactory"/> class.
 	/// </summary>
@@ -40,7 +40,7 @@ public abstract class IEntityShapeFactory
 		if (!m_ResourceManager)
 			throw new System.NullReferenceException();
 	}
-
+	
 	/// <summary>
 	/// Creates the shape.
 	/// </summary>
@@ -63,14 +63,14 @@ public class DefaultShapeFactory : IEntityShapeFactory
 		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>(nShapeID);
 		if (!sqlShape)
 			throw new System.NullReferenceException();
-
+		
 		m_ResourceManager.LoadFromFile(sqlShape.Skeleton, ResourceLoadFlag.RLF_UNITY, 
 		                               delegate(string szUrl, AssetBundle abFile) {
-
+			
 			GameObject resource = abFile.LoadAsset(sqlShape.Skeleton, typeof(GameObject)) as GameObject;
 			if (!resource)
 				throw new System.NullReferenceException();
-
+			
 			GameObject shape = GameObject.Instantiate(resource) as GameObject;
 			if (shape)
 			{
@@ -81,10 +81,10 @@ public class DefaultShapeFactory : IEntityShapeFactory
 				IEntityShape entityShape = shape.AddComponent<IEntityShape>();
 				if (!entityShape)
 					throw new System.NullReferenceException();
-
+				
 				callback(entityShape);
 			}
-
+			
 			return true;
 		});
 	}
@@ -97,7 +97,7 @@ public class EntityShapeFactoryManager : SimpleSingleton<EntityShapeFactoryManag
 {
 	protected Dictionary<string, IEntityShapeFactory> 
 		m_dFactory = new Dictionary<string, IEntityShapeFactory>();
-
+	
 	/// <summary>
 	/// Registers the factory.
 	/// </summary>
@@ -110,7 +110,7 @@ public class EntityShapeFactoryManager : SimpleSingleton<EntityShapeFactoryManag
 			m_dFactory.Add(typeof(T).Name, factory);
 		}
 	}
-
+	
 	/// <summary>
 	/// Gets the shape factory.
 	/// </summary>
@@ -120,7 +120,7 @@ public class EntityShapeFactoryManager : SimpleSingleton<EntityShapeFactoryManag
 	{
 		return m_dFactory[szFactoryName];
 	}
-
+	
 	/// <summary>
 	/// Unregisters the factory.
 	/// </summary>
@@ -133,4 +133,5 @@ public class EntityShapeFactoryManager : SimpleSingleton<EntityShapeFactoryManag
 		}
 	}
 }
+
 

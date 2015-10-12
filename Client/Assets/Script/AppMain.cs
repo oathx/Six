@@ -43,13 +43,15 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
-		
-#if UNITY_EDITOR
-		// open sqlite and register database parse factory
-		OnOpenAndRegisterSqlFactory ();
-#endif
+		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
+		if (resMgr)
+		{
+			resMgr.RegisterAssetBundlePackage(WUrl.AssetBundlePath, delegate(string szUrl, AssetBundle abFile) {
 
-		Install();
+				// install game start resource
+				return Install();
+			});
+		}
 	}
 	
 	// Update is called once per frame
@@ -64,42 +66,16 @@ public class AppMain : MonoBehaviour {
 	/// <summary>
 	/// Installs the resource.
 	/// </summary>
-	protected void Install()
+	protected bool Install()
 	{
-		string szResourceFilePath = string.Format("{0}/{1}.pkg", WUrl.Url, typeof(AssetBundle).Name);
+#if UNITY_EDITOR
+		// open sqlite and register database parse factory
+		OnOpenAndRegisterSqlFactory ();
+#endif
 
-		// decompress all resource
-		DoResourceDecompress(
-			szResourceFilePath, Application.persistentDataPath
-			);
+		RegisterEntityCreateFactory ();
 
-	}
-
-	/// <summary>
-	/// Decompression this instance.
-	/// </summary>
-	protected void DoResourceDecompress(string szSourcePath, string szTargetPath)
-	{
-		UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread(() => {
-			string szAssetbundlPath = szSourcePath;
-
-			string[] arySplit = szSourcePath.Split(':');
-			if (arySplit.Length >= 2)
-				szAssetbundlPath = arySplit[arySplit.Length - 1];
-
-			// execute decompress resource
-			WorkState curState = HttpDownloadManager.GetSingleton().Decompression(szAssetbundlPath, szTargetPath, 
-			                                                                      new HttpWorkEvent(OnDecompressFinished), string.Empty);
-			if (curState == WorkState.HS_SUCCESS)
-			{
-				UnityThreadHelper.Dispatcher.Dispatch( () => {
-
-					// start game
-					Startup();
-				});
-			}
-		});
-
+		return true;
 	}
 
 	/// <summary>
@@ -107,8 +83,6 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	protected void OnOpenAndRegisterSqlFactory()
 	{
-		Debug.Log (WUrl.SqlitePathWin32);
-		
 #if UNITY_EDITOR_WIN
 		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePathWin32, true);
 #else
@@ -122,68 +96,22 @@ public class AppMain : MonoBehaviour {
 	}
 
 	/// <summary>
-	/// Raises the decompress finished event.
-	/// </summary>
-	/// <param name="curState">Current state.</param>
-	/// <param name="szUrl">Size URL.</param>
-	/// <param name="szPath">Size path.</param>
-	/// <param name="nPosition">N position.</param>
-	/// <param name="nReadSpeed">N read speed.</param>
-	/// <param name="nFilength">N filength.</param>
-	/// <param name="szVersion">Size version.</param>
-	protected bool OnDecompressFinished(WorkState curState, string szUrl, string szPath,
-	                                    int nPosition, int nReadSpeed, int nFilength, string szVersion)
-	{
-		return true;
-	}
-
-	/// <summary>
-	/// Registers the resource package.
-	/// </summary>
-	protected void RegisterResourcePackage()
-	{
-		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
-		if (resMgr)
-		{
-			string szPath = WUrl.PersistentDataURL.Substring(7, WUrl.PersistentDataURL.Length - 7);
-			string szName = typeof(AssetBundle).Name;
-
-			resMgr.RegisterAssetBundlePackage(
-				string.Format("{0}/{1}/{2}", szPath, szName, szName)
-				);
-		}
-	}
-
-	/// <summary>
 	/// Registers the factory.
 	/// </summary>
-	protected void RegisterFactory()
+	protected void RegisterEntityCreateFactory()
 	{
 		EntityShapeFactoryManager.GetSingleton().RegisterFactory<DefaultShapeFactory>(new DefaultShapeFactory());
 
+		// register entity create factory
 		IEntityManager entityManager = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
-		if (!entityManager)
-			throw new System.NullReferenceException();
+		if (entityManager)
+		{
+			entityManager.RegisterEntityFactory(
+				typeof(HumanEntityFactory).Name, new HumanEntityFactory()
+				);
 
-		entityManager.RegisterEntityFactory(
-			typeof(HumanEntityFactory).Name, new HumanEntityFactory()
-			);
+			entityManager.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, string.Empty, 
+			                           Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 10000); 
+		}
 	}
-
-	/// <summary>
-	/// Startup this instance.
-	/// </summary>
-	protected void Startup()
-	{
-		RegisterResourcePackage();
-		RegisterFactory();
-
-		IEntityManager entityManager = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
-		if (!entityManager)
-			throw new System.NullReferenceException();
-
-		entityManager.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, "test", 
-		                           Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 10000); 
-	}
-
 }

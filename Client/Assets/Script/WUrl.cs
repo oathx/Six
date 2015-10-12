@@ -22,15 +22,12 @@ public class WUrl
 #endif
 		}
 	}
-	
-	
-	
 
 	/// <summary>
 	/// Gets the persistent data UR.
 	/// </summary>
 	/// <value>The persistent data UR.</value>
-	public static string	PersistentDataURL
+	public static string	DataURL
 	{
 		get
 		{
@@ -51,7 +48,11 @@ public class WUrl
 	public static string	AssetBundlePath
 	{
 		get{
-			return string.Format("{0}/{1}.pkg", Url, typeof(AssetBundle).Name);
+#if UNITY_EDITOR
+			return string.Format("{0}/{1}/{2}", WUrl.Url, typeof(AssetBundle).Name, typeof(AssetBundle).Name);
+#else
+			return string.Format("{0}/{1}/{2}", DataURL, typeof(AssetBundle).Name,  typeof(AssetBundle).Name);
+#endif
 		}
 	}
 

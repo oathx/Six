@@ -15,7 +15,7 @@ public class Build {
 
 		for(int i=0; i<aryPackage.GetLength(0); i++)
 		{
-			BuildFile(aryPackage[i, 0], aryPackage[i, 1], true, Application.dataPath + "/Art");
+			BuildFile(aryPackage[i, 0], aryPackage[i, 1], false, Application.dataPath + "/Art");
 		}
 	}
 	
@@ -26,14 +26,14 @@ public class Build {
 	static void 	BuildFile(string szPackageName, string pattern, bool outZipFile, params string[] aryDirectory)
 	{
 #if UNITY_EDITOR_WIN
-		string szOutPath = string.Format("{0}/Temp/Win/{1}", 
-		                                 Application.dataPath, szPackageName);
+		string szOutPath = string.Format("{0}/Win/{1}", 
+		                                 Application.streamingAssetsPath, szPackageName);
 #elif UNITY_ANDROID
-		string szOutPath = string.Format("{0}/Temp/Android/{1}", 
-		                                 Application.dataPath, szPackageName);
+		string szOutPath = string.Format("{0}/Android/{1}", 
+		                                 Application.streamingAssetsPath, szPackageName);
 #elif UNITY_IOS
-		string szOutPath = string.Format("{0}/Temp/iOS/{1}", 
-		                                 Application.dataPath, szPackageName);
+		string szOutPath = string.Format("{0}/iOS/{1}", 
+		                                 Application.streamingAssetsPath, szPackageName);
 #endif
 
 		foreach(string directory in aryDirectory)

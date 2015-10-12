@@ -196,16 +196,6 @@ public class IResourceManager : IGamePlugin
 	public Dictionary<string, AssetBundleRefResource> RefResource = new Dictionary<string, AssetBundleRefResource>();
 
 	/// <summary>
-	/// Gets the file path.
-	/// </summary>
-	/// <value>The file path.</value>
-	public string		FilePath {
-		get{
-			return WUrl.PersistentDataURL;
-		}
-	} 
-	
-	/// <summary>
 	/// Install this instance.
 	/// </summary>
 	public override void Install()
@@ -238,43 +228,112 @@ public class IResourceManager : IGamePlugin
 	}
 
 	/// <summary>
-	/// Loads the archive.
+	/// Registers the asset bundle package.
 	/// </summary>
-	/// <param name="szArchiveName">Size archive name.</param>
-	public void 	RegisterAssetBundlePackage(string szPackagePath)
+	/// <param name="szPackagePath">Size package path.</param>
+	/// <param name="callback">Callback.</param>
+	public void 	RegisterAssetBundlePackage(string szPackagePath, 
+	                                        AssetbundleFileCallback callback)
 	{
-		try{
-			using (FileStream stream = File.OpenRead(szPackagePath))
-			{
-				if (stream.CanRead)
-				{
-					byte[] binary = new byte[stream.Length];
-					
-					int nReadLength = stream.Read(binary, 0, binary.Length);
-					if (nReadLength == binary.Length)
-					{
+		StartCoroutine(OnLoadPackageIndexFile(szPackagePath, callback));
+	}
+
+	/// <summary>
+	/// Raises the load package index file event.
+	/// </summary>
+	/// <param name="szPackagePath">Size package path.</param>
+	IEnumerator		OnLoadPackageIndexFile(string szPackagePath, AssetbundleFileCallback callback)
+	{
 #if OPEN_DEBUG_LOG
-						Debug.Log("register assetbundle resource manifest " + szPackagePath);
+		Debug.Log("register assetbundle resource manifest " + szPackagePath);
 #endif
 
-						Manifest = new ResourceManifest(
-							AssetBundle.CreateFromMemoryImmediate(binary)
-							);
-					}
-				}
-				
-				stream.Close();
-			}
-			
+		WWW wPackage = WWW.LoadFromCacheOrDownload(szPackagePath, 0);
+		yield return wPackage;
+
+		Manifest = new ResourceManifest(
+			wPackage.assetBundle
+			);
+		
 #if OPEN_DEBUG_LOG
-			Manifest.Dump();
+		Manifest.Dump();
 #endif
-		}
-		catch(System.Exception e)
+		
+		callback(szPackagePath, wPackage.assetBundle);
+	}
+
+	/// <summary>
+	/// Loads from file.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	/// <param name="flag">Flag.</param>
+	/// <param name="callback">Callback.</param>
+	public virtual void LoadFromFile(string szAssetName, ResourceLoadFlag flag, AssetbundleFileCallback callback)
+	{
+		string szUrl = GetFilePath(szAssetName);
+		
+		if (!Exists(szUrl))
 		{
-			Debug.LogException(e);
+			StartCoroutine(
+				OnUnityDownload(szAssetName, callback)
+				);
+		}
+		else
+		{
+			RefResource[szUrl].Grab();
+
+			callback(szUrl, 
+			         RefResource[szUrl].Handle
+			         );
+
+			RefResource[szUrl].Drop();
 		}
 	}
+
+	/// <summary>
+	/// Raises the unity download event.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	IEnumerator 		OnUnityDownload(string szAssetName, AssetbundleFileCallback callback)
+	{
+		string[] aryDepend	= Manifest.GetAllDependencies(szAssetName);
+		foreach(string depend in aryDepend)
+		{
+			string szDependURL = GetFilePath(depend);
+			
+			if (!RefResource.ContainsKey(szDependURL))
+			{
+				WWW wDepend = WWW.LoadFromCacheOrDownload(szDependURL,
+				                                          Manifest.GetAssetBundleHash(szDependURL));
+				yield return wDepend;
+				
+#if OPEN_DEBUG_LOG
+				Debug.Log("Load resource depend url : " + szDependURL);
+#endif
+				RefResource.Add(
+					szDependURL, new AssetBundleRefResource(wDepend.assetBundle)
+					);
+			}
+		}
+		
+		string szAssetURL = GetFilePath(szAssetName);
+		
+		// load the assetbundle file
+		WWW ws = WWW.LoadFromCacheOrDownload(szAssetURL,
+		                                     Manifest.GetAssetBundleHash(szAssetURL));
+		yield return ws;
+		
+#if OPEN_DEBUG_LOG
+		Debug.Log("Load resource assetbundle url : " + szAssetURL);
+#endif
+		RefResource.Add(
+			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
+			);
+		
+		// execute call back
+		callback(szAssetURL, ws.assetBundle);
+	}
+
 
 	/// <summary>
 	/// Gets the file path.
@@ -284,9 +343,30 @@ public class IResourceManager : IGamePlugin
 	public string GetFilePath(string szAssetName)
 	{
 		return string.Format("{0}/{1}/{2}",
-		                             FilePath, typeof(AssetBundle).Name, szAssetName);
+		                             WUrl.Url, typeof(AssetBundle).Name, szAssetName);
 	}
 
+	/// <summary>
+	/// Query the specified szAssetName.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	public AssetBundleRefResource	Query(string szAssetName)
+	{
+		string szUrl = GetFilePath(szAssetName);
+		
+		return RefResource[szUrl];
+	}
+	
+	/// <summary>
+	/// Exists the specified szAssetName.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	public bool			Exists(string szAssetName)
+	{
+		return RefResource.ContainsKey(szAssetName);
+	}
+
+	/*
 	/// <summary>
 	/// Loads the resource.
 	/// </summary>
@@ -310,25 +390,7 @@ public class IResourceManager : IGamePlugin
 		}
 	}
 
-	/// <summary>
-	/// Query the specified szAssetName.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	public AssetBundleRefResource	Query(string szAssetName)
-	{
-		string szUrl = GetFilePath(szAssetName);
 
-		return RefResource[szUrl];
-	}
-
-	/// <summary>
-	/// Exists the specified szAssetName.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	public bool			Exists(string szAssetName)
-	{
-		return RefResource.ContainsKey(szAssetName);
-	}
 	
 	/// <summary>
 	/// Raises the unity download event.
@@ -344,7 +406,7 @@ public class IResourceManager : IGamePlugin
 			if (!RefResource.ContainsKey(szDependURL))
 			{
 				WWW wDepend = WWW.LoadFromCacheOrDownload(szDependURL,
-				                                          Manifest.GetAssetBundleHash(depend));
+				                                          0);
 				yield return wDepend;
 
 #if OPEN_DEBUG_LOG
@@ -360,7 +422,7 @@ public class IResourceManager : IGamePlugin
 
 		// load the assetbundle file
 		WWW ws = WWW.LoadFromCacheOrDownload(szAssetURL,
-		                                     Manifest.GetAssetBundleHash(szAssetName));
+		                                     0);
 		yield return ws;
 
 #if OPEN_DEBUG_LOG
@@ -373,5 +435,6 @@ public class IResourceManager : IGamePlugin
 		// execute call back
 		callback(szAssetURL, ws.assetBundle);
 	}
+	*/
 }
 

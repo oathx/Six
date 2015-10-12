@@ -112,7 +112,7 @@ public class IEntityManager : IGamePlugin
 		IEntityFactory factory = GetEntityFactory(szFactoryName);
 
 		// create entity object
-		IEntity entity = factory.CreateEntity(type, nID, szName,vPos, vScale, vEuler, args, nStyle, transform);
+		IEntity entity = factory.CreateEntity(type, nID, szName, vPos, vScale, vEuler, args, nStyle, transform);
 		if (!entity)
 			throw new System.NullReferenceException("Can't create entity " + nID + " name " + szName);
 
