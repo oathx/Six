@@ -42,4 +42,16 @@ public class IUIWidget : MonoBehaviour
 	{
 		IUIEventTriggerListener.Get(Child[szName]).onClick = callback;
 	}
+
+	/// <summary>
+	/// Sets the text.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	/// <param name="text">Text.</param>
+	public void SetText(string szName, string text)
+	{
+		Text lab = Child[szName].GetComponent<Text>();
+		if (lab)
+			lab.text = text;
+	}
 }

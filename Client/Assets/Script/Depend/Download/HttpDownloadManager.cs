@@ -41,25 +41,33 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 
 		UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread( () => {
 
-			WorkState curState 	= WorkState.HS_FAILURE;
-			HttpWork curWork 	= default(HttpWork);
-
-			while(aryWork.Count > 0)
-			{
-				curWork = workQueue.Dequeue();
+			try{
+				WorkState curState 	= WorkState.HS_FAILURE;
+				HttpWork curWork 	= default(HttpWork);
 				
-				if (!string.IsNullOrEmpty(curWork.Url) && !string.IsNullOrEmpty(curWork.FilePath))
+				while(aryWork.Count > 0)
 				{
-					curState = DoHttpThreadWork(curWork, evtCallback);
-					if (curState == WorkState.HS_FAILURE || curState == WorkState.HS_INSTALL)
-						break;
+					curWork = workQueue.Dequeue();
+					
+					if (!string.IsNullOrEmpty(curWork.Url) && !string.IsNullOrEmpty(curWork.FilePath))
+					{
+						curState = DoHttpThreadWork(curWork, evtCallback);
+						if (curState == WorkState.HS_FAILURE || curState == WorkState.HS_INSTALL)
+							break;
+					}
+				}
+				
+				if (curState == WorkState.HS_SUCCESS)
+				{
+					UnityThreadHelper.Dispatcher.Dispatch( ()=> {
+						evtCallback(WorkState.HS_FINISHED, curWork.Url, curWork.FilePath, 0, 0, 0, curWork.FilePath);
+					});
 				}
 			}
-
-			if (curState == WorkState.HS_SUCCESS)
+			catch(System.Exception e)
 			{
 				UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-					evtCallback(WorkState.HS_FINISHED, curWork.Url, curWork.FilePath, 0, 0, 0, curWork.FilePath);
+					evtCallback(WorkState.HS_FAILURE, e.Message, string.Empty, 0, 0, 0, string.Empty);
 				});
 			}
 		});

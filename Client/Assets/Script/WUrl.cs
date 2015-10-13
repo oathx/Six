@@ -56,6 +56,21 @@ public class WUrl
 		}
 	}
 
+	/// <summary>
+	/// Gets the asset bundle package.
+	/// </summary>
+	/// <value>The asset bundle package.</value>
+	public static string	AssetBundlePkg
+	{
+		get{
+			return string.Format("{0}/AssetBundle.pkg", WUrl.Url);
+		}
+	}
+
+	/// <summary>
+	/// Gets the sqlite path win32.
+	/// </summary>
+	/// <value>The sqlite path win32.</value>
 	public static string	SqlitePathWin32
 	{
 		get{

@@ -4,10 +4,14 @@ using System.Collections.Generic;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/// <summary>
+/// User interface version.
+/// </summary>
 public class UIVersion : IUIWidget
 {
-	public const string	UI_BUTTON = "Button";
-	public const string	UI_SLIDER = "Slider";
+	public const string	UV_SLIDER 	= "UV_SLIDER";
+	public const string	UV_TEXT 	= "UV_TEXT";
+	public const string	UV_VERSION 	= "UV_VERSION";
 
 	/// <summary>
 	/// Awake this instance.
@@ -15,8 +19,9 @@ public class UIVersion : IUIWidget
 	void Awake()
 	{
 		Install(new string[]{
-			UI_BUTTON,
-			UI_SLIDER,
+			UV_SLIDER,
+			UV_TEXT,
+			UV_VERSION,
 		});
 	}
 
@@ -25,16 +30,28 @@ public class UIVersion : IUIWidget
 	/// </summary>
 	void Start()
 	{
-		RegisterClickEvent(UI_BUTTON, OnButtonClicked);
+
 	}
 
 	/// <summary>
-	/// Raises the button clicked event.
+	/// Sets the version.
 	/// </summary>
-	/// <param name="goSend">Go send.</param>
-	/// <param name="eventData">Event data.</param>
-	void OnButtonClicked(GameObject goSend, BaseEventData eventData)
+	/// <value>The version.</value>
+	public string	Version
 	{
-		Debug.Log(goSend.name);
+		set{
+			SetText(UV_VERSION, value);
+		}
+	}
+
+	/// <summary>
+	/// Sets the progress.
+	/// </summary>
+	/// <value>The progress.</value>
+	public int		Progress
+	{
+		set{
+			SetText(UV_TEXT, value.ToString() + "%");
+		}
 	}
 }

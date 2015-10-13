@@ -15,7 +15,7 @@ public class Build {
 
 		for(int i=0; i<aryPackage.GetLength(0); i++)
 		{
-			BuildFile(aryPackage[i, 0], aryPackage[i, 1], false, Application.dataPath + "/Art");
+			BuildFile(aryPackage[i, 0], aryPackage[i, 1], true, Application.dataPath + "/Art");
 		}
 	}
 	

@@ -36,7 +36,6 @@ public class AppMain : MonoBehaviour {
 	{
 		GameEngine.GetSingleton().Startup();
 	}
-	
 
 	// Use this for initialization
 	/// <summary>
@@ -44,6 +43,20 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
+		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
+		if (global)
+		{
+			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
+			if (observer)
+				observer.Active();
+		}
+		/*
+		UIVersion version = UISystem.GetSingleton().LoadWidget<UIVersion>(ResourceDef.UI_VERSION);
+		if (!version)
+			throw new System.NullReferenceException();
+
+		version.Version = Version.GetVersion();
+		
 		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
 		if (resMgr)
 		{
@@ -53,6 +66,7 @@ public class AppMain : MonoBehaviour {
 				return Install();
 			});
 		}
+		*/
 	}
 	
 	// Update is called once per frame
@@ -62,6 +76,28 @@ public class AppMain : MonoBehaviour {
 	void Update () 
 	{
 	
+	}
+
+
+	/// <summary>
+	/// Tos the K.
+	/// </summary>
+	/// <returns>The K.</returns>
+	/// <param name="nBytes">N bytes.</param>
+	protected string	ToKB(int nBytes)
+	{
+		return string.Format("{0:F}", (float)nBytes / 1024);
+	}
+	
+	/// <summary>
+	/// Tos the M.
+	/// </summary>
+	/// <returns>The M.</returns>
+	/// <param name="nBytes">N bytes.</param>
+	protected string	ToMB(int nBytes)
+	{
+		return string.Format("{0:F}", 
+		                     (float)nBytes / 1024 / 1024);
 	}
 
 	/// <summary>
@@ -76,7 +112,7 @@ public class AppMain : MonoBehaviour {
 
 		RegisterEntityCreateFactory ();
 
-		UISystem.GetSingleton().LoadWidget<UIVersion>("Panel");
+
 		return true;
 	}
 
