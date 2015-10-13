@@ -34,6 +34,14 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	}
 
 	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
+	protected void 	OnDestroy()
+	{
+		GameSqlLite.GetSingleton().CloseDB();
+	}
+
+	/// <summary>
 	/// Loads the plugin.
 	/// </summary>
 	/// <returns>The plugin.</returns>

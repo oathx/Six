@@ -48,10 +48,21 @@ public class UIVersion : IUIWidget
 	/// Sets the progress.
 	/// </summary>
 	/// <value>The progress.</value>
-	public int		Progress
+	public string	Text
 	{
 		set{
-			SetText(UV_TEXT, value.ToString() + "%");
+			SetText(UV_TEXT, value);
+		}
+	}
+
+	/// <summary>
+	/// Sets the progress.
+	/// </summary>
+	/// <value>The progress.</value>
+	public float	Progress
+	{
+		set{
+			SetSlider(UV_SLIDER, value);
 		}
 	}
 }

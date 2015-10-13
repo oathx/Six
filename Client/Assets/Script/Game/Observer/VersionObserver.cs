@@ -45,6 +45,27 @@ public class VersionObserver : IEventObserver
 	{ get; private set; }
 
 	/// <summary>
+	/// Gets the text.
+	/// </summary>
+	/// <value>The text.</value>
+	public string			Text
+	{ get; private set;}
+
+	/// <summary>
+	/// Gets the progress.
+	/// </summary>
+	/// <value>The progress.</value>
+	public float			Progress
+	{ get; private set; }
+
+	/// <summary>
+	/// Gets the current.
+	/// </summary>
+	/// <value>The current.</value>
+	public string			Ver
+	{ get; private set; }
+
+	/// <summary>
 	/// Active this instance.
 	/// </summary>
 	public override void 	Active()
@@ -61,6 +82,19 @@ public class VersionObserver : IEventObserver
 		if (!string.IsNullOrEmpty(text))
 			OnVersionUpdate(text);
 #endif
+	}
+
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
+	protected void Update()
+	{
+		if (VerUI)
+		{
+			VerUI.Text 		= Text;
+			VerUI.Progress	= Progress;
+			VerUI.Version	= Ver;
+		}
 	}
 	
 	/// <summary>
@@ -86,8 +120,11 @@ public class VersionObserver : IEventObserver
 
 		foreach(VersionStruct.VersionPackage p in v.Package)
 		{
-			aryWork.Add
-				(new HttpWork(p.Url, Application.persistentDataPath, p.Version, HttpFileType.HFT_ZIP, 0)
+			string szName = HttpDownloadManager.GetSingleton().GetFileName(p.Url);
+			string szPath = string.Format("{0}/{1}", 
+			                              Application.persistentDataPath, szName);
+			aryWork.Add(
+				new HttpWork(p.Url, szPath, p.Version, HttpFileType.HFT_ZIP, 0)
 				 );
 		}
 
@@ -109,10 +146,111 @@ public class VersionObserver : IEventObserver
 	public bool 	OnHttpWorkDownload(WorkState curState, string szUrl, string szPath,
 	                    int nPosition, int nReadSpeed, int nFilength, string szVersion)
 	{
-		if (curState == WorkState.HS_FAILURE)
+		switch(curState)
 		{
+		case WorkState.HS_FAILURE:
 			UISystem.GetSingleton().Box(szUrl);
+			break;
+
+		case WorkState.HS_DECOMPRE:
+			OnDecompression(szPath, nPosition, nReadSpeed, nFilength);
+			break;
+
+		case WorkState.HS_COMPLETED:
+			break;
+
+		case WorkState.HS_DOWNLOAD:
+			OnDownloading(szPath, nPosition, nReadSpeed, nFilength);
+			break;
+
+		case WorkState.HS_FINISHED:
+			OnFinished(szPath, nPosition, nReadSpeed, nFilength, szVersion);
+			break;
 		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Tos the K.
+	/// </summary>
+	/// <returns>The K.</returns>
+	/// <param name="nBytes">N bytes.</param>
+	protected string	ToKB(int nBytes)
+	{
+		return string.Format("{0:F}", (float)nBytes / 1024);
+	}
+	
+	/// <summary>
+	/// Tos the M.
+	/// </summary>
+	/// <returns>The M.</returns>
+	/// <param name="nBytes">N bytes.</param>
+	protected string	ToMB(int nBytes)
+	{
+		return string.Format("{0:F}", 
+		                     (float)nBytes / 1024 / 1024);
+	}
+	
+	/// <summary>
+	/// Raises the decompression event.
+	/// </summary>
+	/// <param name="szPath">Size path.</param>
+	/// <param name="nPosition">N position.</param>
+	/// <param name="nReadSpeed">N read speed.</param>
+	/// <param name="nFileLength">N file length.</param>
+	public bool		OnDecompression(string szPath, int nPosition, int nReadSpeed, int nFileLength)
+	{
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DECOMPRESS);
+		if (!string.IsNullOrEmpty(tooltip.Text))
+		{
+			float fProg = (float)nPosition / (float)nPosition;
+			Progress 	= fProg;
+			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
+			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
+
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Raises the downloading event.
+	/// </summary>
+	/// <param name="szPath">Size path.</param>
+	/// <param name="nPosition">N position.</param>
+	/// <param name="nReadSpeed">N read speed.</param>
+	/// <param name="nFileLength">N file length.</param>
+	public bool		OnDownloading(string szPath, int nPosition, int nReadSpeed, int nFileLength)
+	{
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DOWNLOAD);
+		if (!string.IsNullOrEmpty(tooltip.Text))
+		{
+			float fProg = (float)nPosition / (float)nPosition;
+			Progress 	= fProg;
+			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
+			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
+		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Raises the finished event.
+	/// </summary>
+	/// <param name="szPath">Size path.</param>
+	/// <param name="nPosition">N position.</param>
+	/// <param name="nReadSpeed">N read speed.</param>
+	/// <param name="nFileLength">N file length.</param>
+	public bool		OnFinished(string szPath, int nPosition, int nReadSpeed, int nFileLength, string szVersion)
+	{
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_LOADING);
+		if (!string.IsNullOrEmpty(tooltip.Text))
+		{
+			Text 	= tooltip.Text;
+			Ver 	= szVersion;
+		}
+
 		return true;
 	}
 }

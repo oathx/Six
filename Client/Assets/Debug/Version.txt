@@ -3,17 +3,6 @@
 	"Package":[{
 				"Version":"0.3.0000",
 				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
-				"Url":"http://192.168.8.253:8082/kingkong/Andorid/KingKong_DEBUG_0.2.3_Build-Android-150915.apk"
-			},
-			{
-
-				"Version":"0.3.1000",
-				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
-				"Url":"http://192.168.8.253:8082/kingkong/Andorid/Config1.zip"
-			},
-			{
-				"Version":"0.3.2000",
-				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
-				"Url":"http://192.168.8.253:8082/kingkong/Andorid/Config2.zip"
+				"Url":"http://192.168.8.253:8082/kingkong/Andorid/AssetBundle.pkg"
 			}]
 }

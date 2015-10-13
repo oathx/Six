@@ -13,8 +13,7 @@ public enum WorkState
 	HS_FAILURE,
 	HS_DOWNLOAD,
 	HS_COMPLETED,
-	HS_DECOMPRESS,
-	HS_INSTALL,
+	HS_DECOMPRE,
 	HS_TIMEOUT,
 	HS_FINISHED,
 }
@@ -45,14 +44,14 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 				WorkState curState 	= WorkState.HS_FAILURE;
 				HttpWork curWork 	= default(HttpWork);
 				
-				while(aryWork.Count > 0)
+				while(workQueue.Count > 0)
 				{
 					curWork = workQueue.Dequeue();
 					
 					if (!string.IsNullOrEmpty(curWork.Url) && !string.IsNullOrEmpty(curWork.FilePath))
 					{
 						curState = DoHttpThreadWork(curWork, evtCallback);
-						if (curState == WorkState.HS_FAILURE || curState == WorkState.HS_INSTALL)
+						if (curState == WorkState.HS_FAILURE)
 							break;
 					}
 				}
@@ -60,7 +59,7 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 				if (curState == WorkState.HS_SUCCESS)
 				{
 					UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-						evtCallback(WorkState.HS_FINISHED, curWork.Url, curWork.FilePath, 0, 0, 0, curWork.FilePath);
+						evtCallback(WorkState.HS_FINISHED, curWork.Url, curWork.FilePath, 0, 0, 0, curWork.Version);
 					});
 				}
 			}
@@ -83,15 +82,8 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 	public WorkState	DoHttpThreadWork(HttpWork work, HttpWorkEvent evtCallback)
 	{
 		int nFileLength = GetFileLength(work.Url);
-		if (nFileLength <= 0)
-		{
-			UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-				evtCallback(WorkState.HS_FAILURE, work.Url, work.FilePath, 0, 0, 0, work.Version);
-			});
 
-			return WorkState.HS_FAILURE; 
-		}
-
+		// create http web connected
 		WebClient web = new WebClient ();
 		
 		// open http file
@@ -106,7 +98,19 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 
 				if (nTotalBytes == nFileLength)
 				{
-					return DoFileProgress(work, nFileLength, evtCallback);
+					if (work.Type == HttpFileType.HFT_ZIP)
+					{
+						return Decompression(work.FilePath, GetFilePath(work.FilePath), evtCallback, work.Version);
+					}
+					else
+					{
+						UnityThreadHelper.Dispatcher.Dispatch( ()=> {
+							evtCallback(WorkState.HS_COMPLETED, work.Url, work.FilePath, 
+							            (int)nTotalBytes, (int)nTotalBytes, nFileLength, work.Version);
+						});
+
+						return WorkState.HS_SUCCESS;
+					}
 				}
 				else
 				{
@@ -156,45 +160,25 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 				// close zip file
 				fs.Close();
 
-				UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-					evtCallback(nFilePostion != nFileLength ? WorkState.HS_FAILURE : WorkState.HS_COMPLETED, work.Url, work.FilePath, 
-					            nFilePostion, nSecSpeed, nFileLength, work.Version);
-				});
-
-				if (nFilePostion == nFileLength)
+				if (work.Type == HttpFileType.HFT_ZIP)
 				{
-					return DoFileProgress(work, nFileLength, evtCallback);
+					return Decompression(work.FilePath, GetFilePath(work.FilePath), evtCallback, work.Version);
+				}
+				else
+				{
+					UnityThreadHelper.Dispatcher.Dispatch( ()=> {
+						evtCallback(WorkState.HS_COMPLETED, work.Url, work.FilePath, 
+						            nFilePostion, nSecSpeed, nFileLength, work.Version);
+					});
+
+					return WorkState.HS_SUCCESS;
 				}
 			}
 		}
 
 		return WorkState.HS_FAILURE;
 	}
-
-	/// <summary>
-	/// Dos the file progress.
-	/// </summary>
-	/// <returns>The file progress.</returns>
-	/// <param name="work">Work.</param>
-	/// <param name="nFileLength">N file length.</param>
-	public WorkState	DoFileProgress(HttpWork work, int nFileLength, HttpWorkEvent evtCallback)
-	{
-		switch(work.Type)
-		{
-		case HttpFileType.HFT_ZIP:
-			return Decompression(work.FilePath, GetFilePath(work.FilePath), evtCallback, work.Version);
 	
-		case HttpFileType.HFT_APK:
-			UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-				evtCallback(WorkState.HS_INSTALL, work.Url, work.FilePath,
-				            nFileLength, nFileLength, nFileLength, work.Version);
-			});
-			return WorkState.HS_INSTALL;
-		}
-
-		return WorkState.HS_SUCCESS;
-	}
-
 	/// <summary>
 	/// Gets the length of the file.
 	/// </summary>
@@ -324,7 +308,7 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 									nReadSpeed 	= 0;
 								}
 								
-								evtCallback(WorkState.HS_DECOMPRESS, 
+								evtCallback(WorkState.HS_DECOMPRE, 
 								         szSourcePath, szFileName, nPosition, nSecSpeed, (int)s.Length, szVersion);
 							}
 							
@@ -340,7 +324,7 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 
 			zipFile.Close();
 		}
-		
+
 		return WorkState.HS_SUCCESS;
 	}
 }

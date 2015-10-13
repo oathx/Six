@@ -44,6 +44,17 @@ public class IUIWidget : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Gets the child component.
+	/// </summary>
+	/// <returns>The child component.</returns>
+	/// <param name="szName">Size name.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	public T	GetChildComponent<T>(string szName) where T : Component
+	{
+		return Child[szName].GetComponent<T>();
+	}
+
+	/// <summary>
 	/// Sets the text.
 	/// </summary>
 	/// <param name="szName">Size name.</param>
@@ -53,5 +64,17 @@ public class IUIWidget : MonoBehaviour
 		Text lab = Child[szName].GetComponent<Text>();
 		if (lab)
 			lab.text = text;
+	}
+
+	/// <summary>
+	/// Sets the slider.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	/// <param name="fProgress">F progress.</param>
+	public void SetSlider(string szName, float fProgress)
+	{
+		Slider slider = GetChildComponent<Slider>(szName);
+		if (slider)
+			slider.value = fProgress;
 	}
 }

@@ -43,13 +43,9 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
-		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
-		if (global)
-		{
-			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
-			if (observer)
-				observer.Active();
-		}
+		Install();
+
+	
 		/*
 		UIVersion version = UISystem.GetSingleton().LoadWidget<UIVersion>(ResourceDef.UI_VERSION);
 		if (!version)
@@ -112,6 +108,14 @@ public class AppMain : MonoBehaviour {
 
 		RegisterEntityCreateFactory ();
 
+		// install version update observer
+		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
+		if (global)
+		{
+			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
+			if (observer)
+				observer.Active();
+		}
 
 		return true;
 	}
@@ -129,6 +133,9 @@ public class AppMain : MonoBehaviour {
 
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
+			);
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlTooltip).Name, new DefaultSqlPackageFactory<SqlTooltip> ()
 			);
 	}
 
