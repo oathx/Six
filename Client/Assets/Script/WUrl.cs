@@ -77,4 +77,15 @@ public class WUrl
 			return string.Format("{0}/Design/Design.db", Application.dataPath);
 		}
 	}
+
+	/// <summary>
+	/// Gets the sqlite path.
+	/// </summary>
+	/// <value>The sqlite path.</value>
+	public static string	SqlitePath
+	{
+		get{
+			return string.Format("{0}/Design/Design.db", Application.persistentDataPath);
+		}
+	}
 }

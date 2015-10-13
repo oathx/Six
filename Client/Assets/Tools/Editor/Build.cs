@@ -6,24 +6,35 @@ using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
 
 public class Build {
+
+	public class BuildDirectory
+	{
+		public string	directory
+		{ get; set; }
+
+		public string	pattern
+		{ get; set; }
+
+		public BuildDirectory(string szDirectory, string szPattern)
+		{
+			directory = szDirectory; pattern = szPattern;
+		}
+	}
+
 	[MenuItem("Build/Build all resource to zip")]
 	static void 	BuildZipFileToStreamasset()
 	{
-		string[,] aryPackage = new string[,]{
-			{"AssetBundle", "*.prefab"},
-		};
-
-		for(int i=0; i<aryPackage.GetLength(0); i++)
-		{
-			BuildFile(aryPackage[i, 0], aryPackage[i, 1], true, Application.dataPath + "/Art");
-		}
+		BuildFile(typeof(AssetBundle).Name, true, new BuildDirectory[]{
+			new BuildDirectory(Application.dataPath + "/Art/Model", "*.prefab"),
+			new BuildDirectory(Application.dataPath + "/Art/Scene", "*.unity"),
+		});
 	}
 	
 	/// <summary>
 	/// Builds the zip file.
 	/// </summary>
 	/// <param name="aryPath">Ary path.</param>
-	static void 	BuildFile(string szPackageName, string pattern, bool outZipFile, params string[] aryDirectory)
+	static void 	BuildFile(string szPackageName, bool outZipFile, params BuildDirectory[] aryDirectory)
 	{
 #if UNITY_EDITOR_WIN
 		string szOutPath = string.Format("{0}/Win/{1}", 
@@ -36,9 +47,9 @@ public class Build {
 		                                 Application.streamingAssetsPath, szPackageName);
 #endif
 
-		foreach(string directory in aryDirectory)
+		foreach(BuildDirectory directory in aryDirectory)
 		{
-			string[] aryFile = System.IO.Directory.GetFiles(directory, pattern, System.IO.SearchOption.AllDirectories);
+			string[] aryFile = System.IO.Directory.GetFiles(directory.directory, directory.pattern, System.IO.SearchOption.AllDirectories);
 			foreach(string path in aryFile)
 			{
 				string szFilePath	= path.Replace("\\", "/");
@@ -55,10 +66,12 @@ public class Build {
 				string[] aryDepend = AssetDatabase.GetDependencies(new string[]{szAssetPath});
 				foreach(string depend in aryDepend)
 				{
-					AssetImporter ai = AssetImporter.GetAtPath(depend);
+					AssetImporter ai 	= AssetImporter.GetAtPath(depend);
+
+					string szDependGUID = AssetDatabase.AssetPathToGUID(depend);
 					if (string.IsNullOrEmpty(ai.assetBundleName))
 					{
-						ai.assetBundleName = AssetDatabase.AssetPathToGUID(depend);
+						ai.assetBundleName = szDependGUID;
 					}
 
 #if UNITY_EDITOR
