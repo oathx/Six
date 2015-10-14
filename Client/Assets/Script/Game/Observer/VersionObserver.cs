@@ -59,13 +59,6 @@ public class VersionObserver : IEventObserver
 	{ get; private set; }
 
 	/// <summary>
-	/// Gets the current.
-	/// </summary>
-	/// <value>The current.</value>
-	public string			Ver
-	{ get; private set; }
-
-	/// <summary>
 	/// Active this instance.
 	/// </summary>
 	public override void 	Active()
@@ -93,7 +86,6 @@ public class VersionObserver : IEventObserver
 		{
 			VerUI.Text 		= Text;
 			VerUI.Progress	= Progress;
-			VerUI.Version	= Ver;
 		}
 	}
 	
@@ -247,10 +239,26 @@ public class VersionObserver : IEventObserver
 		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_LOADING);
 		if (!string.IsNullOrEmpty(tooltip.Text))
 		{
-			Text 	= tooltip.Text;
-			Ver 	= szVersion;
+			VerUI.Text 		= tooltip.Text;
+			VerUI.Version	= szVersion;
+		}
+
+		return Startup();
+	}
+
+	/// <summary>
+	/// Startup this instance.
+	/// </summary>
+	protected bool	Startup()
+	{
+		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
+		if (resMgr)
+		{
+			resMgr.RegisterAssetBundlePackage(WUrl.AssetBundlePath, delegate(string szUrl, AssetBundle abFile) {
+				return SceneSupport.GetSingleton().LoadScene(1);
+			});
 		}
 
 		return true;
-	}
+	}	
 }

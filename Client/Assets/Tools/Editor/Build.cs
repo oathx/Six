@@ -4,6 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using ICSharpCode.SharpZipLib.Zip;
 using System.IO;
+using System.Timers;
 
 public class Build {
 
@@ -142,8 +143,8 @@ public class Build {
 				{
 					if (!file.Contains(".meta"))
 					{
-						string szZipEntryName = file.Substring(Application.dataPath.Length + 5,
-						                                      file.Length - Application.dataPath.Length - 5);
+						string szZipEntryName = file.Substring(Application.streamingAssetsPath.Length + 5,
+						                                       file.Length - Application.streamingAssetsPath.Length - 5);
 
 						ZipEntry entry = new ZipEntry(szZipEntryName);
 						stream.PutNextEntry(entry);

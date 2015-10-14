@@ -304,7 +304,7 @@ public class IResourceManager : IGamePlugin
 			if (!RefResource.ContainsKey(szDependURL))
 			{
 				WWW wDepend = WWW.LoadFromCacheOrDownload(szDependURL,
-				                                          Manifest.GetAssetBundleHash(szDependURL));
+				                                          Manifest.GetAssetBundleHash(depend));
 				yield return wDepend;
 				
 #if OPEN_DEBUG_LOG
@@ -320,7 +320,7 @@ public class IResourceManager : IGamePlugin
 		
 		// load the assetbundle file
 		WWW ws = WWW.LoadFromCacheOrDownload(szAssetURL,
-		                                     Manifest.GetAssetBundleHash(szAssetURL));
+		                                     Manifest.GetAssetBundleHash(szAssetName));
 		yield return ws;
 		
 #if OPEN_DEBUG_LOG

@@ -34,6 +34,10 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Awake ()
 	{
+#if UNITY_EDITOR
+		Caching.CleanCache();
+#endif
+
 		GameEngine.GetSingleton().Startup();
 	}
 
@@ -114,7 +118,9 @@ public class AppMain : MonoBehaviour {
 		{
 			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
 			if (observer)
+			{
 				observer.Active();
+			}
 		}
 
 		return true;
@@ -137,6 +143,9 @@ public class AppMain : MonoBehaviour {
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlTooltip).Name, new DefaultSqlPackageFactory<SqlTooltip> ()
 			);
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlScene).Name, new DefaultSqlPackageFactory<SqlScene> ()
+			);
 	}
 
 	/// <summary>
@@ -153,9 +162,6 @@ public class AppMain : MonoBehaviour {
 			entityManager.RegisterEntityFactory(
 				typeof(HumanEntityFactory).Name, new HumanEntityFactory()
 				);
-
-			entityManager.CreateEntity(typeof(HumanEntityFactory).Name, EntityType.ET_ACTOR, 0, string.Empty, 
-			                           Vector3.zero, Vector3.one, Vector3.zero, EntityStyle.ES_PLAYER, 10000); 
 		}
 	}
 }
