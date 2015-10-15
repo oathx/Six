@@ -47,26 +47,23 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
-		Install();
-
-	
-		/*
-		UIVersion version = UISystem.GetSingleton().LoadWidget<UIVersion>(ResourceDef.UI_VERSION);
-		if (!version)
-			throw new System.NullReferenceException();
-
-		version.Version = Version.GetVersion();
+#if UNITY_EDITOR
+		// open sqlite and register database parse factory
+		OnOpenAndRegisterSqlFactory ();
+#endif
 		
-		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
-		if (resMgr)
+		RegisterEntityCreateFactory ();
+		
+		// install version update observer
+		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
+		if (global)
 		{
-			resMgr.RegisterAssetBundlePackage(WUrl.AssetBundlePath, delegate(string szUrl, AssetBundle abFile) {
-
-				// install game start resource
-				return Install();
-			});
+			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
+			if (observer)
+			{
+				observer.Active();
+			}
 		}
-		*/
 	}
 	
 	// Update is called once per frame
@@ -98,32 +95,6 @@ public class AppMain : MonoBehaviour {
 	{
 		return string.Format("{0:F}", 
 		                     (float)nBytes / 1024 / 1024);
-	}
-
-	/// <summary>
-	/// Installs the resource.
-	/// </summary>
-	protected bool Install()
-	{
-#if UNITY_EDITOR
-		// open sqlite and register database parse factory
-		OnOpenAndRegisterSqlFactory ();
-#endif
-
-		RegisterEntityCreateFactory ();
-
-		// install version update observer
-		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
-		if (global)
-		{
-			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
-			if (observer)
-			{
-				observer.Active();
-			}
-		}
-
-		return true;
 	}
 
 	/// <summary>
