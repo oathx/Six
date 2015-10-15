@@ -6,6 +6,25 @@ using System.Text;
 using LitJson;
 
 /// <summary>
+/// Version.
+/// </summary>
+public class Version
+{
+	public static int 	MainVersion 	= 0;
+	public static int	PkgVersion		= 0;
+	public static int	CfgVersion		= 0;
+	
+	/// <summary>
+	/// Gets the version.
+	/// </summary>
+	/// <returns>The version.</returns>
+	public static string	GetVersion()
+	{
+		return string.Format("{0}.{1}.{0}", MainVersion, PkgVersion, CfgVersion);
+	}
+}
+
+/// <summary>
 /// Version struct.
 /// </summary>
 public class VersionStruct
@@ -105,7 +124,7 @@ public class VersionObserver : IEventObserver
 	{
 		VersionStruct v = JsonMapper.ToObject<VersionStruct>(text);
 		if (v.Package == null)
-			return true;
+			return Startup();
 
 		List<HttpWork> 
 			aryWork = new List<HttpWork>();
@@ -115,6 +134,7 @@ public class VersionObserver : IEventObserver
 			string szName = HttpDownloadManager.GetSingleton().GetFileName(p.Url);
 			string szPath = string.Format("{0}/{1}", 
 			                              Application.persistentDataPath, szName);
+
 			aryWork.Add(
 				new HttpWork(p.Url, szPath, p.Version, HttpFileType.HFT_ZIP, 0)
 				 );

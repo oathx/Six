@@ -32,11 +32,11 @@ public class WUrl
 		get
 		{
 #if UNITY_STANDALONE || UNITY_EDITOR
-			return "file://" + Application.persistentDataPath + "/Win";
+			return Application.persistentDataPath;
 #elif UNITY_ANDROID
-			return "file://" + Application.persistentDataPath + "/Android";
+			return Application.persistentDataPath;
 #elif UNITY_IPHONE
-			return "file://" + Application.persistentDataPath + "/iOS";
+			return Application.persistentDataPath;
 #endif
 		}
 	}
@@ -49,7 +49,7 @@ public class WUrl
 	{
 		get{
 #if UNITY_EDITOR
-			return string.Format("{0}/{1}/{2}", WUrl.Url, typeof(AssetBundle).Name, typeof(AssetBundle).Name);
+			return string.Format("{0}/{1}/{2}", DataURL, typeof(AssetBundle).Name, typeof(AssetBundle).Name);
 #else
 			return string.Format("{0}/{1}/{2}", DataURL, typeof(AssetBundle).Name,  typeof(AssetBundle).Name);
 #endif

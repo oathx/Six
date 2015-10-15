@@ -172,7 +172,7 @@ public class ResourceManifest : AssetBundleRefResource
 public enum ResourceLoadFlag
 {
 	RLF_UNITY			= 1 << 1,
-	RLF_SYNCHRONOUS		= 1 << 2,
+	RLF_MEMORY			= 1 << 2,
 	RLF_THREAD			= 1 << 3,
 }
 
@@ -235,7 +235,59 @@ public class IResourceManager : IGamePlugin
 	public void 	RegisterAssetBundlePackage(string szPackagePath, 
 	                                        AssetbundleFileCallback callback)
 	{
-		StartCoroutine(OnLoadPackageIndexFile(szPackagePath, callback));
+		if (UrlType(szPackagePath))
+		{
+			StartCoroutine(OnLoadPackageIndexFile(szPackagePath, callback));
+		}
+		else
+		{
+			StartCoroutine(
+				OnLoadPackageIndexFileFromMemory(szPackagePath, callback)
+				);
+		}
+	}
+
+	/// <summary>
+	/// URLs the type.
+	/// </summary>
+	/// <returns><c>true</c>, if type was URLed, <c>false</c> otherwise.</returns>
+	/// <param name="szUrl">Size URL.</param>
+	public bool		UrlType(string szUrl)
+	{
+		if (szUrl[0] == 102 && szUrl[1] == 105 && szUrl[2] == 108 && szUrl[3] == 101)
+			return true;
+
+		return false;
+	}
+
+	/// <summary>
+	/// Raises the load package index file from memory event.
+	/// </summary>
+	/// <param name="szPath">Size path.</param>
+	/// <param name="callback">Callback.</param>
+	IEnumerator		OnLoadPackageIndexFileFromMemory(string szUrl, 
+	                                              AssetbundleFileCallback callback)
+	{
+		byte[] byIndexFile = File.ReadAllBytes(szUrl);
+		if (byIndexFile.Length != 0)
+		{
+#if OPEN_DEBUG_LOG
+			Debug.Log("register assetbundle resource manifest " + szUrl);
+#endif
+		}
+
+		AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byIndexFile);
+		yield return req;
+
+		Manifest = new ResourceManifest(
+			req.assetBundle
+			);
+		
+#if OPEN_DEBUG_LOG
+		Manifest.Dump();
+#endif
+		
+		callback(szUrl, req.assetBundle);
 	}
 
 	/// <summary>
@@ -270,24 +322,96 @@ public class IResourceManager : IGamePlugin
 	/// <param name="callback">Callback.</param>
 	public virtual void LoadFromFile(string szAssetName, ResourceLoadFlag flag, AssetbundleFileCallback callback)
 	{
-		string szUrl = GetFilePath(szAssetName);
+		string szUrl = flag == ResourceLoadFlag.RLF_UNITY ? GetFilePath(szAssetName) : GetLocalPath(szAssetName);
+
+		switch(flag)
+		{
+		case ResourceLoadFlag.RLF_UNITY:
+			if (!Exists(szUrl))
+			{
+				StartCoroutine(
+					OnUnityDownload(szAssetName, callback)
+					);
+			}
+			else
+			{
+				RefResource[szUrl].Grab();
+				
+				callback(szUrl, 
+				         RefResource[szUrl].Handle
+				         );
+				
+				RefResource[szUrl].Drop();
+			}
+			break;
 		
-		if (!Exists(szUrl))
-		{
-			StartCoroutine(
-				OnUnityDownload(szAssetName, callback)
-				);
+		case ResourceLoadFlag.RLF_MEMORY:
+			if (!Exists(szUrl))
+			{
+				StartCoroutine(
+					OnMemoryDownload(szAssetName, callback)
+					);
+			}
+			else
+			{
+				RefResource[szUrl].Grab();
+				
+				callback(szUrl, 
+				         RefResource[szUrl].Handle
+				         );
+				
+				RefResource[szUrl].Drop();
+			}
+			break;
 		}
-		else
+
+	}
+
+	/// <summary>
+	/// Raises the memory download event.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	/// <param name="callback">Callback.</param>
+	IEnumerator			OnMemoryDownload(string szAssetName, AssetbundleFileCallback callback)
+	{
+		string[] aryDepend = Manifest.GetAllDependencies(szAssetName);
+		foreach(string depend in aryDepend)
 		{
-			RefResource[szUrl].Grab();
+			string szDependURL = GetFilePath(depend);
 
-			callback(szUrl, 
-			         RefResource[szUrl].Handle
-			         );
+			if (!RefResource.ContainsKey(szDependURL))
+			{
+				byte[] byFile = File.ReadAllBytes(szDependURL);
 
-			RefResource[szUrl].Drop();
+				AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byFile);
+				yield return req;
+				
+#if OPEN_DEBUG_LOG
+				Debug.Log("Load resource depend url : " + szDependURL);
+#endif
+				RefResource.Add(
+					szDependURL, new AssetBundleRefResource(req.assetBundle)
+					);
+			}
 		}
+
+		string szAssetURL = GetFilePath(szAssetName);
+
+		// create the assetbundle form memory
+		AssetBundleCreateRequest ws = AssetBundle.CreateFromMemory(
+			File.ReadAllBytes(szAssetURL));
+
+		yield return ws;
+		
+#if OPEN_DEBUG_LOG
+		Debug.Log("Load resource assetbundle url : " + szAssetURL);
+#endif
+		RefResource.Add(
+			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
+			);
+		
+		// execute call back
+		callback(szAssetURL, ws.assetBundle);
 	}
 
 	/// <summary>
@@ -347,6 +471,17 @@ public class IResourceManager : IGamePlugin
 	}
 
 	/// <summary>
+	/// Gets the local path.
+	/// </summary>
+	/// <returns>The local path.</returns>
+	/// <param name="szAssetName">Size asset name.</param>
+	public string GetLocalPath(string szAssetName)
+	{
+		return string.Format("{0}/{1}/{2}",
+		                     WUrl.DataURL, typeof(AssetBundle).Name, szAssetName);
+	}
+
+	/// <summary>
 	/// Query the specified szAssetName.
 	/// </summary>
 	/// <param name="szAssetName">Size asset name.</param>
@@ -365,76 +500,5 @@ public class IResourceManager : IGamePlugin
 	{
 		return RefResource.ContainsKey(szAssetName);
 	}
-
-	/*
-	/// <summary>
-	/// Loads the resource.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	public virtual void LoadFromFile(string szAssetName, ResourceLoadFlag flag, AssetbundleFileCallback callback)
-	{
-		string szUrl = GetFilePath(szAssetName);
-
-		if (!Exists(szUrl))
-		{
-			switch(flag)
-			{
-			case ResourceLoadFlag.RLF_UNITY:
-				StartCoroutine(OnUnityDownload(szAssetName, callback));
-				break;
-			}
-		}
-		else
-		{
-			callback(szUrl, RefResource[szUrl].Handle);
-		}
-	}
-
-
-	
-	/// <summary>
-	/// Raises the unity download event.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	IEnumerator 		OnUnityDownload(string szAssetName, AssetbundleFileCallback callback)
-	{
-		string[] aryDepend	= Manifest.GetAllDependencies(szAssetName);
-		foreach(string depend in aryDepend)
-		{
-			string szDependURL = GetFilePath(depend);
-
-			if (!RefResource.ContainsKey(szDependURL))
-			{
-				WWW wDepend = WWW.LoadFromCacheOrDownload(szDependURL,
-				                                          0);
-				yield return wDepend;
-
-#if OPEN_DEBUG_LOG
-				Debug.Log("Load resource depend url : " + szDependURL);
-#endif
-				RefResource.Add(
-					szDependURL, new AssetBundleRefResource(wDepend.assetBundle)
-					);
-			}
-		}
-		
-		string szAssetURL = GetFilePath(szAssetName);
-
-		// load the assetbundle file
-		WWW ws = WWW.LoadFromCacheOrDownload(szAssetURL,
-		                                     0);
-		yield return ws;
-
-#if OPEN_DEBUG_LOG
-		Debug.Log("Load resource assetbundle url : " + szAssetURL);
-#endif
-		RefResource.Add(
-			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
-			);
-
-		// execute call back
-		callback(szAssetURL, ws.assetBundle);
-	}
-	*/
 }
 

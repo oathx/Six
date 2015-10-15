@@ -6,25 +6,6 @@ using ICSharpCode.SharpZipLib.Zip;
 using UnityEngine.UI;
 
 /// <summary>
-/// Version.
-/// </summary>
-public class Version
-{
-	public static int 	MainVersion 	= 0;
-	public static int	PkgVersion		= 0;
-	public static int	CfgVersion		= 0;
-
-	/// <summary>
-	/// Gets the version.
-	/// </summary>
-	/// <returns>The version.</returns>
-	public static string	GetVersion()
-	{
-		return string.Format("{0}.{1}.{0}", MainVersion, PkgVersion, CfgVersion);
-	}
-}
-
-/// <summary>
 /// App main.
 /// </summary>
 public class AppMain : MonoBehaviour {
@@ -37,8 +18,16 @@ public class AppMain : MonoBehaviour {
 #if UNITY_EDITOR
 		Caching.CleanCache();
 #endif
-
+		// start game engine
 		GameEngine.GetSingleton().Startup();
+		GameScript.GetSingleton().Startup();
+		
+#if UNITY_EDITOR
+		// open sqlite and register database parse factory
+		OnOpenAndRegisterSqlFactory ();
+#endif
+		
+		RegisterEntityCreateFactory ();
 	}
 
 	// Use this for initialization
@@ -47,13 +36,6 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
-#if UNITY_EDITOR
-		// open sqlite and register database parse factory
-		OnOpenAndRegisterSqlFactory ();
-#endif
-		
-		RegisterEntityCreateFactory ();
-		
 		// install version update observer
 		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
 		if (global)
