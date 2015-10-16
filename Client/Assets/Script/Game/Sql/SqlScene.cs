@@ -36,12 +36,6 @@ public class SqlScene : ISqlPackage
 	{ get; private set; }
 	
 	/// <summary>
-	/// The center.
-	/// </summary>
-	public string			Observer
-	{ get; private set; }
-	
-	/// <summary>
 	/// Gets the radius.
 	/// </summary>
 	/// <value>The radius.</value>
@@ -65,7 +59,6 @@ public class SqlScene : ISqlPackage
 		Name 		= System.Convert.ToString(sdr["Name"]);
 		Url			= System.Convert.ToString(sdr["Url"]);
 		Stream		= System.Convert.ToInt32(sdr["Stream"]) != 0;
-		Observer	= System.Convert.ToString(sdr["Observer"]);
 		Script 		= System.Convert.ToString(sdr["Script"]);
 		Describe 	= System.Convert.ToString(sdr["Describe"]);
 	}

@@ -37,13 +37,38 @@ public class UILogin : IUIWidget
 	}
 
 	/// <summary>
+	/// Gets the name of the user.
+	/// </summary>
+	/// <returns>The user name.</returns>
+	public string	GetUserName()
+	{
+		return GetInputText(UL_USERNAME);
+	}
+
+	/// <summary>
+	/// Gets the password.
+	/// </summary>
+	/// <returns>The password.</returns>
+	public string	GetPassword()
+	{
+		return GetInputText(UL_PASSWORD);
+	}
+
+	/// <summary>
 	/// Raises the login clicked event.
 	/// </summary>
 	/// <param name="goSend">Go send.</param>
 	/// <param name="evtData">Evt data.</param>
 	protected void OnLoginClicked(GameObject goSend, BaseEventData evtData)
 	{
+		CmdEvt.UILoginEventArgs v = new CmdEvt.UILoginEventArgs();
+		v.Widget 	= this;
+		v.UserName	= GetUserName();
+		v.Password	= GetPassword();
 
+		GameEngine.GetSingleton().SendEvent(
+			new IEvent(EngineEventType.EVENT_UI, CmdEvt.CMD_UI_LOGIN, v)
+			);
 	}
 
 	/// <summary>
@@ -53,6 +78,11 @@ public class UILogin : IUIWidget
 	/// <param name="evtData">Evt data.</param>
 	protected void OnRegisterClicked(GameObject goSend, BaseEventData evtData)
 	{
+		CmdEvt.UIClickEventArgs v = new CmdEvt.UIClickEventArgs();
+		v.Widget = this;
 		
+		GameEngine.GetSingleton().SendEvent(
+			new IEvent(EngineEventType.EVENT_UI, CmdEvt.CMD_UI_REGISTER, v)
+			);
 	}
 }

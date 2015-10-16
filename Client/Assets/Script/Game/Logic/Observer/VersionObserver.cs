@@ -115,11 +115,8 @@ public class VersionObserver : IEventObserver
 		// set current version
 		VerUI.Version = Version.GetVersion();
 
-		bool bResult = CheckUpdate();
-		if (bResult)
-		{
-
-		}
+		// check client version
+		CheckVersionAndUpdate();
 	}
 
 	/// <summary>
@@ -146,7 +143,7 @@ public class VersionObserver : IEventObserver
 	/// Checks the update.
 	/// </summary>
 	/// <returns><c>true</c>, if update was checked, <c>false</c> otherwise.</returns>
-	public bool				CheckUpdate()
+	public void				CheckVersionAndUpdate()
 	{
 #if UNITY_EDITOR
 		string text = File.ReadAllText(string.Format("{0}/Version.txt", Application.dataPath));
@@ -171,8 +168,6 @@ public class VersionObserver : IEventObserver
 #else
 		// To do http request version update
 #endif
-
-		return true;
 	}
 
 	/// <summary>
@@ -196,7 +191,7 @@ public class VersionObserver : IEventObserver
 
 				UnityThreadHelper.Dispatcher.Dispatch( () => {
 
-					SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_LOADING);
+					SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(ErrorCode.ERR_LOADING);
 					if (!string.IsNullOrEmpty(tooltip.Text))
 					{
 						Text = tooltip.Text;
@@ -229,7 +224,7 @@ public class VersionObserver : IEventObserver
 	public bool			OnDownloading(WorkState curState, string szUrl, string szPath,
 	                                 int nPosition, int nReadSpeed, int nFileLength, string szVersion)
 	{
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DOWNLOAD);
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(ErrorCode.ERR_DOWNLOAD);
 		if (!string.IsNullOrEmpty(tooltip.Text))
 		{
 			float fProg = (float)nPosition / (float)nPosition;
@@ -261,7 +256,7 @@ public class VersionObserver : IEventObserver
 	public bool			OnDecompression(WorkState curState, string szUrl, string szPath,
 	                            int nPosition, int nReadSpeed, int nFileLength, string szVersion)
 	{
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DECOMPRESS);
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(ErrorCode.ERR_DECOMPRESS);
 		if (!string.IsNullOrEmpty(tooltip.Text))
 		{
 			float fProg = (float)nPosition / (float)nPosition;
