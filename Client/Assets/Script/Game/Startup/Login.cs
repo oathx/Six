@@ -12,7 +12,13 @@ public class Login : MonoBehaviour
 	/// </summary>
 	void Awake()
 	{
+		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
+		if (global)
+			global.UnregisterObserver(typeof(VersionObserver).Name);
 
+		LoginPlugin plugin = GameEngine.GetSingleton ().LoadPlugin<LoginPlugin> ();
+		if (plugin)
+			plugin.Startup ();
 	}
 
 	/// <summary>

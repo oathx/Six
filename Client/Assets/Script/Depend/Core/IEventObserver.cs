@@ -20,20 +20,6 @@ public class IEventObserver : MonoBehaviour
 	{get; set;}
 
 	/// <summary>
-	/// Startup this instance.
-	/// </summary>
-	public virtual void 	Run()
-	{
-	}
-
-	/// <summary>
-	/// Shutdown this instance.
-	/// </summary>
-	public virtual void 	Stop()
-	{
-	}
-
-	/// <summary>
 	/// Active this instance.
 	/// </summary>
 	public virtual void 	Active()

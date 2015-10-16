@@ -6,6 +6,8 @@ public enum SceneFlag {
 	SCENE_LOGIN	= 1,
 }
 
+public delegate bool SceneLoadingCallback(float fProgress, string szAssetName);
+
 /// <summary>
 /// Game engine.
 /// </summary>
@@ -77,6 +79,26 @@ public class SceneSupport : ScriptableSingleton<SceneSupport>
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Loads the scene.
+	/// </summary>
+	/// <returns><c>true</c>, if scene was loaded, <c>false</c> otherwise.</returns>
+	/// <param name="nSceneID">N scene I.</param>
+	/// <param name="aryPreLoad">Ary pre load.</param>
+	public bool		LoadScene(int nSceneID, List<string> aryPreLoad, SceneLoadingCallback callback)
+	{
+		for(int i=0; i<aryPreLoad.Count; i++)
+		{
+			m_ResourceManager.LoadFromFile(aryPreLoad[i], 
+			                               delegate(string szUrl, AssetBundle abFile) {
+				float fProgress = (float)i / (float)aryPreLoad.Count;
+				return callback(fProgress, aryPreLoad[i]);
+			});
+		}
+
+		return LoadScene(nSceneID);
 	}
 }
 

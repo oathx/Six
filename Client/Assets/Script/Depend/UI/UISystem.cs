@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public enum BoxStyle
 {
@@ -12,6 +13,9 @@ public enum BoxStyle
 [RequireComponent(typeof(Canvas))]
 [RequireComponent(typeof(CanvasScaler))]
 [RequireComponent(typeof(GraphicRaycaster))]
+[RequireComponent(typeof(EventSystem))]
+[RequireComponent(typeof(StandaloneInputModule))]
+[RequireComponent(typeof(TouchInputModule))]
 public class UISystem : MonoBehaviourSingleton<UISystem>
 {
 	public Dictionary<string, IUIWidget> DictWidget = new Dictionary<string, IUIWidget>();

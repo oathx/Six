@@ -153,4 +153,17 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 				break;
 		}
 	}
+
+	/// <summary>
+	/// Sends the event.
+	/// </summary>
+	/// <param name="szPluginName">Size plugin name.</param>
+	/// <param name="evt">Evt.</param>
+	public void 	SendEvent(string szPluginName, IEvent evt)
+	{
+		if (m_dPlugin.ContainsKey(szPluginName))
+		{
+			m_dPlugin[szPluginName].SendEvent(evt);
+		}
+	}
 }

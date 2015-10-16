@@ -86,6 +86,22 @@ public class VersionObserver : IEventObserver
 	{ get; private set; }
 
 	/// <summary>
+	/// Start this instance.
+	/// </summary>
+	void Start()
+	{
+		Active();
+	}
+
+	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
+	void OnDestroy()
+	{
+		Detive();
+	}
+
+	/// <summary>
 	/// Active this instance.
 	/// </summary>
 	public override void 	Active()

@@ -36,15 +36,14 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
+		GameEngine.GetSingleton().LoadPlugin<ServerPlugin>();
+		
 		// install version update observer
 		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
 		if (global)
 		{
-			VersionObserver observer = global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
-			if (observer)
-			{
-				observer.Active();
-			}
+			global.RegisterObserver<StatusObserver>(typeof(StatusObserver).Name);
+			global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
 		}
 	}
 	
@@ -55,28 +54,6 @@ public class AppMain : MonoBehaviour {
 	void Update () 
 	{
 	
-	}
-
-
-	/// <summary>
-	/// Tos the K.
-	/// </summary>
-	/// <returns>The K.</returns>
-	/// <param name="nBytes">N bytes.</param>
-	protected string	ToKB(int nBytes)
-	{
-		return string.Format("{0:F}", (float)nBytes / 1024);
-	}
-	
-	/// <summary>
-	/// Tos the M.
-	/// </summary>
-	/// <returns>The M.</returns>
-	/// <param name="nBytes">N bytes.</param>
-	protected string	ToMB(int nBytes)
-	{
-		return string.Format("{0:F}", 
-		                     (float)nBytes / 1024 / 1024);
 	}
 
 	/// <summary>
