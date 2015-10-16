@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.IO;
 using System.Text;
 using LitJson;
+using UnityThreading;
 
 /// <summary>
 /// Version.
@@ -68,7 +69,14 @@ public class VersionObserver : IEventObserver
 	/// </summary>
 	/// <value>The text.</value>
 	public string			Text
-	{ get; private set;}
+	{ get; private set; }
+
+	/// <summary>
+	/// Gets the persistent data path.
+	/// </summary>
+	/// <value>The persistent data path.</value>
+	public string			PersistentDataPath
+	{ get; private set; }
 
 	/// <summary>
 	/// Gets the progress.
@@ -82,6 +90,8 @@ public class VersionObserver : IEventObserver
 	/// </summary>
 	public override void 	Active()
 	{
+		PersistentDataPath = Application.persistentDataPath;
+
 		// load version ui widget
 		if (!VerUI)
 			VerUI = UISystem.GetSingleton().LoadWidget<UIVersion>(ResourceDef.UI_VERSION);
@@ -89,11 +99,11 @@ public class VersionObserver : IEventObserver
 		// set current version
 		VerUI.Version = Version.GetVersion();
 
-#if UNITY_EDITOR
-		string text = File.ReadAllText(Application.dataPath + "/Debug/Version.txt");
-		if (!string.IsNullOrEmpty(text))
-			OnVersionUpdate(text);
-#endif
+		bool bResult = CheckUpdate();
+		if (bResult)
+		{
+
+		}
 	}
 
 	/// <summary>
@@ -117,36 +127,81 @@ public class VersionObserver : IEventObserver
 	}
 
 	/// <summary>
-	/// Raises the parse version update event.
+	/// Checks the update.
 	/// </summary>
-	/// <param name="text">Text.</param>
-	public bool				OnVersionUpdate(string text)
+	/// <returns><c>true</c>, if update was checked, <c>false</c> otherwise.</returns>
+	public bool				CheckUpdate()
 	{
-		VersionStruct v = JsonMapper.ToObject<VersionStruct>(text);
-		if (v.Package == null)
-			return Startup();
-
-		List<HttpWork> 
-			aryWork = new List<HttpWork>();
-
-		foreach(VersionStruct.VersionPackage p in v.Package)
+#if UNITY_EDITOR
+		string text = File.ReadAllText(string.Format("{0}/Version.txt", Application.dataPath));
+		if (!string.IsNullOrEmpty(text))
 		{
-			string szName = HttpDownloadManager.GetSingleton().GetFileName(p.Url);
-			string szPath = string.Format("{0}/{1}", 
-			                              Application.persistentDataPath, szName);
+			VersionStruct v = JsonMapper.ToObject<VersionStruct>(text);
+			if (v.Package != default(List<VersionStruct.VersionPackage>))
+			{
+				Queue<HttpWork> 
+					workQueue = new Queue<HttpWork>();
 
-			aryWork.Add(
-				new HttpWork(p.Url, szPath, p.Version, HttpFileType.HFT_ZIP, 0)
-				 );
+				foreach(VersionStruct.VersionPackage vp in v.Package)
+				{
+					workQueue.Enqueue(
+						new HttpWork(vp.Url, Application.persistentDataPath, vp.Version, HttpFileType.HFT_ZIP, 0)
+						);
+				}
+
+				Download(workQueue);
+			}
 		}
+#else
 
-		HttpDownloadManager.GetSingleton().Download(aryWork, new HttpWorkEvent(OnHttpWorkDownload));
+#endif
 
 		return true;
 	}
 
 	/// <summary>
-	/// Raises the http work download event.
+	/// Download the specified workQueue and evtCallback.
+	/// </summary>
+	/// <param name="workQueue">Work queue.</param>
+	/// <param name="evtCallback">Evt callback.</param>
+	public WorkState	Download(Queue<HttpWork> workQueue)
+	{
+		if (workQueue.Count <= 0)
+			return WorkState.HS_SUCCESS;
+
+		try{
+			UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread( ()=> {
+				do{
+					WorkState curState = HttpDownloadManager.GetSingleton().Download(workQueue.Dequeue(), OnDownloading);
+					if (curState != WorkState.HS_FAILURE)
+						break;
+
+				}while(workQueue.Count <= 0);
+
+				UnityThreadHelper.Dispatcher.Dispatch( () => {
+
+					SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_LOADING);
+					if (!string.IsNullOrEmpty(tooltip.Text))
+					{
+						Text = tooltip.Text;
+					}
+
+					// start game
+					Startup();
+				});
+			});
+
+		}
+		catch(System.Exception e) 
+		{
+			UISystem.GetSingleton().Box(e.Message);
+		}
+
+		return WorkState.HS_SUCCESS;
+	}
+
+	/// <summary>
+	/// Raises the download finished event.
 	/// </summary>
 	/// <param name="curState">Current state.</param>
 	/// <param name="szUrl">Size URL.</param>
@@ -155,29 +210,48 @@ public class VersionObserver : IEventObserver
 	/// <param name="nReadSpeed">N read speed.</param>
 	/// <param name="nFilength">N filength.</param>
 	/// <param name="szVersion">Size version.</param>
-	public bool 	OnHttpWorkDownload(WorkState curState, string szUrl, string szPath,
-	                    int nPosition, int nReadSpeed, int nFilength, string szVersion)
+	public bool			OnDownloading(WorkState curState, string szUrl, string szPath,
+	                                 int nPosition, int nReadSpeed, int nFileLength, string szVersion)
 	{
-		switch(curState)
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DOWNLOAD);
+		if (!string.IsNullOrEmpty(tooltip.Text))
 		{
-		case WorkState.HS_FAILURE:
-			UISystem.GetSingleton().Box(szUrl);
-			break;
+			float fProg = (float)nPosition / (float)nPosition;
+			Progress 	= fProg;
+			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
+			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
+		}
 
-		case WorkState.HS_DECOMPRE:
-			OnDecompression(szPath, nPosition, nReadSpeed, nFilength);
-			break;
+		if (curState == WorkState.HS_COMPLETED)
+		{
+			HttpDownloadManager.GetSingleton().Decompression(szPath, 
+			                                                 PersistentDataPath, szVersion, OnDecompression);
+		}
 
-		case WorkState.HS_COMPLETED:
-			break;
+		return true;
+	}
 
-		case WorkState.HS_DOWNLOAD:
-			OnDownloading(szPath, nPosition, nReadSpeed, nFilength);
-			break;
-
-		case WorkState.HS_FINISHED:
-			OnFinished(szPath, nPosition, nReadSpeed, nFilength, szVersion);
-			break;
+	/// <summary>
+	/// Raises the decompression event.
+	/// </summary>
+	/// <param name="curState">Current state.</param>
+	/// <param name="szUrl">Size URL.</param>
+	/// <param name="szPath">Size path.</param>
+	/// <param name="nPosition">N position.</param>
+	/// <param name="nReadSpeed">N read speed.</param>
+	/// <param name="nFileLength">N file length.</param>
+	/// <param name="szVersion">Size version.</param>
+	public bool			OnDecompression(WorkState curState, string szUrl, string szPath,
+	                            int nPosition, int nReadSpeed, int nFileLength, string szVersion)
+	{
+		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DECOMPRESS);
+		if (!string.IsNullOrEmpty(tooltip.Text))
+		{
+			float fProg = (float)nPosition / (float)nPosition;
+			Progress 	= fProg;
+			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
+			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
+			
 		}
 
 		return true;
@@ -203,79 +277,17 @@ public class VersionObserver : IEventObserver
 		return string.Format("{0:F}", 
 		                     (float)nBytes / 1024 / 1024);
 	}
-	
-	/// <summary>
-	/// Raises the decompression event.
-	/// </summary>
-	/// <param name="szPath">Size path.</param>
-	/// <param name="nPosition">N position.</param>
-	/// <param name="nReadSpeed">N read speed.</param>
-	/// <param name="nFileLength">N file length.</param>
-	public bool		OnDecompression(string szPath, int nPosition, int nReadSpeed, int nFileLength)
-	{
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DECOMPRESS);
-		if (!string.IsNullOrEmpty(tooltip.Text))
-		{
-			float fProg = (float)nPosition / (float)nPosition;
-			Progress 	= fProg;
-			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
-			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
-
-		}
-
-		return true;
-	}
-
-	/// <summary>
-	/// Raises the downloading event.
-	/// </summary>
-	/// <param name="szPath">Size path.</param>
-	/// <param name="nPosition">N position.</param>
-	/// <param name="nReadSpeed">N read speed.</param>
-	/// <param name="nFileLength">N file length.</param>
-	public bool		OnDownloading(string szPath, int nPosition, int nReadSpeed, int nFileLength)
-	{
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_DOWNLOAD);
-		if (!string.IsNullOrEmpty(tooltip.Text))
-		{
-			float fProg = (float)nPosition / (float)nPosition;
-			Progress 	= fProg;
-			Text 		= string.Format("{0} {1}MB/{2}MB {3}KB ({4})%", tooltip.Text, ToMB(nPosition), 
-			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
-		}
-
-		return true;
-	}
-
-	/// <summary>
-	/// Raises the finished event.
-	/// </summary>
-	/// <param name="szPath">Size path.</param>
-	/// <param name="nPosition">N position.</param>
-	/// <param name="nReadSpeed">N read speed.</param>
-	/// <param name="nFileLength">N file length.</param>
-	public bool		OnFinished(string szPath, int nPosition, int nReadSpeed, int nFileLength, string szVersion)
-	{
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(TooltipCode.TC_LOADING);
-		if (!string.IsNullOrEmpty(tooltip.Text))
-		{
-			VerUI.Text 		= tooltip.Text;
-			VerUI.Version	= szVersion;
-		}
-
-		return Startup();
-	}
 
 	/// <summary>
 	/// Startup this instance.
 	/// </summary>
-	protected bool	Startup()
+	protected bool		Startup()
 	{
 		IResourceManager resMgr = GameEngine.GetSingleton().QueryPlugin<IResourceManager>();
 		if (resMgr)
 		{
 			resMgr.RegisterAssetBundlePackage(WUrl.AssetBundlePath, delegate(string szUrl, AssetBundle abFile) {
-				return SceneSupport.GetSingleton().LoadScene(1);
+				return SceneSupport.GetSingleton().LoadScene((int)SceneFlag.SCENE_LOGIN);
 			});
 		}
 

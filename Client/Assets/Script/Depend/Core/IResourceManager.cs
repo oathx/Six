@@ -237,12 +237,12 @@ public class IResourceManager : IGamePlugin
 	{
 		if (UrlType(szPackagePath))
 		{
-			StartCoroutine(OnLoadPackageIndexFile(szPackagePath, callback));
+			StartCoroutine(OnLoadPackageIndexFromWWW(szPackagePath, callback));
 		}
 		else
 		{
 			StartCoroutine(
-				OnLoadPackageIndexFileFromMemory(szPackagePath, callback)
+				OnLoadPackageIndexFromMemory(szPackagePath, callback)
 				);
 		}
 	}
@@ -265,7 +265,7 @@ public class IResourceManager : IGamePlugin
 	/// </summary>
 	/// <param name="szPath">Size path.</param>
 	/// <param name="callback">Callback.</param>
-	IEnumerator		OnLoadPackageIndexFileFromMemory(string szUrl, 
+	IEnumerator		OnLoadPackageIndexFromMemory(string szUrl, 
 	                                              AssetbundleFileCallback callback)
 	{
 		byte[] byIndexFile = File.ReadAllBytes(szUrl);
@@ -294,7 +294,7 @@ public class IResourceManager : IGamePlugin
 	/// Raises the load package index file event.
 	/// </summary>
 	/// <param name="szPackagePath">Size package path.</param>
-	IEnumerator		OnLoadPackageIndexFile(string szPackagePath, AssetbundleFileCallback callback)
+	IEnumerator		OnLoadPackageIndexFromWWW(string szPackagePath, AssetbundleFileCallback callback)
 	{
 #if OPEN_DEBUG_LOG
 		Debug.Log("register assetbundle resource manifest " + szPackagePath);
@@ -320,51 +320,23 @@ public class IResourceManager : IGamePlugin
 	/// <param name="szAssetName">Size asset name.</param>
 	/// <param name="flag">Flag.</param>
 	/// <param name="callback">Callback.</param>
-	public virtual void LoadFromFile(string szAssetName, ResourceLoadFlag flag, AssetbundleFileCallback callback)
+	public virtual void LoadFromFile(string szAssetName, AssetbundleFileCallback callback)
 	{
-		string szUrl = flag == ResourceLoadFlag.RLF_UNITY ? GetFilePath(szAssetName) : GetLocalPath(szAssetName);
-
-		switch(flag)
+		string szUrl = GetFilePath(szAssetName);
+		if (!Exists(szUrl))
 		{
-		case ResourceLoadFlag.RLF_UNITY:
-			if (!Exists(szUrl))
-			{
-				StartCoroutine(
-					OnUnityDownload(szAssetName, callback)
-					);
-			}
-			else
-			{
-				RefResource[szUrl].Grab();
-				
-				callback(szUrl, 
-				         RefResource[szUrl].Handle
-				         );
-				
-				RefResource[szUrl].Drop();
-			}
-			break;
-		
-		case ResourceLoadFlag.RLF_MEMORY:
-			if (!Exists(szUrl))
-			{
-				StartCoroutine(
-					OnMemoryDownload(szAssetName, callback)
-					);
-			}
-			else
-			{
-				RefResource[szUrl].Grab();
-				
-				callback(szUrl, 
-				         RefResource[szUrl].Handle
-				         );
-				
-				RefResource[szUrl].Drop();
-			}
-			break;
+			StartCoroutine(OnMemoryDownload(szAssetName, callback));
 		}
-
+		else
+		{
+			RefResource[szUrl].Grab();
+			
+			callback(szUrl, 
+			         RefResource[szUrl].Handle
+			         );
+			
+			RefResource[szUrl].Drop();
+		}
 	}
 
 	/// <summary>
@@ -415,6 +387,30 @@ public class IResourceManager : IGamePlugin
 	}
 
 	/// <summary>
+	/// Download the specified szAssetName and callback.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	/// <param name="callback">Callback.</param>
+	public virtual void Download(string szAssetName, AssetbundleFileCallback callback)
+	{
+		string szUrl = GetFilePath(szAssetName);
+		if (!Exists(szUrl))
+		{
+			StartCoroutine(OnUnityDownload(szAssetName, callback));
+		}
+		else
+		{
+			RefResource[szUrl].Grab();
+			
+			callback(szUrl, 
+			         RefResource[szUrl].Handle
+			         );
+			
+			RefResource[szUrl].Drop();
+		}
+	}
+
+	/// <summary>
 	/// Raises the unity download event.
 	/// </summary>
 	/// <param name="szAssetName">Size asset name.</param>
@@ -458,24 +454,12 @@ public class IResourceManager : IGamePlugin
 		callback(szAssetURL, ws.assetBundle);
 	}
 
-
 	/// <summary>
 	/// Gets the file path.
 	/// </summary>
 	/// <returns>The file path.</returns>
 	/// <param name="szAssetName">Size asset name.</param>
 	public string GetFilePath(string szAssetName)
-	{
-		return string.Format("{0}/{1}/{2}",
-		                             WUrl.Url, typeof(AssetBundle).Name, szAssetName);
-	}
-
-	/// <summary>
-	/// Gets the local path.
-	/// </summary>
-	/// <returns>The local path.</returns>
-	/// <param name="szAssetName">Size asset name.</param>
-	public string GetLocalPath(string szAssetName)
 	{
 		return string.Format("{0}/{1}/{2}",
 		                     WUrl.DataURL, typeof(AssetBundle).Name, szAssetName);

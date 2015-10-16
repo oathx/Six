@@ -2,6 +2,10 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
+public enum SceneFlag {
+	SCENE_LOGIN	= 1,
+}
+
 /// <summary>
 /// Game engine.
 /// </summary>
@@ -27,7 +31,7 @@ public class SceneSupport : ScriptableSingleton<SceneSupport>
 	public bool		LoadScene(string szName)
 	{
 		try{
-			m_ResourceManager.LoadFromFile(szName.ToLower(), ResourceLoadFlag.RLF_UNITY, delegate(string szUrl, AssetBundle abFile) {
+			m_ResourceManager.LoadFromFile(szName.ToLower(), delegate(string szUrl, AssetBundle abFile) {
 #if OPEN_DEBUG_LOG
 				string[] aryAssetName = abFile.GetAllAssetNames();
 				foreach(string asset in aryAssetName)

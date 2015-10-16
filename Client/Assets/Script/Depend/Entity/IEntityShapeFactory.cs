@@ -45,7 +45,7 @@ public class DefaultShapeFactory : IEntityShapeFactory
 		if (!sqlShape)
 			throw new System.NullReferenceException();
 		
-		m_ResourceManager.LoadFromFile(sqlShape.Skeleton, ResourceLoadFlag.RLF_UNITY, 
+		m_ResourceManager.LoadFromFile(sqlShape.Skeleton,
 		                               delegate(string szUrl, AssetBundle abFile) {
 			
 			GameObject resource = abFile.LoadAsset(sqlShape.Skeleton, typeof(GameObject)) as GameObject;

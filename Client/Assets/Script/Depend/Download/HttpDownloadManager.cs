@@ -21,164 +21,179 @@ public enum WorkState
 public delegate bool 	HttpWorkEvent(WorkState curState, string szUrl, string szPath,
                                     int nPosition, int nReadSpeed, int nFilength, string szVersion);
 
+
+public enum UrlType
+{
+	URL_STREAM,
+	URL_LOCAL,
+	URL_HTTP,
+}
+
 /// <summary>
 /// Download manager.
 /// </summary>
 public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager> 
 {
 	/// <summary>
-	/// Download the specified workQueue.
+	/// Gets the type of the URL.
 	/// </summary>
-	/// <param name="workQueue">Work queue.</param>
-	public bool			Download(List<HttpWork> aryWork, HttpWorkEvent evtCallback)
+	/// <returns>The URL type.</returns>
+	/// <param name="szUrl">Size URL.</param>
+	public UrlType		GetUrlType(string szUrl)
 	{
-		Queue<HttpWork> workQueue = new Queue<HttpWork>();
-		foreach(HttpWork work in aryWork)
-		{
-			workQueue.Enqueue(work);
-		}
-
-		UnityThreading.ActionThread thread = UnityThreadHelper.CreateThread( () => {
-
-			try{
-				WorkState curState 	= WorkState.HS_FAILURE;
-				HttpWork curWork 	= default(HttpWork);
-				
-				while(workQueue.Count > 0)
-				{
-					curWork = workQueue.Dequeue();
-					
-					if (!string.IsNullOrEmpty(curWork.Url) && !string.IsNullOrEmpty(curWork.FilePath))
-					{
-						curState = DoHttpThreadWork(curWork, evtCallback);
-						if (curState == WorkState.HS_FAILURE)
-							break;
-					}
-				}
-				
-				if (curState == WorkState.HS_SUCCESS)
-				{
-					UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-						evtCallback(WorkState.HS_FINISHED, curWork.Url, curWork.FilePath, 0, 0, 0, curWork.Version);
-					});
-				}
-			}
-			catch(System.Exception e)
-			{
-				UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-					evtCallback(WorkState.HS_FAILURE, e.Message, string.Empty, 0, 0, 0, string.Empty);
-				});
-			}
-		});
-
-		return true;
+		if (szUrl[0] == 'f' && szUrl[1] == 'i' && szUrl[2] == 'l' && szUrl[3] == 'e')
+			return UrlType.URL_STREAM;
+		
+		if (szUrl[0] == 'h' && szUrl[1] == 't' && szUrl[2] == 't' && szUrl[3] == 'p')
+			return UrlType.URL_HTTP;
+		
+		return UrlType.URL_LOCAL;
 	}
 
 	/// <summary>
-	/// Dos the http work.
+	/// Download the specified work and evtCallback.
 	/// </summary>
-	/// <returns>The http work.</returns>
 	/// <param name="work">Work.</param>
-	public WorkState	DoHttpThreadWork(HttpWork work, HttpWorkEvent evtCallback)
+	/// <param name="evtCallback">Evt callback.</param>
+	public WorkState	Download(HttpWork work, HttpWorkEvent evtCallback)
 	{
 		int nFileLength = GetFileLength(work.Url);
+		if (nFileLength <= 0)
+			return WorkState.HS_FAILURE;
 
 		// create http web connected
 		WebClient web = new WebClient ();
 		
 		// open http file
 		Stream stream = web.OpenRead(work.Url);
-		if (stream.CanRead)
+		if (!stream.CanRead)
+			return WorkState.HS_FAILURE;
+
+		string szFilePath = string.Format("{0}/{1}", 
+		                                  work.FilePath, GetFileName(work.Url));
+		// create local file
+		FileStream fs = new FileStream (szFilePath, FileMode.OpenOrCreate);
+		
+		// current read length
+		int nReadLength 	= 0;
+		int nMinLength		= work.MinReadSize == 0 ? nFileLength : work.MinReadSize;
+		int nFilePostion	= 0;
+		int nReadSpeed		= 0;
+		int nSecSpeed		= 0;
+		int nPrevTick 		= System.Environment.TickCount;
+		
+		// start time
+		byte[] byBuffer = new byte[nMinLength];
+		do{
+			// read file bytes
+			nReadLength = stream.Read(byBuffer, 0, byBuffer.Length);
+			if (nReadLength == 0)
+				break;
+			
+			// write buffer data to file
+			fs.Write(byBuffer, 0, nReadLength);
+			
+			nFilePostion 	+= nReadLength;
+			nReadSpeed		+= nReadLength;
+			
+			int nElapsed = System.Environment.TickCount - nPrevTick;
+			if (nElapsed >= 1000)
+			{
+				nPrevTick 	= System.Environment.TickCount;
+				nSecSpeed	= nReadSpeed;
+				nReadSpeed 	= 0;
+			}
+			
+			evtCallback(WorkState.HS_DOWNLOAD, work.Url, szFilePath, 
+			            nFilePostion, nSecSpeed, nFileLength, work.Version);
+			
+		}while(nFilePostion < nFileLength);
+		
+		// close zip file
+		fs.Close();
+
+		// download completed
+		evtCallback(WorkState.HS_COMPLETED, work.Url,
+		            szFilePath, nFilePostion, nSecSpeed, nFileLength, work.Version);
+
+		return WorkState.HS_SUCCESS;
+	}
+
+	/// <summary>
+	/// Decompression the specified szZipFilePath and szTargetDirectory.
+	/// </summary>
+	/// <param name="szZipFilePath">Size zip file path.</param>
+	/// <param name="szTargetDirectory">Size target directory.</param>
+	public WorkState	Decompression(string szZipFilePath, string szTargetDirectory, string szVersion, HttpWorkEvent evtCallback)
+	{
+		FileStream zipFile = File.OpenRead (szZipFilePath);
+		if (zipFile.Length <= 0)
+			return WorkState.HS_FAILURE;
+
+		using (ZipInputStream s = new ZipInputStream(zipFile))
 		{
-			if (File.Exists(work.FilePath))
+			ZipEntry entry;
+			while((entry = s.GetNextEntry()) != null)
 			{
-				FileStream	existStream = File.Open(work.FilePath, FileMode.Open);
-				long nTotalBytes		= existStream.Length;
-				existStream.Close();
-
-				if (nTotalBytes == nFileLength)
+				string szDirectoryName = string.Format("{0}/{1}/", szTargetDirectory, Path.GetDirectoryName(entry.Name));
+				if (!Directory.Exists(szDirectoryName))
 				{
-					if (work.Type == HttpFileType.HFT_ZIP)
-					{
-						return Decompression(work.FilePath, GetFilePath(work.FilePath), evtCallback, work.Version);
-					}
-					else
-					{
-						UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-							evtCallback(WorkState.HS_COMPLETED, work.Url, work.FilePath, 
-							            (int)nTotalBytes, (int)nTotalBytes, nFileLength, work.Version);
-						});
-
-						return WorkState.HS_SUCCESS;
-					}
+					Directory.CreateDirectory(szDirectoryName);
 				}
-				else
+				
+				string szFileName = Path.GetFileName(entry.Name);
+				if (!string.IsNullOrEmpty(szFileName))
 				{
-					File.Delete(work.FilePath);
+					using (FileStream sw = File.Open(szDirectoryName + szFileName, FileMode.OpenOrCreate))
+					{
+						int nReadSize	= 0;
+						byte[] byBuffer = new byte[1024];
+						int nPosition	= 0;
+						
+						int nReadSpeed	= 0;
+						int nSecSpeed	= 0;
+						int nPrevTick 	= System.Environment.TickCount;
+						
+						do{
+							nReadSize = s.Read(byBuffer, 0, byBuffer.Length);
+							if (nReadSize > 0)
+							{
+								sw.Write(byBuffer, 0, nReadSize);
+								
+								nPosition 	+= nReadSize;
+								nReadSpeed	+= nReadSize;
+								
+								int nElapsed = System.Environment.TickCount - nPrevTick;
+								if (nElapsed >= 1000)
+								{
+									nPrevTick 	= System.Environment.TickCount;
+									nSecSpeed	= nReadSpeed;
+									nReadSpeed 	= 0;
+								}
+								
+								evtCallback(WorkState.HS_DECOMPRE, 
+								            szZipFilePath, szFileName, nPosition, nSecSpeed, (int)s.Length, szVersion);
+							}
+							
+						}while(nPosition < s.Length);
+						
+#if OPEN_DEBUG_LOG
+						Debug.Log("Decompression file : " + sw.Name + " length " + sw.Length);
+#endif
+						sw.Close();
+					}
 				}
 			}
-			else
-			{
-				// create local file
-				FileStream fs = new FileStream (work.FilePath, FileMode.OpenOrCreate);
-
-				// current read length
-				int nReadLength 	= 0;
-				int nMinLength		= work.MinReadSize == 0 ? nFileLength : work.MinReadSize;
-				int nFilePostion	= 0;
-				int nReadSpeed		= 0;
-				int nSecSpeed		= 0;
-				int nPrevTick 		= System.Environment.TickCount;
-				
-				// start time
-				byte[] byBuffer = new byte[nMinLength];
-				do{
-					// read file bytes
-					nReadLength = stream.Read(byBuffer, 0, byBuffer.Length);
-					if (nReadLength == 0)
-						break;
-					
-					// write buffer data to file
-					fs.Write(byBuffer, 0, nReadLength);
-					
-					nFilePostion 	+= nReadLength;
-					nReadSpeed		+= nReadLength;
-					
-					int nElapsed = System.Environment.TickCount - nPrevTick;
-					if (nElapsed >= 1000)
-					{
-						nPrevTick 	= System.Environment.TickCount;
-						nSecSpeed	= nReadSpeed;
-						nReadSpeed 	= 0;
-					}
-					
-					evtCallback(WorkState.HS_DOWNLOAD, work.Url, work.FilePath, 
-					         nFilePostion, nSecSpeed, nFileLength, work.Version);
-					
-				}while(nFilePostion < nFileLength);
-				
-				// close zip file
-				fs.Close();
-
-				if (work.Type == HttpFileType.HFT_ZIP)
-				{
-					return Decompression(work.FilePath, GetFilePath(work.FilePath), evtCallback, work.Version);
-				}
-				else
-				{
-					UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-						evtCallback(WorkState.HS_COMPLETED, work.Url, work.FilePath, 
-						            nFilePostion, nSecSpeed, nFileLength, work.Version);
-					});
-
-					return WorkState.HS_SUCCESS;
-				}
-			}
+			
+			zipFile.Close();
 		}
 
-		return WorkState.HS_FAILURE;
+		evtCallback(WorkState.HS_COMPLETED, 
+		            szZipFilePath, szTargetDirectory, 1, 1, 1, szVersion);
+
+		return WorkState.HS_SUCCESS;
 	}
-	
+
 	/// <summary>
 	/// Gets the length of the file.
 	/// </summary>
@@ -224,109 +239,7 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 			iPos = szPath.LastIndexOf("/");
 		
 		return szPath.Substring(0, iPos);
-	}
-
-	/// <summary>
-	/// Decompression the specified szZipFilePath and szTargetDirectory.
-	/// </summary>
-	/// <param name="szZipFilePath">Size zip file path.</param>
-	/// <param name="szTargetDirectory">Size target directory.</param>
-	public WorkState	Decompression(string szZipFilePath, string szTargetDirectory)
-	{
-		try{
-			FastZip zip = new FastZip();
-			zip.ExtractZip(szZipFilePath, szTargetDirectory, string.Empty);
-
-			return WorkState.HS_SUCCESS;
-		}
-		catch(System.Exception e)
-		{
-			Debug.LogException(e);
-		}
-
-		return WorkState.HS_FAILURE;
-	}
-
-	/// <summary>
-	/// Decompression the specified szSourcePath, szTargetPath, callback and szVersion.
-	/// </summary>
-	/// <param name="szSourcePath">Size source path.</param>
-	/// <param name="szTargetPath">Size target path.</param>
-	/// <param name="callback">Callback.</param>
-	/// <param name="szVersion">Size version.</param>
-	public WorkState 	Decompression(string szSourcePath, string szTargetPath, HttpWorkEvent evtCallback, string szVersion)
-	{
-		FileStream zipFile = File.OpenRead (szSourcePath);
-		if (zipFile.Length <= 0)
-		{
-			UnityThreadHelper.Dispatcher.Dispatch( ()=> {
-				evtCallback(WorkState.HS_FAILURE, szSourcePath, szTargetPath, 
-				            0, 0, 0, szVersion);
-			});
-
-			return WorkState.HS_FAILURE;
-		}
-		
-		using (ZipInputStream s = new ZipInputStream(zipFile))
-		{
-			ZipEntry entry;
-			while((entry = s.GetNextEntry()) != null)
-			{
-				string szDirectoryName = string.Format("{0}/{1}/", szTargetPath, Path.GetDirectoryName(entry.Name));
-				if (!Directory.Exists(szDirectoryName))
-				{
-					Directory.CreateDirectory(szDirectoryName);
-				}
-				
-				string szFileName = Path.GetFileName(entry.Name);
-				if (!string.IsNullOrEmpty(szFileName))
-				{
-					using (FileStream sw = File.Open(szDirectoryName + szFileName, FileMode.OpenOrCreate))
-					{
-						int nReadSize	= 0;
-						byte[] byBuffer = new byte[1024];
-						int nPosition	= 0;
-						
-						int nReadSpeed	= 0;
-						int nSecSpeed	= 0;
-						int nPrevTick 	= System.Environment.TickCount;
-						
-						do{
-							nReadSize = s.Read(byBuffer, 0, byBuffer.Length);
-							if (nReadSize > 0)
-							{
-								sw.Write(byBuffer, 0, nReadSize);
-								
-								nPosition 	+= nReadSize;
-								nReadSpeed	+= nReadSize;
-								
-								int nElapsed = System.Environment.TickCount - nPrevTick;
-								if (nElapsed >= 1000)
-								{
-									nPrevTick 	= System.Environment.TickCount;
-									nSecSpeed	= nReadSpeed;
-									nReadSpeed 	= 0;
-								}
-								
-								evtCallback(WorkState.HS_DECOMPRE, 
-								         szSourcePath, szFileName, nPosition, nSecSpeed, (int)s.Length, szVersion);
-							}
-							
-						}while(nPosition < s.Length);
-
-#if OPEN_DEBUG_LOG
-						Debug.Log("Decompression file : " + sw.Name + " length " + sw.Length);
-#endif
-						sw.Close();
-					}
-				}
-			}
-
-			zipFile.Close();
-		}
-
-		return WorkState.HS_SUCCESS;
-	}
+	}	
 }
 
 
