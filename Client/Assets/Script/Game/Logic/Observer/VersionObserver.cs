@@ -153,7 +153,7 @@ public class VersionObserver : IEventObserver
 			}
 		}
 #else
-
+		// To do http request version update
 #endif
 
 		return true;
