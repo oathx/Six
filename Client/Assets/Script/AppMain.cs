@@ -42,7 +42,7 @@ public class AppMain : MonoBehaviour {
 		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
 		if (global)
 		{
-			global.RegisterObserver<StatusObserver>(typeof(StatusObserver).Name);
+			global.RegisterObserver<GlobalObserver>(typeof(GlobalObserver).Name);
 			global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
 		}
 	}

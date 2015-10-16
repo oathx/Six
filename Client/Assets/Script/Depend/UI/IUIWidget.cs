@@ -59,11 +59,37 @@ public class IUIWidget : MonoBehaviour
 	/// </summary>
 	/// <param name="szName">Size name.</param>
 	/// <param name="text">Text.</param>
-	public void SetText(string szName, string text)
+	public void 	SetText(string szName, string text)
 	{
 		Text lab = Child[szName].GetComponent<Text>();
 		if (lab)
 			lab.text = text;
+	}
+
+	/// <summary>
+	/// Gets the input text.
+	/// </summary>
+	/// <returns>The input text.</returns>
+	/// <param name="szName">Size name.</param>
+	public string	GetInputText(string szName)
+	{
+		InputField ipt = GetChildComponent<InputField>(szName);
+		if (ipt)
+			return ipt.text;
+
+		return string.Empty;
+	}
+
+	/// <summary>
+	/// Sets the input text.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	/// <param name="text">Text.</param>
+	public void 	SetInputText(string szName, string text)
+	{
+		InputField ipt = GetChildComponent<InputField>(szName);
+		if (ipt)
+			ipt.text = text;
 	}
 
 	/// <summary>
