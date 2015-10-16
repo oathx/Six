@@ -222,6 +222,7 @@ public class VersionObserver : IEventObserver
 			                       ToMB(nFileLength), ToKB(nReadSpeed), (int)(fProg * 100));
 		}
 
+		// download finished descompress the package to local file system
 		if (curState == WorkState.HS_COMPLETED)
 		{
 			HttpDownloadManager.GetSingleton().Decompression(szPath, 

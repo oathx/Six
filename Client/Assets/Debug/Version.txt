@@ -1,8 +1,0 @@
-{
-	"Status":0,
-	"Package":[{
-				"Version":"0.3.0000",
-				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
-				"Url":"http://192.168.8.253:8082/kingkong/Andorid/AssetBundle.pkg"
-			}]
-}

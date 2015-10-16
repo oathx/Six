@@ -38,14 +38,14 @@ public class Build {
 	static void 	BuildFile(string szPackageName, bool outZipFile, params BuildDirectory[] aryDirectory)
 	{
 #if UNITY_EDITOR_WIN
-		string szOutPath = string.Format("{0}/Win/{1}", 
-		                                 Application.streamingAssetsPath, szPackageName);
+		string szOutPath = string.Format("{0}/Temp/Win/{1}", 
+		                                 Application.dataPath, szPackageName);
 #elif UNITY_ANDROID
-		string szOutPath = string.Format("{0}/Android/{1}", 
-		                                 Application.streamingAssetsPath, szPackageName);
+		string szOutPath = string.Format("{0}/Temp/Android/{1}", 
+		                                 Application.dataPath, szPackageName);
 #elif UNITY_IOS
-		string szOutPath = string.Format("{0}/iOS/{1}", 
-		                                 Application.streamingAssetsPath, szPackageName);
+		string szOutPath = string.Format("{0}/Temp/iOS/{1}", 
+		                                 Application.dataPath, szPackageName);
 #endif
 
 		foreach(BuildDirectory directory in aryDirectory)
@@ -114,7 +114,8 @@ public class Build {
 				if (!Directory.Exists(szPackagePath))
 					Directory.CreateDirectory(szPackagePath);
 
-				string zipOutPath = string.Format("{0}/{1}.pkg", szPackagePath, szPackageName);
+				string zipOutPath = string.Format("{0}/{1}.pkg", 
+				                                  szPackagePath, szPackageName);
 				// create zip file
 				CreateZipFile(szTargetDirectory, zipOutPath);
 			}
@@ -143,8 +144,8 @@ public class Build {
 				{
 					if (!file.Contains(".meta"))
 					{
-						string szZipEntryName = file.Substring(Application.streamingAssetsPath.Length + 5,
-						                                       file.Length - Application.streamingAssetsPath.Length - 5);
+						string szZipEntryName = file.Substring(szInputDirectory.Length - 11,
+						                                       file.Length - szInputDirectory.Length + 11);
 
 						ZipEntry entry = new ZipEntry(szZipEntryName);
 						stream.PutNextEntry(entry);

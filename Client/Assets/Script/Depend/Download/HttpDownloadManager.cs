@@ -57,6 +57,20 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 	/// <param name="evtCallback">Evt callback.</param>
 	public WorkState	Download(HttpWork work, HttpWorkEvent evtCallback)
 	{
+		
+		string szFilePath = string.Format("{0}/{1}", 
+		                                  work.FilePath, GetFileName(work.Url));
+
+		UrlType type = GetUrlType(work.Url);
+		if (type == UrlType.URL_LOCAL)
+		{
+			// download completed
+			evtCallback(WorkState.HS_COMPLETED, work.Url,
+			            work.Url, 1, 1, 1, work.Version);
+
+			return WorkState.HS_SUCCESS;
+		}
+
 		int nFileLength = GetFileLength(work.Url);
 		if (nFileLength <= 0)
 			return WorkState.HS_FAILURE;
@@ -69,8 +83,6 @@ public class HttpDownloadManager : SimpleSingleton<HttpDownloadManager>
 		if (!stream.CanRead)
 			return WorkState.HS_FAILURE;
 
-		string szFilePath = string.Format("{0}/{1}", 
-		                                  work.FilePath, GetFileName(work.Url));
 		// create local file
 		FileStream fs = new FileStream (szFilePath, FileMode.OpenOrCreate);
 		
