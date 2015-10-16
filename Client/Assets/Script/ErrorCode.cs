@@ -9,4 +9,6 @@ public class ErrorCode
 	public const int ERR_CHECKVERSION	= 10002;
 	public const int ERR_LOADING		= 10003;
 	public const int ERR_USERNAME		= 10004;
+	public const int ERR_TIMEOUT		= 10005;
+	public const int ERR_DISCONNECT		= 10006;
 }

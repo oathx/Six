@@ -5,6 +5,8 @@ using UnityEngine;
 /// </summary>
 public class WUrl
 {
+	public static string	IPAddress 	= "0.0.0.0";
+	public static int 		Port		= 20000;
 
 	/// <summary>
 	/// Gets the root UR.

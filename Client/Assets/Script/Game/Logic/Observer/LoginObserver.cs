@@ -15,6 +15,13 @@ public class LoginObserver : IEventObserver
 	/// </summary>
 	void Start()
 	{
+		SubscribeEvent(ITcpSession.TCP_CONNECTERROR, 
+		               OnTcpConnectError);
+		SubscribeEvent(ITcpSession.TCP_CONNECTFINISH,
+		               OnTcpConnectSuccess);
+		SubscribeEvent(ITcpSession.TCP_DISCONNECTED, 
+		               OnTcpDisconnected);
+
 		SubscribeEvent(CmdEvt.CMD_UI_LOGIN, 	OnLoginEvent);
 		SubscribeEvent(CmdEvt.CMD_UI_REGISTER, 	OnRegisterEvent);
 	}
@@ -48,11 +55,15 @@ public class LoginObserver : IEventObserver
 		CmdEvt.UILoginEventArgs v = evt.Args as CmdEvt.UILoginEventArgs;
 		if (string.IsNullOrEmpty(v.UserName) || string.IsNullOrEmpty(v.Password))
 		{
-			GameEngine.GetSingleton().SendEvent(CmdEvt.CreateErrorEvent(ErrorCode.ERR_USERNAME));
+			LogicHelper.Error(ErrorCode.ERR_USERNAME);
 		}
 		else
 		{
-
+			LoginPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LoginPlugin>();
+			if (plugin)
+			{
+				plugin.Connect(WUrl.IPAddress, WUrl.Port);
+			}
 		}
 
 		return true;
@@ -64,6 +75,37 @@ public class LoginObserver : IEventObserver
 	/// <param name="evt">Evt.</param>
 	protected bool 			OnRegisterEvent(IEvent evt)
 	{
+		return true;
+	}
+
+	/// <summary>
+	/// Raises the tcp connect error event.
+	/// </summary>
+	/// <param name="evt">Evt.</param>
+	protected bool			OnTcpConnectError(IEvent evt)
+	{
+		LogicHelper.Error(ErrorCode.ERR_DISCONNECT);
+
+		return true;
+	}
+
+	/// <summary>
+	/// Raises the tcp connect success event.
+	/// </summary>
+	/// <param name="evt">Evt.</param>
+	protected bool			OnTcpConnectSuccess(IEvent evt)
+	{
+		return true;
+	}
+
+	/// <summary>
+	/// Raises the tcp disconnected event.
+	/// </summary>
+	/// <param name="evt">Evt.</param>
+	protected bool			OnTcpDisconnected(IEvent evt)
+	{
+		LogicHelper.Error(ErrorCode.ERR_DISCONNECT);
+
 		return true;
 	}
 }

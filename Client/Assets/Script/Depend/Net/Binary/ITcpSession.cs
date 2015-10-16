@@ -16,9 +16,9 @@ using System;
 public class ITcpSession : IGamePlugin 
 {
 	// tcp connected fnish
-	public const int TCP_CONNECTFNISH = -11001;
-	public const int TCP_CONNECTERROR = -11002;
-	public const int TCP_DISCONNECTED = -11003;
+	public const int TCP_CONNECTFINISH 	= -11001;
+	public const int TCP_CONNECTERROR 	= -11002;
+	public const int TCP_DISCONNECTED 	= -11003;
 
 	/// <summary>
 	/// TcpEvent connect fnished.
@@ -245,7 +245,7 @@ public class ITcpSession : IGamePlugin
 
 		m_dSocket.noDelay = true;
 
-		PostEvent (new IEvent (EngineEventType.EVENT_USER, TCP_CONNECTFNISH, v));
+		PostEvent (new IEvent (EngineEventType.EVENT_USER, TCP_CONNECTFINISH, v));
 	}
 	
 	/// <summary>
