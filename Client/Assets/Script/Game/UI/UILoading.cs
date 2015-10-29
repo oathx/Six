@@ -19,6 +19,7 @@ public class UILoading : IUIWidget
 	{
 		Install(new string[]{
 			UL_SLIDER,
+			UL_TEXT
 		});
 	}
 

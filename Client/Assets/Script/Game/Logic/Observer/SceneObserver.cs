@@ -103,8 +103,10 @@ public class SceneObserver : IEventObserver
 		CmdEvent.SceneLoadEventArgs v = evt.Args as CmdEvent.SceneLoadEventArgs;
 
 		// display loading progress
-		if (LoadUI)
+		if (LoadUI) {
 			LoadUI.Progress = v.Progress;
+			LoadUI.Text		= string.Format("{0}%", (int)(v.Progress * 100));
+		}
 
 		return true;
 	}
