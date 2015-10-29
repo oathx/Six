@@ -4,16 +4,35 @@ using System.Collections.Generic;
 
 public enum MountType
 {
-	HH_NONE,
-	HH_WAIST,
-	HH_WEAPON,
-	HH_CHEST,
-	HH_L_FOOT,
-	HH_R_FOOT,
-	HH_L_SHOULDER,
-	HH_R_SHOULDER,
-	HH_L_HAND,
-	HH_R_HAND,
+	None				= 0,
+	Dummy_L_Hand		= 1,
+	Dummy_R_Hand		= 2,
+	Dummy_L_Foot		= 3,
+	Dummy_R_Foot		= 4,
+	Dummy_L_Clavicle	= 5,
+	Dummy_R_Clavicle	= 6,
+	Dummy_Spine1		= 7,
+	Dummy_NPower		= 8,
+	Dummy_Pelvis		= 9,
+	Dummy_Head			= 10,
+	Dummy_Spine			= 11,
+	Dummy_Tail			= 12,
+	Dummy_L_Wings		= 13,
+	Dummy_R_Wings		= 14,
+}
+
+// shape type define
+public enum PartType
+{
+	PT_NONE 			= 0,
+	PT_ARMAMENT 		= 1,
+	PT_ENGINE 			= 2,
+	PT_CONTROL 			= 3,
+	PT_HEAD 			= 4,
+	PT_ARMOUR 			= 5,
+	PT_ARM 				= 6,
+	PT_LEG 				= 7,
+	PT_PROTECT 			= 8,
 }
 
 /// <summary>
@@ -24,7 +43,32 @@ public class IEntityShape : MonoBehaviour
 	/// <summary>
 	/// The mount.
 	/// </summary>
-	protected Dictionary<MountType, Transform> m_dMount = new Dictionary<MountType, Transform>();
+	protected Dictionary<MountType, 
+		Transform> m_dMount = new Dictionary<MountType, Transform>();
+
+	// bone buffer
+	protected class BoneBuffer
+	{
+		public SkinnedMeshRenderer 	smr;
+		public StringHolder			holder;
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="CharacterEntity+BoneInfo"/> class.
+		/// </summary>
+		/// <param name="m">M.</param>
+		/// <param name="h">The height.</param>
+		public BoneBuffer(SkinnedMeshRenderer m, StringHolder h)
+		{
+			smr 	= m;
+			holder 	= h;
+		}
+	}
+	
+	/// <summary>
+	/// The d skin mesh.
+	/// </summary>
+	protected Dictionary<PartType, 
+		BoneBuffer> m_dMesh = new Dictionary<PartType, BoneBuffer> ();
 
 	/// <summary>
 	/// Sets the enabled.
@@ -88,7 +132,7 @@ public class IEntityShape : MonoBehaviour
 	/// <param name="type">Type.</param>
 	public Transform		GetMount(MountType type)
 	{
-		if (type == MountType.HH_NONE)
+		if (type == MountType.None)
 			return transform;
 
 		return m_dMount[type];
@@ -162,6 +206,94 @@ public class IEntityShape : MonoBehaviour
 			{
 				GameObject.Destroy(bind.gameObject);
 			}
+		}
+	}
+
+	/// <summary>
+	/// Megres the equip.
+	/// </summary>
+	public void 		MegreEquip()
+	{
+		// add bones list
+		List<Transform> aryBones 	= new List<Transform>();
+		// save all mesh
+		List<CombineInstance> 
+			aryCombineInstances 	= new List<CombineInstance>();
+		// save all material
+		List<Material> aryMaterial 	= new List<Material>();
+		
+		foreach(KeyValuePair<PartType, BoneBuffer> it in m_dMesh)
+		{
+			foreach(string bone in it.Value.holder.content)
+			{
+				foreach(Transform hip in GetComponentsInChildren<Transform>())
+				{
+					if (hip.name != bone)
+						continue;
+					
+					aryBones.Add(hip);
+					break;
+				}
+			}
+			
+			// create combin instance
+			CombineInstance c = new CombineInstance();
+			c.mesh = it.Value.smr.sharedMesh;
+			aryCombineInstances.Add(c);
+			
+			aryMaterial.AddRange(
+				it.Value.smr.sharedMaterials
+				);
+		}
+		
+		SkinnedMeshRenderer smr = GetComponent<SkinnedMeshRenderer>();
+		if (smr)
+		{
+			smr.sharedMesh = new Mesh();
+			smr.sharedMesh.CombineMeshes(aryCombineInstances.ToArray(), false, false);
+			
+			smr.bones 			= aryBones.ToArray();
+			smr.materials 		= aryMaterial.ToArray();
+			smr.useLightProbes 	= true;
+		}
+	}
+	
+	/// <summary>
+	/// Changes the equip.
+	/// </summary>
+	/// <param name="part">Part.</param>
+	/// <param name="szEquipName">Size equip name.</param>
+	/// <param name="assetBundle">Asset bundle.</param>
+	public virtual void 	ChangeEquip(PartType part, GameObject equipMesh, StringHolder holder)
+	{
+		if (part == PartType.PT_ARMAMENT)
+		{
+			
+		}
+		else
+		{
+			m_dMesh [part] = new BoneBuffer (
+				equipMesh.GetComponent<SkinnedMeshRenderer>(), holder
+				);
+			
+			// megre equip
+			MegreEquip ();
+		}
+	}
+	
+	/// <summary>
+	/// Removes the equip.
+	/// </summary>
+	/// <param name="part">Part.</param>
+	public void 		RemoveEquip(PartType part)
+	{
+		if (m_dMesh.ContainsKey(part))
+		{
+			// remove the equip
+			m_dMesh.Remove(part);
+			
+			// reset the all equip
+			MegreEquip();
 		}
 	}
 }

@@ -28,49 +28,6 @@ public abstract class IEntityShapeFactory
 	public abstract void	CreateShape(int nShapeID, CreateShapeFactoryCallback callback);
 }
 
-
-/// <summary>
-/// Default shape factory.
-/// </summary>
-public class DefaultShapeFactory : IEntityShapeFactory
-{
-	/// <summary>
-	/// Creates the shape.
-	/// </summary>
-	/// <returns>The shape.</returns>
-	/// <param name="nShapeID">N shape I.</param>
-	public override void	CreateShape(int nShapeID, CreateShapeFactoryCallback callback)
-	{
-		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>(nShapeID);
-		if (!sqlShape)
-			throw new System.NullReferenceException();
-		
-		m_ResourceManager.LoadFromFile(sqlShape.Skeleton,
-		                               delegate(string szUrl, AssetBundle abFile) {
-			
-			GameObject resource = abFile.LoadAsset(sqlShape.Skeleton, typeof(GameObject)) as GameObject;
-			if (!resource)
-				throw new System.NullReferenceException();
-			
-			GameObject shape = GameObject.Instantiate(resource) as GameObject;
-			if (shape)
-			{
-				shape.transform.position 			= Vector3.zero;
-				shape.transform.localScale			= Vector3.one;
-				shape.transform.localEulerAngles 	= Vector3.zero;
-				
-				IEntityShape entityShape = shape.AddComponent<IEntityShape>();
-				if (!entityShape)
-					throw new System.NullReferenceException();
-				
-				callback(entityShape);
-			}
-			
-			return true;
-		});
-	}
-}
-
 /// <summary>
 /// Entity shape factory manager.
 /// </summary>

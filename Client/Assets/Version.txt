@@ -3,6 +3,19 @@
 	"Package":[{
 				"Version":"0.3.0000",
 				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
-				"Url":"D:/SvnSix/trunk/Client/Assets/StreamingAssets/Win/AssetBundle.pkg"
+				"Url":"D:/SvnSix/trunk/Client/Assets/StreamingAssets/Win/AssetBundle.zip",
+				"Size" : 1736231
+			},
+			{
+				"Version":"0.3.0001",
+				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
+				"Url":"D:/SvnSix/trunk/Client/Assets/StreamingAssets/Win/Single.zip",
+				"Size" : 807
+			},
+			{
+				"Version":"0.3.0002",
+				"Log":"\u7248\u672c\u66f4\u65b0\u57fa\u7840\u7248\u672c",
+				"Url":"D:/SvnSix/trunk/Client/Assets/StreamingAssets/Win/Character.zip",
+				"Size" : 807
 			}]
 }

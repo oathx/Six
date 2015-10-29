@@ -79,7 +79,7 @@ public class SqlShape : ISqlPackage
 		Radius		= System.Convert.ToSingle(sdr["Radius"]);
 		Height		= System.Convert.ToSingle(sdr["Height"]);
 		FootStepTime= System.Convert.ToSingle(sdr["FootStepTime"]);
-		Center 		= MathfEx.ToVector3(System.Convert.ToString(sdr["Colour"]));
+		Center 		= MathfEx.ToVector3(System.Convert.ToString(sdr["Center"]));
 
 		string equip = System.Convert.ToString(sdr["Equip"]);
 		if (!string.IsNullOrEmpty (equip))

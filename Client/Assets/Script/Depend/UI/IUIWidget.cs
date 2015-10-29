@@ -35,12 +35,66 @@ public class IUIWidget : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Active this instance.
+	/// </summary>
+	public void Show()
+	{
+		SetVisible(true);
+	}
+
+	/// <summary>
+	/// Detive this instance.
+	/// </summary>
+	public void Hide()
+	{
+		SetVisible(false);
+	}
+
+	/// <summary>
+	/// Sets the visible.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	/// <param name="bVisible">If set to <c>true</c> b visible.</param>
+	public void Show(string szName, bool bVisible)
+	{
+		Child[szName].SetActive(bVisible);
+	}
+
+	/// <summary>
+	/// Sets the visible.
+	/// </summary>
+	/// <param name="bVisible">If set to <c>true</c> b visible.</param>
+	public void SetVisible(bool bVisible)
+	{
+		gameObject.SetActive(bVisible);
+	}
+
+	/// <summary>
+	/// Gets the visible.
+	/// </summary>
+	/// <returns><c>true</c>, if visible was gotten, <c>false</c> otherwise.</returns>
+	public bool	GetVisible()
+	{
+		return gameObject.activeSelf;
+	}
+
+	/// <summary>
 	/// Registers the click event.
 	/// </summary>
 	/// <param name="szName">Size name.</param>
 	public void RegisterClickEvent(string szName, IUIEventTriggerListener.VoidDelegate callback)
 	{
 		IUIEventTriggerListener.Get(Child[szName]).onClick = callback;
+	}
+
+	/// <summary>
+	/// Registers the click event.
+	/// </summary>
+	/// <param name="go">Go.</param>
+	/// <param name="callback">Callback.</param>
+	public void RegisterClickEvent(GameObject target, IUIEventTriggerListener.VoidDelegate callback)
+	{
+		IUIEventTriggerListener.Get(target).onClick = callback;
 	}
 
 	/// <summary>
@@ -97,10 +151,22 @@ public class IUIWidget : MonoBehaviour
 	/// </summary>
 	/// <param name="szName">Size name.</param>
 	/// <param name="fProgress">F progress.</param>
-	public void SetSlider(string szName, float fProgress)
+	public void 	SetSlider(string szName, float fProgress)
 	{
 		Slider slider = GetChildComponent<Slider>(szName);
 		if (slider)
 			slider.value = fProgress;
+	}
+
+	/// <summary>
+	/// Sets the disibled.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	/// <param name="disibled">If set to <c>true</c> disibled.</param>
+	public void 	SetDisibled(string szName, bool disibled)
+	{
+		Button b = GetChildComponent<Button>(szName);
+		if (b)
+			b.enabled = disibled;
 	}
 }

@@ -15,14 +15,14 @@ public class IResource<T> where T : class, new()
 	/// <value>The handle.</value>
 	public T					Handle
 	{ get; set; }
-
+	
 	/// <summary>
 	/// Gets or sets the reference count.
 	/// </summary>
 	/// <value>The reference count.</value>
 	public int 					RefCount
 	{ get; set; }
-
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IResource`1"/> class.
 	/// </summary>
@@ -31,7 +31,7 @@ public class IResource<T> where T : class, new()
 	{
 		RefCount = 1; Handle = handle;
 	}
-
+	
 	/// <summary>
 	/// Grab this instance.
 	/// </summary>
@@ -39,7 +39,7 @@ public class IResource<T> where T : class, new()
 	{
 		return ++RefCount;
 	}
-
+	
 	/// <summary>
 	/// Gets the reference count.
 	/// </summary>
@@ -48,7 +48,7 @@ public class IResource<T> where T : class, new()
 	{
 		return RefCount;
 	}
-
+	
 	/// <summary>
 	/// Drop this instance.
 	/// </summary>
@@ -56,7 +56,7 @@ public class IResource<T> where T : class, new()
 	{
 		return --RefCount;
 	}
-
+	
 	/// <summary>
 	/// Dump this instance.
 	/// </summary>
@@ -69,18 +69,25 @@ public class IResource<T> where T : class, new()
 /// <summary>
 /// I asset bundle resource.
 /// </summary>
-public class AssetBundleRefResource : IResource<AssetBundle>
+public class AssetBundleResource : IResource<AssetBundle>
 {
+	/// <summary>
+	/// Gets the depend.
+	/// </summary>
+	/// <value>The depend.</value>
+	public string[]			Depend
+	{ get; private set; }
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IAssetBundleResource"/> class.
 	/// </summary>
 	/// <param name="handle">Handle.</param>
-	public AssetBundleRefResource(AssetBundle handle)
+	public AssetBundleResource(AssetBundle handle, string[] aryDepend)
 		: base(handle)
 	{
-
+		Depend = aryDepend;
 	}
-
+	
 	/// <summary>
 	/// Drop this instance.
 	/// </summary>
@@ -90,29 +97,52 @@ public class AssetBundleRefResource : IResource<AssetBundle>
 		{
 			Handle.Unload(false);
 		}
-
+		
 		return RefCount;
 	}
-
+	
 	/// <summary>
 	/// Dump this instance.
 	/// </summary>
 	public override void 	Dump()
 	{
 		base.Dump();
-
+		
 		string[] aryAssetName = Handle.GetAllAssetNames();
 		foreach(string asset in aryAssetName)
 		{
 			Debug.Log(" >> Aasset bundle name " + Handle.name + " asset : " + asset);
 		}
 	}
+	
+	/// <summary>
+	/// Gets all asset names.
+	/// </summary>
+	/// <returns>The all asset names.</returns>
+	public string[]			GetAllAssetNames()
+	{
+		return Handle.GetAllAssetNames();
+	}
+
+	/// <summary>
+	/// Gets the asset.
+	/// </summary>
+	/// <returns>The asset.</returns>
+	/// <param name="szAssetName">Size asset name.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	public T				GetAsset<T>(string szAssetName) where T : UnityEngine.Object
+	{
+		if (!Handle.Contains(szAssetName))
+			throw new System.NullReferenceException("Can't find asset " + szAssetName);
+
+		return Handle.LoadAsset<T>(szAssetName);
+	}
 }
 
 /// <summary>
 /// I resource package.
 /// </summary>
-public class ResourceManifest : AssetBundleRefResource
+public class ResourceManifest : AssetBundleResource
 {
 	/// <summary>
 	/// Gets or sets the manifest.
@@ -120,34 +150,34 @@ public class ResourceManifest : AssetBundleRefResource
 	/// <value>The manifest.</value>
 	public AssetBundleManifest Manifest
 	{ get; set; }
-
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IResourcePackage"/> class.
 	/// </summary>
 	/// <param name="handle">Handle.</param>
 	/// <param name="manifest">Manifest.</param>
 	public ResourceManifest(AssetBundle handle)
-		: base(handle)
+		: base(handle, new string[]{})
 	{
 		Manifest = handle.LoadAsset<AssetBundleManifest>(typeof(AssetBundleManifest).Name);
 		if (!Manifest)
 			throw new System.NullReferenceException();
 	}
-
+	
 	/// <summary>
 	/// Dump this instance.
 	/// </summary>
 	public override	void 	Dump()
 	{
 		base.Dump();
-
+		
 		string[] aryAssetBundle = Manifest.GetAllAssetBundles();
 		foreach(string s in aryAssetBundle)
 		{
 			Debug.Log(typeof(ResourceManifest).Name + " >> " + s);
 		}
 	}
-
+	
 	/// <summary>
 	/// Gets all dependencies.
 	/// </summary>
@@ -157,7 +187,7 @@ public class ResourceManifest : AssetBundleRefResource
 	{
 		return Manifest.GetAllDependencies(szAssetName);
 	}
-
+	
 	/// <summary>
 	/// Gets the asset bundle hash.
 	/// </summary>
@@ -169,6 +199,47 @@ public class ResourceManifest : AssetBundleRefResource
 	}
 }
 
+
+/// <summary>
+/// I asset bundle task.
+/// </summary>
+public abstract class IAssetBundleTask : IEnumerator
+{
+	public object 			Current
+	{
+		get{
+			return default(object);
+		}
+	}
+	
+	/// <summary>
+	/// Moves the next.
+	/// </summary>
+	/// <returns><c>true</c>, if next was moved, <c>false</c> otherwise.</returns>
+	public bool 			MoveNext()
+	{
+		return !IsDone();
+	}
+	
+	/// <summary>
+	/// Reset this instance.
+	/// </summary>
+	public void 			Reset()
+	{
+	}
+	
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
+	abstract public bool 	Update ();
+	
+	/// <summary>
+	/// Determines whether this instance is done.
+	/// </summary>
+	/// <returns><c>true</c> if this instance is done; otherwise, <c>false</c>.</returns>
+	abstract public bool 	IsDone ();
+}
+
 public enum ResourceLoadFlag
 {
 	RLF_UNITY			= 1 << 1,
@@ -176,7 +247,7 @@ public enum ResourceLoadFlag
 	RLF_THREAD			= 1 << 3,
 }
 
-public delegate bool		AssetbundleFileCallback(string szUrl, AssetBundle abFile);
+public delegate bool		AssetbundleFileCallback(string szAssetName, AssetBundleResource abResource);
 
 /// <summary>
 /// resource manager.
@@ -189,18 +260,78 @@ public class IResourceManager : IGamePlugin
 	/// <value>The resource manifest.</value>
 	public ResourceManifest	Manifest
 	{ get; private set ;}
-
+	
 	/// <summary>
 	/// The reference resource.
 	/// </summary>
-	public Dictionary<string, AssetBundleRefResource> RefResource = new Dictionary<string, AssetBundleRefResource>();
-
+	public Dictionary<string, 
+	AssetBundleResource> RefResource = new Dictionary<string, AssetBundleResource>();
+	
+	public class Work
+	{
+		/// <summary>
+		/// Gets the name of the asset.
+		/// </summary>
+		/// <value>The name of the asset.</value>
+		public string							AssetName
+		{ get; private set; }
+		
+		/// <summary>
+		/// The callback.
+		/// </summary>
+		public List<AssetbundleFileCallback>	
+			Callback = new List<AssetbundleFileCallback>();
+		
+		/// <summary>
+		/// Gets the download.
+		/// </summary>
+		/// <value>The download.</value>
+		public WWW								Download
+		{ get; private set; }
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IResourceManager+Work"/> class.
+		/// </summary>
+		/// <param name="szAssetName">Size asset name.</param>
+		public Work(string szAssetName, WWW download)
+		{
+			AssetName = szAssetName; Download = download;
+		}
+		
+		/// <summary>
+		/// Initializes a new instance of the <see cref="IResourceManager+Work"/> class.
+		/// </summary>
+		/// <param name="szAssetName">Size asset name.</param>
+		public Work(string szAssetName, AssetbundleFileCallback callback)
+		{
+			AssetName = szAssetName; Callback.Add(callback);
+		}
+		
+		/// <summary>
+		/// Dos the interal.
+		/// </summary>
+		/// <param name="abResource">Ab resource.</param>
+		public void	DoInteral(AssetBundleResource abResource)
+		{
+			foreach(AssetbundleFileCallback call in Callback)
+			{
+				call(AssetName, abResource);
+			}
+		}
+	}
+	
+	/// <summary>
+	/// The work task.
+	/// </summary>
+	public Dictionary<string, Work> 
+		WorkTask = new Dictionary<string, Work>();
+	
 	/// <summary>
 	/// Install this instance.
 	/// </summary>
 	public override void Install()
 	{
-
+		
 	}
 	
 	/// <summary>
@@ -208,7 +339,7 @@ public class IResourceManager : IGamePlugin
 	/// </summary>
 	public override void Uninstall()
 	{
-
+		
 	}
 	
 	/// <summary>
@@ -216,7 +347,7 @@ public class IResourceManager : IGamePlugin
 	/// </summary>
 	public override void Startup()
 	{
-
+		
 	}
 	
 	/// <summary>
@@ -224,9 +355,9 @@ public class IResourceManager : IGamePlugin
 	/// </summary>
 	public override void Shutdown()
 	{
-
+		
 	}
-
+	
 	/// <summary>
 	/// Registers the asset bundle package.
 	/// </summary>
@@ -235,18 +366,11 @@ public class IResourceManager : IGamePlugin
 	public void 	RegisterAssetBundlePackage(string szPackagePath, 
 	                                        AssetbundleFileCallback callback)
 	{
-		if (UrlType(szPackagePath))
-		{
-			StartCoroutine(OnLoadPackageIndexFromWWW(szPackagePath, callback));
-		}
-		else
-		{
-			StartCoroutine(
-				OnLoadPackageIndexFromMemory(szPackagePath, callback)
-				);
-		}
+		StartCoroutine(
+			OnLoadPackageIndexFromMemory(szPackagePath, callback)
+			);
 	}
-
+	
 	/// <summary>
 	/// URLs the type.
 	/// </summary>
@@ -256,233 +380,203 @@ public class IResourceManager : IGamePlugin
 	{
 		if (szUrl[0] == 102 && szUrl[1] == 105 && szUrl[2] == 108 && szUrl[3] == 101)
 			return true;
-
+		
 		return false;
 	}
-
+	
 	/// <summary>
 	/// Raises the load package index file from memory event.
 	/// </summary>
 	/// <param name="szPath">Size path.</param>
 	/// <param name="callback">Callback.</param>
 	IEnumerator		OnLoadPackageIndexFromMemory(string szUrl, 
-	                                              AssetbundleFileCallback callback)
+	                                          AssetbundleFileCallback callback)
 	{
 		byte[] byIndexFile = File.ReadAllBytes(szUrl);
 		if (byIndexFile.Length != 0)
 		{
-#if OPEN_DEBUG_LOG
+			#if OPEN_DEBUG_LOG
 			Debug.Log("register assetbundle resource manifest " + szUrl);
-#endif
+			#endif
 		}
-
+		
 		AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byIndexFile);
 		yield return req;
-
+		
 		Manifest = new ResourceManifest(
 			req.assetBundle
 			);
 		
-#if OPEN_DEBUG_LOG
+		#if OPEN_DEBUG_LOG
 		Manifest.Dump();
-#endif
+		#endif
 		
-		callback(szUrl, req.assetBundle);
+		callback(szUrl, Manifest);
 	}
-
-	/// <summary>
-	/// Raises the load package index file event.
-	/// </summary>
-	/// <param name="szPackagePath">Size package path.</param>
-	IEnumerator		OnLoadPackageIndexFromWWW(string szPackagePath, AssetbundleFileCallback callback)
-	{
-#if OPEN_DEBUG_LOG
-		Debug.Log("register assetbundle resource manifest " + szPackagePath);
-#endif
-
-		WWW wPackage = WWW.LoadFromCacheOrDownload(szPackagePath, 0);
-		yield return wPackage;
-
-		Manifest = new ResourceManifest(
-			wPackage.assetBundle
-			);
-		
-#if OPEN_DEBUG_LOG
-		Manifest.Dump();
-#endif
-		
-		callback(szPackagePath, wPackage.assetBundle);
-	}
-
-	/// <summary>
-	/// Loads from file.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	/// <param name="flag">Flag.</param>
-	/// <param name="callback">Callback.</param>
-	public virtual void LoadFromFile(string szAssetName, AssetbundleFileCallback callback)
-	{
-		string szUrl = GetFilePath(szAssetName);
-		if (!Exists(szUrl))
-		{
-			StartCoroutine(OnMemoryDownload(szAssetName, callback));
-		}
-		else
-		{
-			RefResource[szUrl].Grab();
-			
-			callback(szUrl, 
-			         RefResource[szUrl].Handle
-			         );
-			
-			RefResource[szUrl].Drop();
-		}
-	}
-
-	/// <summary>
-	/// Raises the memory download event.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	/// <param name="callback">Callback.</param>
-	IEnumerator			OnMemoryDownload(string szAssetName, AssetbundleFileCallback callback)
-	{
-		string[] aryDepend = Manifest.GetAllDependencies(szAssetName);
-		foreach(string depend in aryDepend)
-		{
-			string szDependURL = GetFilePath(depend);
-
-			if (!RefResource.ContainsKey(szDependURL))
-			{
-				byte[] byFile = File.ReadAllBytes(szDependURL);
-
-				AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byFile);
-				yield return req;
-				
-#if OPEN_DEBUG_LOG
-				Debug.Log("Load resource depend url : " + szDependURL);
-#endif
-				RefResource.Add(
-					szDependURL, new AssetBundleRefResource(req.assetBundle)
-					);
-			}
-		}
-
-		string szAssetURL = GetFilePath(szAssetName);
-
-		// create the assetbundle form memory
-		AssetBundleCreateRequest ws = AssetBundle.CreateFromMemory(
-			File.ReadAllBytes(szAssetURL));
-
-		yield return ws;
-		
-#if OPEN_DEBUG_LOG
-		Debug.Log("Load resource assetbundle url : " + szAssetURL);
-#endif
-		RefResource.Add(
-			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
-			);
-		
-		// execute call back
-		callback(szAssetURL, ws.assetBundle);
-	}
-
-	/// <summary>
-	/// Download the specified szAssetName and callback.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	/// <param name="callback">Callback.</param>
-	public virtual void Download(string szAssetName, AssetbundleFileCallback callback)
-	{
-		string szUrl = GetFilePath(szAssetName);
-		if (!Exists(szUrl))
-		{
-			StartCoroutine(OnUnityDownload(szAssetName, callback));
-		}
-		else
-		{
-			RefResource[szUrl].Grab();
-			
-			callback(szUrl, 
-			         RefResource[szUrl].Handle
-			         );
-			
-			RefResource[szUrl].Drop();
-		}
-	}
-
-	/// <summary>
-	/// Raises the unity download event.
-	/// </summary>
-	/// <param name="szAssetName">Size asset name.</param>
-	IEnumerator 		OnUnityDownload(string szAssetName, AssetbundleFileCallback callback)
-	{
-		string[] aryDepend	= Manifest.GetAllDependencies(szAssetName);
-		foreach(string depend in aryDepend)
-		{
-			string szDependURL = GetFilePath(depend);
-			
-			if (!RefResource.ContainsKey(szDependURL))
-			{
-				WWW wDepend = WWW.LoadFromCacheOrDownload(szDependURL,
-				                                          Manifest.GetAssetBundleHash(depend));
-				yield return wDepend;
-				
-#if OPEN_DEBUG_LOG
-				Debug.Log("Load resource depend url : " + szDependURL);
-#endif
-				RefResource.Add(
-					szDependURL, new AssetBundleRefResource(wDepend.assetBundle)
-					);
-			}
-		}
-		
-		string szAssetURL = GetFilePath(szAssetName);
-		
-		// load the assetbundle file
-		WWW ws = WWW.LoadFromCacheOrDownload(szAssetURL,
-		                                     Manifest.GetAssetBundleHash(szAssetName));
-		yield return ws;
-		
-#if OPEN_DEBUG_LOG
-		Debug.Log("Load resource assetbundle url : " + szAssetURL);
-#endif
-		RefResource.Add(
-			szAssetURL, new AssetBundleRefResource(ws.assetBundle)
-			);
-		
-		// execute call back
-		callback(szAssetURL, ws.assetBundle);
-	}
-
+	
+	
 	/// <summary>
 	/// Gets the file path.
 	/// </summary>
 	/// <returns>The file path.</returns>
 	/// <param name="szAssetName">Size asset name.</param>
-	public string GetFilePath(string szAssetName)
+	public string 	GetAssetPath(string szAssetName)
 	{
 		return string.Format("{0}/{1}/{2}",
 		                     WUrl.DataURL, typeof(AssetBundle).Name, szAssetName);
 	}
-
+	
 	/// <summary>
-	/// Query the specified szAssetName.
+	/// Gets the asset depend.
 	/// </summary>
+	/// <returns>The asset depend.</returns>
 	/// <param name="szAssetName">Size asset name.</param>
-	public AssetBundleRefResource	Query(string szAssetName)
+	public string[]	GetAssetDepend(string szAssetName)
 	{
-		string szUrl = GetFilePath(szAssetName);
-		
-		return RefResource[szUrl];
+		return Manifest.GetAllDependencies(szAssetName);
 	}
 	
 	/// <summary>
 	/// Exists the specified szAssetName.
 	/// </summary>
 	/// <param name="szAssetName">Size asset name.</param>
-	public bool			Exists(string szAssetName)
+	public bool		Exists(string szAssetName)
 	{
 		return RefResource.ContainsKey(szAssetName);
+	}
+	
+	/// <summary>
+	/// Unloads the asset.
+	/// </summary>
+	/// <param name="szName">Size name.</param>
+	public void 	UnloadAssetBundle(string szAssetName)
+	{
+		if (RefResource.ContainsKey(szAssetName))
+		{
+			AssetBundleResource r = RefResource[szAssetName];
+			foreach(string depend in r.Depend)
+			{
+				if (RefResource.ContainsKey(depend))
+					RefResource[depend].Drop();
+			}
+			
+			#if OPEN_DEBUG_LOG
+			Debug.Log("Unload assetbundle name " + szAssetName);
+			#endif
+			int nRefCount = RefResource[szAssetName].Drop();
+			if (nRefCount <= 0)
+				RefResource.Remove(szAssetName);
+		}
+	}
+	
+	/// <summary>
+	/// Dos the internal.
+	/// </summary>
+	/// <returns><c>true</c>, if internal was done, <c>false</c> otherwise.</returns>
+	/// <param name="szAssetName">Size asset name.</param>
+	/// <param name="bManifest">If set to <c>true</c> b manifest.</param>
+	public bool		LoadAssetBundleFromStream(string szAssetName, AssetbundleFileCallback callback)
+	{
+		// To find out if this resource already exists
+		if (RefResource.ContainsKey(szAssetName))
+		{
+			// Add resource reference count
+			RefResource[szAssetName].Grab(); 
+			
+			// execute resource progress
+			return callback(
+				szAssetName, RefResource[szAssetName]
+				);
+		}
+		else
+		{
+			if (!WorkTask.ContainsKey(szAssetName))
+			{
+				WorkTask.Add(szAssetName, new Work(szAssetName, callback));
+				
+				// add download task
+				StartCoroutine(
+					OnLoadAssetFromStream(szAssetName)
+					);
+			}
+			else
+			{
+				WorkTask[szAssetName].Callback.Add(callback);
+			}
+		}
+		
+		return true;
+	}
+	
+	/// <summary>
+	/// Raises the load asset from stream event.
+	/// </summary>
+	/// <param name="szAssetName">Size asset name.</param>
+	IEnumerator			OnLoadAssetFromStream(string szAssetName)
+	{
+		Dictionary<string, bool> 
+			aryDependTask = new Dictionary<string, bool>();
+		
+		string[] aryDepend = Manifest.GetAllDependencies(szAssetName);
+		
+		foreach(string depend in aryDepend)
+		{
+			if (!RefResource.ContainsKey(depend) && !aryDependTask.ContainsKey(depend))
+			{
+				byte[] byFile = File.ReadAllBytes(GetAssetPath(depend));
+				if (byFile.Length > 0)
+				{
+					aryDependTask.Add(depend, true);
+					
+					// create the assetbundle form memory
+					AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byFile);
+					yield return req;
+					
+					// remove load flag
+					aryDependTask.Remove(depend);
+					
+					#if OPEN_DEBUG_LOG
+					Debug.Log("Load resource depend : " + depend);
+					#endif
+					// save assetbundle ref
+					RefResource.Add(
+						depend, new AssetBundleResource(req.assetBundle, new string[]{})
+						);
+				}
+			}
+			else
+			{
+				RefResource[depend].Grab();
+			}
+		}
+		
+		// load assetbundle file
+		string szAssetURL = GetAssetPath(szAssetName);
+		
+		// create the assetbundle form memory
+		AssetBundleCreateRequest ws = AssetBundle.CreateFromMemory(
+			File.ReadAllBytes(szAssetURL));
+		
+		yield return ws;
+		
+#if OPEN_DEBUG_LOG
+		Debug.Log("Load assetbundle url : " + szAssetURL);
+#endif
+
+		RefResource.Add(
+			szAssetName, new AssetBundleResource(ws.assetBundle, aryDepend)
+			);
+		
+		if (WorkTask.ContainsKey(szAssetName))
+		{
+			// Execute all resource callback functions
+			WorkTask[szAssetName].DoInteral(
+				RefResource[szAssetName]
+				);
+			
+			// remove the work task
+			WorkTask.Remove(szAssetName);
+		}
 	}
 }
 

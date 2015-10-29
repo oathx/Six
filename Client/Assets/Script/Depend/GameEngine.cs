@@ -5,7 +5,7 @@ using System.Collections.Generic;
 /// <summary>
 /// Game engine.
 /// </summary>
-public class GameEngine : MonoBehaviourSingleton<GameEngine>
+public class GameEngine : ScriptableSingleton<GameEngine>
 {
 	/// <summary>
 	/// The m_d plugin.
@@ -14,9 +14,26 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 		IGamePlugin> m_dPlugin = new Dictionary<string, IGamePlugin>();
 
 	/// <summary>
+	/// The m_ engine.
+	/// </summary>
+	protected GameObject gameEngine;
+
+	/// <summary>
 	/// Startup this instance.
 	/// </summary>
-	public void 	Startup()
+	public void 		Startup()
+	{
+		gameEngine = new GameObject(typeof(GameEngine).Name);
+		if (gameEngine)
+			GameObject.DontDestroyOnLoad(gameEngine);
+
+		InstallPlugin();
+	}
+
+	/// <summary>
+	/// Installs the plugin.
+	/// </summary>
+	public void 		InstallPlugin()
 	{
 		LoadPlugin<IGlobalPlugin>();
 		LoadPlugin<IResourceManager>();
@@ -26,7 +43,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	/// <summary>
 	/// Shutdown this instance.
 	/// </summary>
-	public void 	Shutdown()
+	public void 		Shutdown()
 	{
 		UnloadPlugin<IResourceManager>();
 		UnloadPlugin<IEntityManager>();
@@ -34,19 +51,11 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	}
 
 	/// <summary>
-	/// Raises the destroy event.
-	/// </summary>
-	protected void 	OnDestroy()
-	{
-		GameSqlLite.GetSingleton().CloseDB();
-	}
-
-	/// <summary>
 	/// Loads the plugin.
 	/// </summary>
 	/// <returns>The plugin.</returns>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
-	public T 		LoadPlugin<T>() where T : IGamePlugin
+	public T 			LoadPlugin<T>() where T : IGamePlugin
 	{
 		string szPluginName = typeof(T).Name;
 		
@@ -58,7 +67,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 			throw new System.NullReferenceException (szPluginName);
 		
 		goPlugin.transform.position = Vector3.zero;
-		goPlugin.transform.parent	= transform;
+		goPlugin.transform.parent	= gameEngine.transform;
 		
 		T cmp = goPlugin.AddComponent<T>();
 		if (!cmp)
@@ -68,7 +77,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 		m_dPlugin.Add(szPluginName, cmp);
 		
 #if UNITY_EDITOR
-		Debug.Log("********************** Load plugin : " + szPluginName);
+		Debug.Log("**************************** Load plugin : " + szPluginName);
 #endif
 		// call plugin first time init
 		cmp.Install();
@@ -112,7 +121,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 		if (m_dPlugin.ContainsKey(szPluginName))
 		{
 #if UNITY_EDITOR
-			Debug.Log("********************** Unload plugin : " + szPluginName);
+			Debug.Log("**************************** Unload plugin : " + szPluginName);
 #endif
 			m_dPlugin[szPluginName].Uninstall();
 			
@@ -130,7 +139,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	/// Posts the event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	public void 	PostEvent(IEvent evt)
+	public void 		PostEvent(IEvent evt)
 	{
 		foreach (KeyValuePair<string, IGamePlugin> it in m_dPlugin)
 		{
@@ -144,7 +153,7 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	/// Sends the event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	public void 	SendEvent(IEvent evt)
+	public void 		SendEvent(IEvent evt)
 	{
 		foreach (KeyValuePair<string, IGamePlugin> it in m_dPlugin)
 		{
@@ -159,11 +168,27 @@ public class GameEngine : MonoBehaviourSingleton<GameEngine>
 	/// </summary>
 	/// <param name="szPluginName">Size plugin name.</param>
 	/// <param name="evt">Evt.</param>
-	public void 	SendEvent(string szPluginName, IEvent evt)
+	public void 		SendEvent(string szPluginName, IEvent evt)
 	{
 		if (m_dPlugin.ContainsKey(szPluginName))
 		{
 			m_dPlugin[szPluginName].SendEvent(evt);
 		}
+	}
+
+	/// <summary>
+	/// Raises the enable event.
+	/// </summary>
+	public void OnEnable ()
+	{
+		Debug.Log("**************************** Game Engine startup ****************************");
+	}
+	
+	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
+	public void OnDestroy()
+	{
+		Debug.Log("**************************** Game Engine shutdown ****************************");
 	}
 }

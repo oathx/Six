@@ -1,0 +1,515 @@
+fileFormatVersion: 2
+guid: 0fb71a5729eaff248b9251c9f4413633
+ModelImporter:
+  serializedVersion: 18
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: Bip001
+    100004: Bip001 Footsteps
+    100006: Bip001 Head
+    100008: Bip001 L Calf
+    100010: Bip001 L Clavicle
+    100012: Bip001 L Finger0
+    100014: Bip001 L Finger01
+    100016: Bip001 L Finger02
+    100018: Bip001 L Finger0Nub
+    100020: Bip001 L Finger1
+    100022: Bip001 L Finger11
+    100024: Bip001 L Finger12
+    100026: Bip001 L Finger1Nub
+    100028: Bip001 L Finger2
+    100030: Bip001 L Finger21
+    100032: Bip001 L Finger22
+    100034: Bip001 L Finger2Nub
+    100036: Bip001 L Foot
+    100038: Bip001 L Forearm
+    100040: Bip001 L Hand
+    100042: Bip001 L Thigh
+    100044: Bip001 L Toe0
+    100046: Bip001 L Toe0Nub
+    100048: Bip001 L UpperArm
+    100050: Bip001 Neck
+    100052: Bip001 Pelvis
+    100054: Bip001 R Calf
+    100056: Bip001 R Clavicle
+    100058: Bip001 R Finger0
+    100060: Bip001 R Finger01
+    100062: Bip001 R Finger02
+    100064: Bip001 R Finger0Nub
+    100066: Bip001 R Finger1
+    100068: Bip001 R Finger11
+    100070: Bip001 R Finger12
+    100072: Bip001 R Finger1Nub
+    100074: Bip001 R Finger2
+    100076: Bip001 R Finger21
+    100078: Bip001 R Finger22
+    100080: Bip001 R Finger2Nub
+    100082: Bip001 R Foot
+    100084: Bip001 R Forearm
+    100086: Bip001 R Hand
+    100088: Bip001 R Thigh
+    100090: Bip001 R Toe0
+    100092: Bip001 R Toe0Nub
+    100094: Bip001 R UpperArm
+    100096: Bip001 Spine
+    100098: Bip001 Spine1
+    100100: Bone005
+    100102: Bone006
+    100104: Bone007
+    100106: Bone008
+    100108: Dummy_Head
+    100110: Dummy_L_Clavicle
+    100112: Dummy_L_Foot
+    100114: Dummy_L_Hand
+    100116: Dummy_NPower
+    100118: Dummy_Pelvis
+    100120: Dummy_R_Clavicle
+    100122: Dummy_R_Foot
+    100124: Dummy_R_Hand
+    100126: Dummy_Spine1
+    100128: PC_AM_LArmor_004
+    100130: PC_AM_LArmor_03
+    100132: PC_AM_LHelmet_004
+    100134: PC_AM_LHelmet_03
+    100136: PC_AM_LLeg_004
+    100138: PC_AM_LLeg_03
+    100140: PC_AM_LVambrace_004
+    100142: PC_AM_LVambrace_03
+    100144: PC_AM_NPower_004
+    100146: PC_AM_NPower_03
+    100148: PC_HM_ABigSwrod_01
+    100150: PC_AM_Arm_04_LOD1
+    100152: PC_AM_Body_04_LOD1
+    100154: PC_AM_Helmet_04_LOD1
+    100156: PC_AM_Leg_04_LOD1
+    100158: PC_AM_Power_04_LOD1
+    100160: PC_HM_ABigSword_06
+    100162: PC_AM_Arm_04
+    100164: PC_AM_Arm_04_G
+    100166: PC_AM_Base_Arm_02
+    100168: PC_AM_Base_Arm_02_G
+    100170: PC_AM_Base_Body_02
+    100172: PC_AM_Base_Body_02_G
+    100174: PC_AM_Base_Helmet_02
+    100176: PC_AM_Base_Helmet_02_G
+    100178: PC_AM_Base_Leg_02
+    100180: PC_AM_Base_Leg_02_G
+    100182: PC_AM_Base_Power_02
+    100184: PC_AM_Base_Power_02_G
+    100186: PC_AM_Body_04
+    100188: PC_AM_Body_04_G
+    100190: PC_AM_Helmet_04
+    100192: PC_AM_Helmet_04_G
+    100194: PC_AM_Leg_04
+    100196: PC_AM_Leg_04_G
+    100198: PC_AM_Power_04
+    100200: PC_AM_Power_04_G
+    100202: PC_HM_ABigSword_02
+    100204: PC_AM_Arm_02_LOD0
+    100206: PC_AM_Arm_02_LOD1
+    100208: PC_AM_Arm_04_LOD0
+    100210: PC_AM_Body_02_LOD0
+    100212: PC_AM_Body_02_LOD1
+    100214: PC_AM_Body_04_LOD0
+    100216: PC_AM_Helmet_02_LOD0
+    100218: PC_AM_Helmet_02_LOD1
+    100220: PC_AM_Helmet_04_LOD0
+    100222: PC_AM_Leg_02_LOD0
+    100224: PC_AM_Leg_02_LOD1
+    100226: PC_AM_Leg_04_LOD0
+    100228: PC_AM_Power_02_LOD0
+    100230: PC_AM_Power_02_LOD1
+    100232: PC_AM_Power_04_LOD0
+    100234: PC_AM_Arm_02
+    100236: PC_AM_Arm_03
+    100238: PC_AM_Body_02
+    100240: PC_AM_Body_03
+    100242: PC_AM_Helmet_02
+    100244: PC_AM_Helmet_03
+    100246: PC_AM_Leg_02
+    100248: PC_AM_Leg_03
+    100250: PC_AM_Power_02
+    100252: PC_AM_Power_03
+    100254: PC_AM_Sword_01
+    100256: PC_AM_Arm_01
+    100258: PC_AM_Body_01
+    100260: PC_AM_Helmet_01
+    100262: PC_AM_Leg_01
+    100264: PC_AM_Power_01
+    100266: PC_HM_Weapon_Hammer_1
+    100268: PC_AM_Base_01
+    100270: PC_AM_Base_02
+    100272: PC_AM_Base_03
+    100274: PC_AM_Base_04
+    100276: PC_AM_Base_05
+    100278: PC_AM_Power_05
+    100280: Dummy_R_Follow
+    100282: Dummy_R_Follow 1
+    100284: Dummy_L_Follow
+    400000: //RootNode
+    400002: Bip001
+    400004: Bip001 Footsteps
+    400006: Bip001 Head
+    400008: Bip001 L Calf
+    400010: Bip001 L Clavicle
+    400012: Bip001 L Finger0
+    400014: Bip001 L Finger01
+    400016: Bip001 L Finger02
+    400018: Bip001 L Finger0Nub
+    400020: Bip001 L Finger1
+    400022: Bip001 L Finger11
+    400024: Bip001 L Finger12
+    400026: Bip001 L Finger1Nub
+    400028: Bip001 L Finger2
+    400030: Bip001 L Finger21
+    400032: Bip001 L Finger22
+    400034: Bip001 L Finger2Nub
+    400036: Bip001 L Foot
+    400038: Bip001 L Forearm
+    400040: Bip001 L Hand
+    400042: Bip001 L Thigh
+    400044: Bip001 L Toe0
+    400046: Bip001 L Toe0Nub
+    400048: Bip001 L UpperArm
+    400050: Bip001 Neck
+    400052: Bip001 Pelvis
+    400054: Bip001 R Calf
+    400056: Bip001 R Clavicle
+    400058: Bip001 R Finger0
+    400060: Bip001 R Finger01
+    400062: Bip001 R Finger02
+    400064: Bip001 R Finger0Nub
+    400066: Bip001 R Finger1
+    400068: Bip001 R Finger11
+    400070: Bip001 R Finger12
+    400072: Bip001 R Finger1Nub
+    400074: Bip001 R Finger2
+    400076: Bip001 R Finger21
+    400078: Bip001 R Finger22
+    400080: Bip001 R Finger2Nub
+    400082: Bip001 R Foot
+    400084: Bip001 R Forearm
+    400086: Bip001 R Hand
+    400088: Bip001 R Thigh
+    400090: Bip001 R Toe0
+    400092: Bip001 R Toe0Nub
+    400094: Bip001 R UpperArm
+    400096: Bip001 Spine
+    400098: Bip001 Spine1
+    400100: Bone005
+    400102: Bone006
+    400104: Bone007
+    400106: Bone008
+    400108: Dummy_Head
+    400110: Dummy_L_Clavicle
+    400112: Dummy_L_Foot
+    400114: Dummy_L_Hand
+    400116: Dummy_NPower
+    400118: Dummy_Pelvis
+    400120: Dummy_R_Clavicle
+    400122: Dummy_R_Foot
+    400124: Dummy_R_Hand
+    400126: Dummy_Spine1
+    400128: PC_AM_LArmor_004
+    400130: PC_AM_LArmor_03
+    400132: PC_AM_LHelmet_004
+    400134: PC_AM_LHelmet_03
+    400136: PC_AM_LLeg_004
+    400138: PC_AM_LLeg_03
+    400140: PC_AM_LVambrace_004
+    400142: PC_AM_LVambrace_03
+    400144: PC_AM_NPower_004
+    400146: PC_AM_NPower_03
+    400148: PC_HM_ABigSwrod_01
+    400150: PC_AM_Arm_04_LOD1
+    400152: PC_AM_Body_04_LOD1
+    400154: PC_AM_Helmet_04_LOD1
+    400156: PC_AM_Leg_04_LOD1
+    400158: PC_AM_Power_04_LOD1
+    400160: PC_HM_ABigSword_06
+    400162: PC_AM_Arm_04
+    400164: PC_AM_Arm_04_G
+    400166: PC_AM_Base_Arm_02
+    400168: PC_AM_Base_Arm_02_G
+    400170: PC_AM_Base_Body_02
+    400172: PC_AM_Base_Body_02_G
+    400174: PC_AM_Base_Helmet_02
+    400176: PC_AM_Base_Helmet_02_G
+    400178: PC_AM_Base_Leg_02
+    400180: PC_AM_Base_Leg_02_G
+    400182: PC_AM_Base_Power_02
+    400184: PC_AM_Base_Power_02_G
+    400186: PC_AM_Body_04
+    400188: PC_AM_Body_04_G
+    400190: PC_AM_Helmet_04
+    400192: PC_AM_Helmet_04_G
+    400194: PC_AM_Leg_04
+    400196: PC_AM_Leg_04_G
+    400198: PC_AM_Power_04
+    400200: PC_AM_Power_04_G
+    400202: PC_HM_ABigSword_02
+    400204: PC_AM_Arm_02_LOD0
+    400206: PC_AM_Arm_02_LOD1
+    400208: PC_AM_Arm_04_LOD0
+    400210: PC_AM_Body_02_LOD0
+    400212: PC_AM_Body_02_LOD1
+    400214: PC_AM_Body_04_LOD0
+    400216: PC_AM_Helmet_02_LOD0
+    400218: PC_AM_Helmet_02_LOD1
+    400220: PC_AM_Helmet_04_LOD0
+    400222: PC_AM_Leg_02_LOD0
+    400224: PC_AM_Leg_02_LOD1
+    400226: PC_AM_Leg_04_LOD0
+    400228: PC_AM_Power_02_LOD0
+    400230: PC_AM_Power_02_LOD1
+    400232: PC_AM_Power_04_LOD0
+    400234: PC_AM_Arm_02
+    400236: PC_AM_Arm_03
+    400238: PC_AM_Body_02
+    400240: PC_AM_Body_03
+    400242: PC_AM_Helmet_02
+    400244: PC_AM_Helmet_03
+    400246: PC_AM_Leg_02
+    400248: PC_AM_Leg_03
+    400250: PC_AM_Power_02
+    400252: PC_AM_Power_03
+    400254: PC_AM_Sword_01
+    400256: PC_AM_Arm_01
+    400258: PC_AM_Body_01
+    400260: PC_AM_Helmet_01
+    400262: PC_AM_Leg_01
+    400264: PC_AM_Power_01
+    400266: PC_HM_Weapon_Hammer_1
+    400268: PC_AM_Base_01
+    400270: PC_AM_Base_02
+    400272: PC_AM_Base_03
+    400274: PC_AM_Base_04
+    400276: PC_AM_Base_05
+    400278: PC_AM_Power_05
+    400280: Dummy_R_Follow
+    400282: Dummy_R_Follow 1
+    400284: Dummy_L_Follow
+    2300000: PC_HM_ABigSwrod_01
+    2300002: PC_HM_ABigSword_06
+    2300004: PC_HM_ABigSword_02
+    2300006: PC_AM_Sword_01
+    2300008: PC_HM_Weapon_Hammer_1
+    3300000: PC_HM_ABigSwrod_01
+    3300002: PC_HM_ABigSword_06
+    3300004: PC_HM_ABigSword_02
+    3300006: PC_AM_Sword_01
+    3300008: PC_HM_Weapon_Hammer_1
+    4300000: PC_AM_LLeg_03
+    4300002: PC_AM_NPower_03
+    4300004: PC_AM_LHelmet_03
+    4300006: PC_AM_LVambrace_03
+    4300008: PC_AM_LArmor_03
+    4300010: PC_AM_NPower_004
+    4300012: PC_AM_LArmor_004
+    4300014: PC_AM_LVambrace_004
+    4300016: PC_AM_LHelmet_004
+    4300018: PC_AM_LLeg_004
+    4300020: PC_HM_ABigSwrod_01
+    4300022: PC_AM_Leg_04_LOD1
+    4300024: PC_AM_Power_04_LOD1
+    4300026: PC_AM_Arm_04_LOD1
+    4300028: PC_AM_Body_04_LOD1
+    4300030: PC_AM_Helmet_04_LOD1
+    4300032: PC_HM_ABigSword_06
+    4300034: PC_AM_Leg_04
+    4300036: PC_AM_Power_04
+    4300038: PC_AM_Power_04_G
+    4300040: PC_AM_Arm_04
+    4300042: PC_AM_Body_04
+    4300044: PC_AM_Helmet_04
+    4300046: PC_AM_Arm_04_G
+    4300048: PC_AM_Helmet_04_G
+    4300050: PC_AM_Body_04_G
+    4300052: PC_AM_Leg_04_G
+    4300054: PC_AM_Base_Power_02_G
+    4300056: PC_AM_Base_Power_02
+    4300058: PC_AM_Base_Body_02_G
+    4300060: PC_AM_Base_Arm_02_G
+    4300062: PC_AM_Base_Helmet_02_G
+    4300064: PC_AM_Base_Leg_02_G
+    4300066: PC_AM_Base_Arm_02
+    4300068: PC_AM_Base_Body_02
+    4300070: PC_AM_Base_Leg_02
+    4300072: PC_AM_Base_Helmet_02
+    4300074: PC_HM_ABigSword_02
+    4300076: PC_AM_Helmet_04_LOD0
+    4300078: PC_AM_Body_04_LOD0
+    4300080: PC_AM_Power_04_LOD0
+    4300082: PC_AM_Arm_04_LOD0
+    4300084: PC_AM_Leg_04_LOD0
+    4300086: PC_AM_Power_02_LOD0
+    4300088: PC_AM_Power_02_LOD1
+    4300090: PC_AM_Body_02_LOD0
+    4300092: PC_AM_Arm_02_LOD0
+    4300094: PC_AM_Helmet_02_LOD0
+    4300096: PC_AM_Leg_02_LOD0
+    4300098: PC_AM_Arm_02_LOD1
+    4300100: PC_AM_Body_02_LOD1
+    4300102: PC_AM_Leg_02_LOD1
+    4300104: PC_AM_Helmet_02_LOD1
+    4300106: PC_AM_Power_03
+    4300108: PC_AM_Power_02
+    4300110: PC_AM_Body_02
+    4300112: PC_AM_Helmet_02
+    4300114: PC_AM_Arm_02
+    4300116: PC_AM_Leg_02
+    4300118: PC_AM_Helmet_03
+    4300120: PC_AM_Arm_03
+    4300122: PC_AM_Leg_03
+    4300124: PC_AM_Body_03
+    4300126: PC_AM_Sword_01
+    4300128: PC_HM_Weapon_Hammer_1
+    4300130: PC_AM_Arm_01
+    4300132: PC_AM_Body_01
+    4300134: PC_AM_Leg_01
+    4300136: PC_AM_Helmet_01
+    4300138: PC_AM_Power_01
+    4300140: PC_AM_Base_01
+    4300142: PC_AM_Base_02
+    4300144: PC_AM_Base_03
+    4300146: PC_AM_Base_04
+    4300148: PC_AM_Power_05
+    4300150: PC_AM_Base_05
+    7400000: Take 001
+    9500000: //RootNode
+    13700000: PC_AM_LArmor_004
+    13700002: PC_AM_LArmor_03
+    13700004: PC_AM_LHelmet_004
+    13700006: PC_AM_LHelmet_03
+    13700008: PC_AM_LLeg_004
+    13700010: PC_AM_LLeg_03
+    13700012: PC_AM_LVambrace_004
+    13700014: PC_AM_LVambrace_03
+    13700016: PC_AM_NPower_004
+    13700018: PC_AM_NPower_03
+    13700020: PC_AM_Arm_04_LOD1
+    13700022: PC_AM_Body_04_LOD1
+    13700024: PC_AM_Helmet_04_LOD1
+    13700026: PC_AM_Leg_04_LOD1
+    13700028: PC_AM_Power_04_LOD1
+    13700030: PC_AM_Arm_04
+    13700032: PC_AM_Arm_04_G
+    13700034: PC_AM_Base_Arm_02
+    13700036: PC_AM_Base_Arm_02_G
+    13700038: PC_AM_Base_Body_02
+    13700040: PC_AM_Base_Body_02_G
+    13700042: PC_AM_Base_Helmet_02
+    13700044: PC_AM_Base_Helmet_02_G
+    13700046: PC_AM_Base_Leg_02
+    13700048: PC_AM_Base_Leg_02_G
+    13700050: PC_AM_Base_Power_02
+    13700052: PC_AM_Base_Power_02_G
+    13700054: PC_AM_Body_04
+    13700056: PC_AM_Body_04_G
+    13700058: PC_AM_Helmet_04
+    13700060: PC_AM_Helmet_04_G
+    13700062: PC_AM_Leg_04
+    13700064: PC_AM_Leg_04_G
+    13700066: PC_AM_Power_04
+    13700068: PC_AM_Power_04_G
+    13700070: PC_AM_Arm_02_LOD0
+    13700072: PC_AM_Arm_02_LOD1
+    13700074: PC_AM_Arm_04_LOD0
+    13700076: PC_AM_Body_02_LOD0
+    13700078: PC_AM_Body_02_LOD1
+    13700080: PC_AM_Body_04_LOD0
+    13700082: PC_AM_Helmet_02_LOD0
+    13700084: PC_AM_Helmet_02_LOD1
+    13700086: PC_AM_Helmet_04_LOD0
+    13700088: PC_AM_Leg_02_LOD0
+    13700090: PC_AM_Leg_02_LOD1
+    13700092: PC_AM_Leg_04_LOD0
+    13700094: PC_AM_Power_02_LOD0
+    13700096: PC_AM_Power_02_LOD1
+    13700098: PC_AM_Power_04_LOD0
+    13700100: PC_AM_Arm_02
+    13700102: PC_AM_Arm_03
+    13700104: PC_AM_Body_02
+    13700106: PC_AM_Body_03
+    13700108: PC_AM_Helmet_02
+    13700110: PC_AM_Helmet_03
+    13700112: PC_AM_Leg_02
+    13700114: PC_AM_Leg_03
+    13700116: PC_AM_Power_02
+    13700118: PC_AM_Power_03
+    13700120: PC_AM_Arm_01
+    13700122: PC_AM_Body_01
+    13700124: PC_AM_Helmet_01
+    13700126: PC_AM_Leg_01
+    13700128: PC_AM_Power_01
+    13700130: PC_AM_Base_01
+    13700132: PC_AM_Base_02
+    13700134: PC_AM_Base_03
+    13700136: PC_AM_Base_04
+    13700138: PC_AM_Base_05
+    13700140: PC_AM_Power_05
+    20500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages:
+    - .25
+    - .00999999978
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importBlendShapes: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 0
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 0
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: Bip001
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  additionalBone: 0
+  userData: 
+  assetBundleName: 0fb71a5729eaff248b9251c9f4413633
+  assetBundleVariant: 

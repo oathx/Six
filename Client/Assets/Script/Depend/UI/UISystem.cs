@@ -8,6 +8,7 @@ public enum BoxStyle
 {
 	YES,
 	YESNO,
+	STATUS,
 }
 
 [RequireComponent(typeof(Canvas))]
@@ -18,18 +19,28 @@ public enum BoxStyle
 [RequireComponent(typeof(TouchInputModule))]
 public class UISystem : MonoBehaviourSingleton<UISystem>
 {
-	public Dictionary<string, IUIWidget> DictWidget = new Dictionary<string, IUIWidget>();
+	/// <summary>
+	/// The dict widget.
+	/// </summary>
+	public Dictionary<string, IUIWidget> 
+		DictWidget = new Dictionary<string, IUIWidget>();
 
 	/// <summary>
 	/// Awake this instance.
 	/// </summary>
 	void Awake()
 	{
+		gameObject.layer = LayerMask.NameToLayer("UI");
+
 		Canvas canvas = GetComponent<Canvas>();
 		if (canvas)
 		{
 			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		}
+
+		CanvasScaler scaler = GetComponent<CanvasScaler>();
+		scaler.uiScaleMode 	= CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		scaler.referenceResolution = new Vector2(960, 640);
 	}
 
 	/// <summary>
@@ -37,7 +48,7 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 	/// </summary>
 	/// <param name="szName">Size name.</param>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
-	public virtual T	LoadWidget<T>(string szName, Transform parent) where T : IUIWidget
+	public virtual T	LoadWidget<T>(string szName, Transform parent, bool visible) where T : IUIWidget
 	{
 		if (DictWidget.ContainsKey(szName))
 			return DictWidget[szName] as T;
@@ -49,16 +60,22 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 		GameObject widget = GameObject.Instantiate(resource) as GameObject;
 		if (widget)
 		{
-			widget.name 	= szName;
+			widget.name = szName;
 			widget.transform.SetParent(parent ? parent : transform);
 
 			RectTransform rt = widget.GetComponent<RectTransform>();
-			rt.offsetMax = Vector2.zero;
-			rt.offsetMin = Vector2.zero;
+			rt.offsetMax 	= Vector2.zero;
+			rt.offsetMin 	= Vector2.zero;
+			rt.localScale	= Vector3.one;
+			rt.localPosition= Vector3.zero;
 
 			T cmp = widget.AddComponent<T>();
 			if (cmp)
 			{
+				cmp.SetVisible(
+					visible
+					);
+
 				DictWidget.Add(szName, cmp);
 			}
 		}
@@ -75,7 +92,19 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
 	public virtual T	LoadWidget<T>(string szName) where T : IUIWidget
 	{
-		return LoadWidget<T>(szName, default(Transform));
+		return LoadWidget<T>(szName, true);
+	}
+
+	/// <summary>
+	/// Loads the widget.
+	/// </summary>
+	/// <returns>The widget.</returns>
+	/// <param name="szName">Size name.</param>
+	/// <param name="visible">If set to <c>true</c> visible.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	public virtual T	LoadWidget<T>(string szName, bool visible) where T : IUIWidget
+	{
+		return LoadWidget<T>(szName, default(Transform), visible);
 	}
 
 	/// <summary>
@@ -113,6 +142,10 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 		case BoxStyle.YES:
 			box = LoadWidget<UIYes>(ResourceDef.UI_YES);
 			break;
+
+		case BoxStyle.STATUS:
+			box = LoadWidget<UIStatus>(ResourceDef.UI_STATUS);
+			break;
 		}
 
 		box.Args 	= args;
@@ -135,5 +168,25 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 
 			return true;
 		});
+	}
+
+	/// <summary>
+	/// Box the specified text.
+	/// </summary>
+	/// <param name="text">Text.</param>
+	public void 		ShowStatus(string text)
+	{
+		Box(BoxStyle.STATUS, text, 0, delegate(bool bFlag, object args) {
+			return true;
+		});
+	}
+
+	/// <summary>
+	/// Hides the status.
+	/// </summary>
+	public void 		HideStatus()
+	{
+		// unload box widget
+		UnloadWidget(ResourceDef.UI_STATUS); 
 	}
 }

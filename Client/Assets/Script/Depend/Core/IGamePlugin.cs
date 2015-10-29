@@ -5,26 +5,26 @@ using System.Collections.Generic;
 /// <summary>
 /// IAI state.
 /// </summary>
-abstract public class IGamePlugin : IEventDispatch
+public class IGamePlugin : IEventDispatch
 {
 	/// <summary>
 	/// Install this instance.
 	/// </summary>
-	public abstract void 	Install();
+	public virtual void 	Install(){}
 
 	/// <summary>
 	/// Unstall this instance.
 	/// </summary>
-	public abstract void 	Uninstall();
+	public virtual void 	Uninstall(){}
 
 	/// <summary>
 	/// Startup this instance.
 	/// </summary>
-	public abstract void 	Startup();
+	public virtual void 	Startup(){}
 	
 	/// <summary>
 	/// Shutdown this instance.
 	/// </summary>
-	public abstract void 	Shutdown();
+	public virtual void 	Shutdown(){}
 }
 

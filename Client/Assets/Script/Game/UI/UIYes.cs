@@ -48,5 +48,7 @@ public class UIYes : IUIBox
 	protected void 		OnYesClicked (GameObject go, BaseEventData eventData)
 	{
 		Enter(true, Args);
+
+		UISystem.GetSingleton().UnloadWidget(name);
 	}
 }

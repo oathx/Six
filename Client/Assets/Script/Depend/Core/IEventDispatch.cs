@@ -38,6 +38,28 @@ public class IEventArgs : INullObject
 }
 
 /// <summary>
+/// Virtual net package.
+/// </summary>
+public class VirtualNetPackage : IEventArgs
+{
+	/// <summary>
+	/// Sets the buffer.
+	/// </summary>
+	/// <value>The buffer.</value>
+	public object[]			buffer
+	{ get; set; }
+	
+	/// <summary>
+	/// Initializes a new instance of the <see cref="VirtualNetPackage"/> class.
+	/// </summary>
+	/// <param name="buffer">Buffer.</param>
+	public VirtualNetPackage(object[] buf)
+	{
+		buffer = buf;
+	}
+}
+
+/// <summary>
 /// Dispatch type.
 /// </summary>
 public class IEvent
@@ -323,6 +345,24 @@ public class IEventDispatch : MonoBehaviour
 	/// <summary>
 	/// Registers the observer.
 	/// </summary>
+	/// <returns>The observer.</returns>
+	/// <param name="szObserverName">Size observer name.</param>
+	/// <param name="bActive">If set to <c>true</c> b active.</param>
+	/// <typeparam name="T">The 1st type parameter.</typeparam>
+	public virtual T		RegisterObserver<T>(string szObserverName, bool bActive) where T : IEventObserver
+	{
+		T observer = RegisterObserver<T>(szObserverName);
+
+		// auto active the observer
+		if (bActive)
+			observer.Active();
+
+		return observer;
+	}
+
+	/// <summary>
+	/// Registers the observer.
+	/// </summary>
 	/// <param name="szObserverName">Size observer name.</param>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
 	public virtual T 		RegisterObserver<T>(string szObserverName) where T : IEventObserver
@@ -387,6 +427,8 @@ public class IEventDispatch : MonoBehaviour
 	#if UNITY_EDITOR
 				Debug.Log("Unregister observer : " + szObserverName);
 	#endif
+				m_dObserver[szObserverName].Detive();
+
 				GameObject.Destroy(
 					m_dObserver[szObserverName].gameObject
 					);

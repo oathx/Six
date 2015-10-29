@@ -12,7 +12,7 @@ public class GlobalObserver : IEventObserver
 	/// </summary>
 	void Start()
 	{
-		SubscribeEvent(CmdEvt.CMD_ERROR, OnSystemError);
+		SubscribeEvent(CmdEvent.CMD_ERROR, 			OnSystemError);
 	}
 
 	/// <summary>
@@ -21,15 +21,13 @@ public class GlobalObserver : IEventObserver
 	/// <param name="evt">Evt.</param>
 	protected bool OnSystemError(IEvent evt)
 	{
-		CmdEvt.ErrorEventArgs v = evt.Args as CmdEvt.ErrorEventArgs;
+		CmdEvent.ErrorEventArgs v = evt.Args as CmdEvent.ErrorEventArgs;
 
-		SqlTooltip tooltip = GameSqlLite.GetSingleton().Query<SqlTooltip>(v.Code);
-		if (tooltip)
-		{
-			UISystem.GetSingleton().Box(tooltip.Text);
-		}
+		UISystem.GetSingleton().Box(
+			Tooltip.QueryText(v.Code)
+			);
 
 		return true;
-	}
+	}	
 }
 

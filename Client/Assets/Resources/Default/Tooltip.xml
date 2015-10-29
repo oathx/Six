@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<root>
+	<item id="10000" text="正在下载"/>
+	<item id="10001" text="正在解压"/>
+	<item id="10002" text="验证版本"/>
+	<item id="10003" text="正在加载 ..."/>
+	<item id="10004" text="请输入用户名和密码"/>
+	<item id="10005" text="连接超时"/>
+	<item id="10006" text="连接断开"/>
+	<item id="10007" text="客户端最新版本 {0} 更新包大小 {1} MB, 点击确定开始下载"/>
+	<item id="10008" text="连接中..."/>
+	<item id="10009" text="无法连接服务器，你已启动本地逻辑服务，点击确定进入单机模式"/>
+</root>

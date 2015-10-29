@@ -30,7 +30,7 @@ public class UIVersion : IUIWidget
 	/// </summary>
 	void Start()
 	{
-
+		Show(UV_SLIDER, false);
 	}
 
 	/// <summary>
@@ -62,7 +62,13 @@ public class UIVersion : IUIWidget
 	public float	Progress
 	{
 		set{
-			SetSlider(UV_SLIDER, value);
+			if (value > 0.0f)
+				Show(UV_SLIDER, true);
+
+			// update slider
+			SetSlider(
+				UV_SLIDER, value
+				);
 		}
 	}
 }

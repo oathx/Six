@@ -7,16 +7,17 @@ using System.Collections.Generic;
 /// </summary>
 public class LogicPlugin : ITcpSession
 {
-	protected ServerPlugin		m_Server;
+	// local logic server plugin
+	protected ServerPlugin		m_LogicServer;
 	
 	/// <summary>
 	/// Install this instance.
 	/// </summary>
 	public override void 		Install()
 	{
-		// init local server
-		m_Server = GameEngine.GetSingleton().QueryPlugin<ServerPlugin>();
-		if (!m_Server)
+		// start virtual server
+		m_LogicServer = GameEngine.GetSingleton().LoadPlugin<ServerPlugin>();
+		if (!m_LogicServer)
 			throw new System.NullReferenceException();
 		
 		// init socket object
@@ -40,7 +41,22 @@ public class LogicPlugin : ITcpSession
 	/// </summary>
 	public override void 		Startup()
 	{
-		
+		// start logic server
+		if (m_LogicServer)
+			m_LogicServer.Startup();
+
+		// register gate connect observer
+		GateConnectObserver observer = RegisterObserver<GateConnectObserver> (typeof(GateConnectObserver).Name);
+		if (observer)
+			observer.Active();
+
+		RegisterObserver<CharacterObserver>(typeof(CharacterObserver).Name);
+
+		// connect to game server
+		if (!string.IsNullOrEmpty(GlobalUserInfo.GateIPAddress))
+		{
+			Connect(GlobalUserInfo.GateIPAddress, GlobalUserInfo.GatePort);
+		}
 	}
 	
 	/// <summary>
@@ -48,7 +64,8 @@ public class LogicPlugin : ITcpSession
 	/// </summary>
 	public override void 		Shutdown()
 	{
-		
+		UnregisterObserver (typeof(GateConnectObserver).Name);
+		UnregisterObserver (typeof(CharacterObserver).Name);
 	}
 	
 	/// <summary>
@@ -56,23 +73,23 @@ public class LogicPlugin : ITcpSession
 	/// </summary>
 	/// <param name="">.</param>
 	/// <param name="args">Arguments.</param>
-	public virtual bool 		SendEvent(int nID, params object[] args)
+	public virtual bool 		SendEvent(int nID, bool bLocalServer, params object[] args)
 	{
-#if LOCAL_SERVER
-		// If the current start the virtual server, then the network message is sent to the virtual server processing 
-		if (m_Server)
+		if (bLocalServer || !Connected)
 		{
-			m_Server.SendEvent(
-				new IEvent(EngineEventType.EVENT_NET, nID, new VirtualNetPackage(args))
-				);
-			
-			return true;
+			// If the current start the virtual server, then the network message is sent to the virtual server processing 
+			if (m_LogicServer)
+			{
+				m_LogicServer.SendEvent(
+					new IEvent(EngineEventType.EVENT_NET, nID, new VirtualNetPackage(args))
+					);
+			}
 		}
-		
-#else
-		base.SendEvent(nID, args);
-#endif
-		
+		else 
+		{
+			base.SendEvent(nID, args);
+		}
+	
 		return true;
 	}
 }

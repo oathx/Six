@@ -15,19 +15,14 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Awake ()
 	{
+		Tooltip.Startup();
+
 #if UNITY_EDITOR
 		Caching.CleanCache();
 #endif
 		// start game engine
 		GameEngine.GetSingleton().Startup();
 		GameScript.GetSingleton().Startup();
-		
-#if UNITY_EDITOR
-		// open sqlite and register database parse factory
-		OnOpenAndRegisterSqlFactory ();
-#endif
-		
-		RegisterEntityCreateFactory ();
 	}
 
 	// Use this for initialization
@@ -36,61 +31,21 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
-		GameEngine.GetSingleton().LoadPlugin<ServerPlugin>();
-		
 		// install version update observer
 		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
 		if (global)
 		{
-			global.RegisterObserver<GlobalObserver>(typeof(GlobalObserver).Name);
-			global.RegisterObserver<VersionObserver>(typeof(VersionObserver).Name);
-		}
-	}
-	
-	// Update is called once per frame
-	/// <summary>
-	/// Update this instance.
-	/// </summary>
-	void Update () 
-	{
-	
-	}
-
-	/// <summary>
-	/// Raises the register sql factory event.
-	/// </summary>
-	protected void OnOpenAndRegisterSqlFactory()
-	{
-#if UNITY_EDITOR_WIN
-		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePathWin32, true);
-#else
-		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePath, true);
-#endif
-
-		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
-			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
-			);
-		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
-			typeof(SqlTooltip).Name, new DefaultSqlPackageFactory<SqlTooltip> ()
-			);
-		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
-			typeof(SqlScene).Name, new DefaultSqlPackageFactory<SqlScene> ()
-			);
-	}
-
-	/// <summary>
-	/// Registers the factory.
-	/// </summary>
-	protected void RegisterEntityCreateFactory()
-	{
-		EntityShapeFactoryManager.GetSingleton().RegisterFactory<DefaultShapeFactory>(new DefaultShapeFactory());
-
-		// register entity create factory
-		IEntityManager entityManager = GameEngine.GetSingleton().QueryPlugin<IEntityManager>();
-		if (entityManager)
-		{
-			entityManager.RegisterEntityFactory(
-				typeof(HumanEntityFactory).Name, new HumanEntityFactory()
+			global.RegisterObserver<GlobalObserver>(
+				typeof(GlobalObserver).Name
+				);
+			global.RegisterObserver<LoadingObserver>(
+				typeof(LoadingObserver).Name
+				);
+			global.RegisterObserver<SceneObserver>(
+				typeof(SceneObserver).Name
+				);
+			global.RegisterObserver<VersionObserver>(
+				typeof(VersionObserver).Name
 				);
 		}
 	}

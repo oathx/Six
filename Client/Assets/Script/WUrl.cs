@@ -17,11 +17,11 @@ public class WUrl
 		get
 		{
 #if UNITY_STANDALONE || UNITY_EDITOR
-			return "file://" + Application.streamingAssetsPath + "/Win";
+			return "file:///" + Application.streamingAssetsPath + "/Win";
 #elif UNITY_ANDROID
-			return	"jar:file://" + Application.dataPath + "!/assets/android";
+			return	"jar:file:///" + Application.dataPath + "!/assets/android";
 #elif UNITY_IPHONE
-			return "file://" + Application.streamingAssetsPath + "/iOS";
+			return "file:///" + Application.streamingAssetsPath + "/iOS";
 #endif
 		}
 	}
@@ -77,7 +77,7 @@ public class WUrl
 	public static string	SqlitePathWin32
 	{
 		get{
-			return string.Format("{0}/Design/Design.db", Application.dataPath);
+			return string.Format("{0}/Design/Design.bytes", Application.dataPath);
 		}
 	}
 
@@ -88,7 +88,8 @@ public class WUrl
 	public static string	SqlitePath
 	{
 		get{
-			return string.Format("{0}/Design/Design.db", Application.persistentDataPath);
+			return string.Format("{0}/Single/Design.bytes",
+			                     Application.persistentDataPath);
 		}
 	}
 }

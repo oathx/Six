@@ -130,7 +130,7 @@ public class SqlBuffer <K, T> where T : ISqlPackage
 /// <summary>
 /// Game engine.
 /// </summary>
-public class GameSqlLite : SimpleSingleton<GameSqlLite>
+public class GameSqlLite : ScriptableSingleton<GameSqlLite>
 {
 	/// <summary>
 	/// The sql factory.
@@ -163,7 +163,7 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 	/// <summary>
 	/// Initializes a new instance of the <see cref="GameSqlLite"/> class.
 	/// </summary>
-	protected void OnDestroy()
+	protected void 				OnDestroy()
 	{
 		CloseDB ();
 	}
@@ -189,6 +189,11 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 		
 		// set memory cache
 		m_bCache = bMemeoryCache;
+
+		
+#if OPEN_DEBUG_LOG
+		Debug.Log("**************************** Sqlite opened ****************************");
+#endif
 	}
 	
 	/// <summary>
@@ -202,7 +207,7 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 			m_SqlFactory.Clear ();
 		
 #if OPEN_DEBUG_LOG
-		Debug.Log("Sqlite closed!");
+		Debug.Log("**************************** Sqlite closed ****************************");
 #endif
 		
 		m_SqlConnection.Close ();
@@ -300,9 +305,9 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 	public SqliteDataReader		ExecuteSqlQuery(string szTableName, int nID)
 	{
 		string szQuerySql = string.Format ("SELECT * FROM {0} WHERE ID = {1}", szTableName, nID);
-		#if OPEN_DEBUG_LOG
+#if OPEN_DEBUG_LOG
 		Debug.Log("SQLite : " + szQuerySql);
-		#endif
+#endif
 		return ExecuteSqlQuery (szQuerySql);
 	}
 	
@@ -547,9 +552,9 @@ public class GameSqlLite : SimpleSingleton<GameSqlLite>
 	{
 		if (m_SqlFactory.ContainsKey(szName))
 		{
-			#if OPEN_DEBUG_LOG
+#if OPEN_DEBUG_LOG
 			Debug.Log("Unregister sql package factory : " + szName);
-			#endif
+#endif
 			m_SqlFactory.Remove(szName);
 		}
 	}

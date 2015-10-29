@@ -7,18 +7,11 @@ using System.Collections.Generic;
 /// </summary>
 public class LoginPlugin : ITcpSession
 {
-	protected ServerPlugin		m_Server;
-
 	/// <summary>
 	/// Install this instance.
 	/// </summary>
 	public override void 		Install()
 	{
-		// init local server
-		m_Server = GameEngine.GetSingleton().QueryPlugin<ServerPlugin>();
-		if (!m_Server)
-			throw new System.NullReferenceException();
-
 		// init socket object
 		base.Install ();
 	}
@@ -40,9 +33,7 @@ public class LoginPlugin : ITcpSession
 	/// </summary>
 	public override void 		Startup()
 	{
-		LoginObserver observer = RegisterObserver<LoginObserver>(typeof(LoginObserver).Name);
-		if (observer)
-			observer.Active();
+		RegisterObserver<LoginObserver>(typeof(LoginObserver).Name, true);
 	}
 	
 	/// <summary>
@@ -53,28 +44,4 @@ public class LoginPlugin : ITcpSession
 		UnregisterObserver(typeof(LoginObserver).Name);
 	}
 
-	/// <summary>
-	/// Sends the event.
-	/// </summary>
-	/// <param name="">.</param>
-	/// <param name="args">Arguments.</param>
-	public virtual bool 		SendEvent(int nID, params object[] args)
-	{
-#if LOCAL_SERVER
-		// If the current start the virtual server, then the network message is sent to the virtual server processing 
-		if (m_Server)
-		{
-			m_Server.SendEvent(
-				new IEvent(EngineEventType.EVENT_NET, nID, new VirtualNetPackage(args))
-				);
-			
-			return true;
-		}
-
-#else
-		SendEvent(nID, args);
-#endif
-
-		return true;
-	}
 }

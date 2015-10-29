@@ -9,10 +9,11 @@ using UnityEngine.EventSystems;
 /// </summary>
 public class UILogin : IUIWidget
 {
-	public const string UL_USERNAME = "UL_USERNAME";
-	public const string UL_PASSWORD = "UL_PASSWORD";
-	public const string UL_LOGIN	= "UL_LOGIN";
-	public const string UL_REGISTER = "UL_REGISTER";
+	public const string UL_USERNAME 	= "UL_USERNAME";
+	public const string UL_PASSWORD 	= "UL_PASSWORD";
+	public const string UL_LOGIN		= "UL_LOGIN";
+	public const string UL_REGISTER 	= "UL_REGISTER";
+	public const string UL_FASTREGISTER = "UL_FASTREGISTER";
 
 	/// <summary>
 	/// Awake this instance.
@@ -24,6 +25,7 @@ public class UILogin : IUIWidget
 			UL_PASSWORD,
 			UL_LOGIN,
 			UL_REGISTER,
+			UL_FASTREGISTER,
 		});
 	}
 
@@ -61,13 +63,13 @@ public class UILogin : IUIWidget
 	/// <param name="evtData">Evt data.</param>
 	protected void OnLoginClicked(GameObject goSend, BaseEventData evtData)
 	{
-		CmdEvt.UILoginEventArgs v = new CmdEvt.UILoginEventArgs();
+		CmdEvent.UILoginEventArgs v = new CmdEvent.UILoginEventArgs();
 		v.Widget 	= this;
 		v.UserName	= GetUserName();
 		v.Password	= GetPassword();
 
 		GameEngine.GetSingleton().SendEvent(
-			new IEvent(EngineEventType.EVENT_UI, CmdEvt.CMD_UI_LOGIN, v)
+			new IEvent(EngineEventType.EVENT_UI, CmdEvent.CMD_UI_LOGIN, v)
 			);
 	}
 
@@ -78,11 +80,11 @@ public class UILogin : IUIWidget
 	/// <param name="evtData">Evt data.</param>
 	protected void OnRegisterClicked(GameObject goSend, BaseEventData evtData)
 	{
-		CmdEvt.UIClickEventArgs v = new CmdEvt.UIClickEventArgs();
+		CmdEvent.UIClickEventArgs v = new CmdEvent.UIClickEventArgs();
 		v.Widget = this;
 		
 		GameEngine.GetSingleton().SendEvent(
-			new IEvent(EngineEventType.EVENT_UI, CmdEvt.CMD_UI_REGISTER, v)
+			new IEvent(EngineEventType.EVENT_UI, CmdEvent.CMD_UI_REGISTER, v)
 			);
 	}
 }

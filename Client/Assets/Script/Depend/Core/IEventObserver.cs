@@ -24,7 +24,7 @@ public class IEventObserver : MonoBehaviour
 	/// </summary>
 	public virtual void 	Active()
 	{
-
+		gameObject.SetActive(true);
 	}
 
 	/// <summary>
@@ -32,6 +32,7 @@ public class IEventObserver : MonoBehaviour
 	/// </summary>
 	public virtual void 	Detive()
 	{
+		gameObject.SetActive(false);
 	}
 	
 	/// <summary>
