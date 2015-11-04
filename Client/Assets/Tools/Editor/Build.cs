@@ -46,30 +46,10 @@ public class Build {
 		}
 	}
 
-	[MenuItem("Build/Build Character skeleton and equip")]
-	static void 	BuildSplitModel()
-	{
-		BuildCharacter("Character", Application.dataPath + "/Art/Model", "*.prefab");
-	}
-
-	[MenuItem("Build/Build unity3d package")]
-	static void 	BuildUnity3DPackage()
-	{
-		
-	}
-	
-	[MenuItem("Build/Build single package")]
-	static void 	BuildSinglePackage()
-	{
-		BuildSinglePackage("Single", new BuildDirectory[]{
-			new BuildDirectory(Application.dataPath + "/Design", "*.bytes"),
-		});
-	}
-
 	[MenuItem("Build/Build all resource to zip")]
 	static void 	BuildZipFileToStreamasset()
 	{
-		BuildCharacter("Character", Application.dataPath + "/Art/Model", "*.prefab");
+		CharacterEditor.DoSplitCharacter();
 
 		BuildAssetBundles(typeof(AssetBundle).Name, true, new BuildDirectory[]{
 
@@ -78,8 +58,7 @@ public class Build {
 			new BuildDirectory(Application.dataPath + "/Art/Character", "*.prefab"),
 		});
 
-		BuildSinglePackage ();
-		BuildUnity3DPackage();
+		SingleEditor.DoSinglePackage();
 	}
 
 	/// <summary>
@@ -140,47 +119,28 @@ public class Build {
 	}
 
 	/// <summary>
-	/// Builds the single package.
-	/// </summary>
-	/// <param name="szPackageName">Size package name.</param>
-	/// <param name="outZipFile">If set to <c>true</c> out zip file.</param>
-	/// <param name="aryDirectory">Ary directory.</param>
-	static void 	BuildSinglePackage(string szPackageName, params BuildDirectory[] aryDirectory)
-	{
-		string szOutPath = GetTempPath(szPackageName);
-
-		// create out directory
-		if (!File.Exists(szOutPath))
-			Directory.CreateDirectory(szOutPath);
-
-		foreach(BuildDirectory directory in aryDirectory)
-		{
-			string[] aryFile = System.IO.Directory.GetFiles(directory.directory, directory.pattern, System.IO.SearchOption.AllDirectories);
-			foreach(string path in aryFile)
-			{
-				if (!path.Contains(".meta"))
-				{
-					File.Copy(path, string.Format("{0}/{1}", szOutPath, GetFileName(path)), true);
-				}
-			}
-		}
-
-		if (!Directory.Exists(OutUrl))
-			Directory.CreateDirectory(OutUrl);
-		
-		string zipOutPath = string.Format("{0}/{1}.zip", 
-		                                  OutUrl, szPackageName);
-		// create zip file
-		CreateZipFile(szOutPath, zipOutPath);
-	}
-
-
-	/// <summary>
 	/// Builds the zip file.
 	/// </summary>
 	/// <param name="aryPath">Ary path.</param>
 	static void 	BuildAssetBundles(string szPackageName, bool outZipFile, params BuildDirectory[] aryDirectory)
 	{
+		string szTargetDirectory = GetTempPath(szPackageName);
+		
+		// create out directory
+		if (!File.Exists(szTargetDirectory))
+		{
+			Directory.CreateDirectory(szTargetDirectory);
+		}
+		else
+		{
+			string[] aryFile = System.IO.Directory.GetFiles(szTargetDirectory, "*.*", 
+			                                                System.IO.SearchOption.AllDirectories);
+			for(int i=0; i<aryFile.Length; i++)
+			{
+				File.Delete(aryFile[i]);
+			}
+		}
+
 		foreach(BuildDirectory directory in aryDirectory)
 		{
 			string[] aryFile = System.IO.Directory.GetFiles(directory.directory, directory.pattern, System.IO.SearchOption.AllDirectories);
@@ -211,182 +171,30 @@ public class Build {
 					}
 				}
 			}
+		}
 
-			string szTargetDirectory = GetTempPath(szPackageName);
-
-			// create out directory
-			if (!File.Exists(szTargetDirectory))
-				Directory.CreateDirectory(szTargetDirectory);
-
+		
 #if UNITY_EDITOR_WIN
-			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
-			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.StandaloneWindows);
-
+		BuildPipeline.BuildAssetBundles(szTargetDirectory, 
+		                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.StandaloneWindows);
+		
 #elif UNITY_ANDROID
-			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
-			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.Android);
+		BuildPipeline.BuildAssetBundles(szTargetDirectory, 
+		                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.Android);
 #elif UNITY_IOS
-			BuildPipeline.BuildAssetBundles(szTargetDirectory, 
-			                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.iOS);
+		BuildPipeline.BuildAssetBundles(szTargetDirectory, 
+		                                BuildAssetBundleOptions.UncompressedAssetBundle, BuildTarget.iOS);
 #endif
-
-			if (outZipFile)
-			{
-				if (!Directory.Exists(OutUrl))
-					Directory.CreateDirectory(OutUrl);
-
-				string zipOutPath = string.Format("{0}/{1}.zip", 
-				                                  OutUrl, szPackageName);
-				// create zip file
-				CreateZipFile(szTargetDirectory, zipOutPath);
-			}
-		}
-	}
-
-	/// <summary>
-	/// Split the specified szInputDirectory and szOutDirectory.
-	/// </summary>
-	/// <param name="szInputDirectory">Size input directory.</param>
-	/// <param name="szOutDirectory">Size out directory.</param>
-	static void 	BuildCharacter(string szPackageName, string szInputDirectory, string pattern)
-	{
-		string szOutPath = string.Format("{0}/Art/{1}", 
-		                                 Application.dataPath, szPackageName);
 		
-		// create out directory
-		if (!File.Exists(szOutPath))
-			Directory.CreateDirectory(szOutPath);
-
-		string[] aryPath = System.IO.Directory.GetFiles(szInputDirectory, pattern, System.IO.SearchOption.AllDirectories);
-		foreach(string path in aryPath)
+		if (outZipFile)
 		{
-			string szFilePath	= path.Replace("\\", "/");
+			if (!Directory.Exists(OutUrl))
+				Directory.CreateDirectory(OutUrl);
 			
-			// get the assetbundl file path
-			string szAssetPath 	= szFilePath.Substring(
-				Application.dataPath.Length - 6, szFilePath.Length - Application.dataPath.Length + 6
-				);
-
-			Object resource = AssetDatabase.LoadMainAssetAtPath(szAssetPath);
-			if (resource)
-			{
-				string szTargetPath = string.Format("{0}/{1}/", szOutPath, GetName(szFilePath));
-				if (!Directory.Exists(szTargetPath))
-					Directory.CreateDirectory(szTargetPath);
-
-				ExtractSkeleton(resource, szTargetPath, false);
-				ExtractSkinMesh(resource, szTargetPath, false);
-			}
-		}
-
-		if (!Directory.Exists(OutUrl))
-			Directory.CreateDirectory(OutUrl);
-		
-		string zipOutPath = string.Format("{0}/{1}.zip", 
-		                                  OutUrl, szPackageName);
-		// create zip file
-		CreateZipFile(szOutPath, zipOutPath);
-	}
-
-	/// <summary>
-	/// Extracts the skeleton.
-	/// </summary>
-	/// <param name="resource">Resource.</param>
-	/// <param name="szOutPath">Size out path.</param>
-	static void 	ExtractSkeleton(Object resource, string szOutPath, bool bSingleFile)
-	{
-		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
-		if (fbx)
-		{
-			// destroy all mesh render object
-			Transform[] aryTransform = fbx.GetComponentsInChildren<Transform>();
-			foreach(Transform t in aryTransform)
-			{
-				MeshRenderer render = t.GetComponent<MeshRenderer>();
-				if (render)
-					GameObject.DestroyImmediate(t.gameObject);
-			}
-
-			// destroy all skinned mesh render
-			foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>())
-			{
-				GameObject.DestroyImmediate(mesh.gameObject);
-			}
-
-			SkinnedMeshRenderer skin = fbx.AddComponent<SkinnedMeshRenderer>();
-			if (skin)
-			{
-				GameObject prefab = CreateEmptyPrefab(fbx, string.Format("{0}{1}.prefab", szOutPath, resource.name));
-				if (!prefab)
-					throw new System.NullReferenceException();
-
-				if (bSingleFile)
-				{
-					string szTargetFullPath = string.Format("{0}{1}.skeleton",
-					                                        szOutPath, resource.name);
-
-					BuildAssetBundleOptions opt = BuildAssetBundleOptions.CollectDependencies | 
-						BuildAssetBundleOptions.UncompressedAssetBundle;
-#if UNITY_IOS
-					BuildPipeline.BuildAssetBundle(prefab, new Object[]{}, szTargetFullPath,
-						opt, BuildTarget.iPhone);
-#elif UNITY_STANDALONE
-					BuildPipeline.BuildAssetBundle(prefab, new Object[]{}, szTargetFullPath,
-						opt, BuildTarget.StandaloneWindows);	
-#elif UNITY_ANDROID
-					BuildPipeline.BuildAssetBundle(prefab, new Object[]{}, szTargetFullPath,
-						opt, BuildTarget.Android);						
-#endif
-
-					AssetDatabase.DeleteAsset(AssetDatabase.GetAssetPath(prefab));
-				}
-			}
-
-			GameObject.DestroyImmediate(fbx);
-		}
-	}
-
-	/// <summary>
-	/// Extracts the skin mesh.
-	/// </summary>
-	/// <param name="resource">Resource.</param>
-	/// <param name="szOutPath">Size out path.</param>
-	static void 		ExtractSkinMesh(Object resource, string szOutPath, bool bSingleFile)
-	{
-		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
-		if (fbx)
-		{
-			foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>(true))
-			{
-				GameObject clones = GameObject.Instantiate(mesh.gameObject) as GameObject;
-				if (!clones)
-					throw new System.NullReferenceException();
-					
-				// create skinmesh prefab
-				GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}{1}@{2}.prefab", 
-					                                                            szOutPath, SkinMeshType.mesh.ToString(), mesh.name));
-				if (!prefab)
-					throw new System.NullReferenceException();
-
-				// create skinmesh bone asset
-				StringHolder holder = ScriptableObject.CreateInstance<StringHolder>();
-				if (holder)
-				{
-					List<string> boneName = new List<string>();
-					foreach(Transform t in mesh.bones)
-						boneName.Add(t.name);
-					
-					holder.content 	= boneName.ToArray();
-					
-					string szHolderPath = string.Format("{0}{1}@{2}.asset", GetAssetPath(szOutPath), SkinMeshType.bone.ToString(), mesh.name);
-					AssetDatabase.CreateAsset(holder, 
-					                          szHolderPath);
-				}
-
-				GameObject.DestroyImmediate(clones);
-			}
-
-			GameObject.DestroyImmediate(fbx);
+			string zipOutPath = string.Format("{0}/{1}.zip", 
+			                                  OutUrl, szPackageName);
+			// create zip file
+			CreateZipFile(szTargetDirectory, zipOutPath);
 		}
 	}
 
@@ -395,7 +203,7 @@ public class Build {
 	/// </summary>
 	/// <returns>The asset path.</returns>
 	/// <param name="szPath">Size path.</param>
-	static string		GetAssetPath(string szPath)
+	public static string		GetAssetPath(string szPath)
 	{
 		string szFilePath	= szPath.Replace("\\", "/");
 		
@@ -412,7 +220,7 @@ public class Build {
 	/// <returns>The empty prefab.</returns>
 	/// <param name="goItem">Go item.</param>
 	/// <param name="szPath">Size path.</param>
-	static GameObject	CreateEmptyPrefab(GameObject goItem, string szPath)
+	public static GameObject	CreateEmptyPrefab(GameObject goItem, string szPath)
 	{
 		string szFilePath	= szPath.Replace("\\", "/");
 		
@@ -435,7 +243,7 @@ public class Build {
 	/// Creates the zip file.
 	/// </summary>
 	/// <param name="szOutDirectory">Size out directory.</param>
-	static void 	CreateZipFile(string szInputDirectory, string szOutPath)
+	public static void 	CreateZipFile(string szInputDirectory, string szOutPath)
 	{
 		if (File.Exists(szOutPath))
 			File.Delete(szOutPath);
@@ -452,17 +260,20 @@ public class Build {
 				stream.SetLevel(9);
 
 				string[] aryFilePath = Directory.GetFiles(szInputDirectory, "*.*", SearchOption.AllDirectories);
-				foreach(string file in aryFilePath)
+				for(int i=0; i<aryFilePath.Length; i++)
 				{
-					if (!Filter(file))
+					if (!Filter(aryFilePath[i]))
 					{
-						string path 			= file.Replace('\\', '/');
-						string szZipEntryName 	= path.Substring(iStart + 1, path.Length - iStart - 1);
-
-						ZipEntry entry = new ZipEntry(szZipEntryName);
+						string path 			= aryFilePath[i].Replace('\\', '/');
+						string zipEntryName 	= path.Substring(iStart + 1, path.Length - iStart - 1);
+						
+						ZipEntry entry = new ZipEntry(zipEntryName);
 						stream.PutNextEntry(entry);
-
-						using(FileStream fs = File.OpenRead(file))
+						
+						EditorUtility.DisplayCancelableProgressBar("Zip File Compress ...", zipEntryName,
+						                                           (float) i / (float)(aryFilePath.Length - 1));
+							
+						using(FileStream fs = File.OpenRead(path))
 						{
 							byte[] byData = new byte[fs.Length];
 							
@@ -471,19 +282,20 @@ public class Build {
 							{
 								stream.Write(byData, 0, byData.Length);
 							}
-
+							
 							fs.Close();
 						}
-
-						Debug.Log("Add file to pkg " + szOutPath + " >> " + szZipEntryName);
+						
+						Debug.Log("Add file to pkg " + szOutPath + " >> " + zipEntryName);
 					}
 				}
-
 				stream.Close();
 			}
 
 			zipFileStream.Close();
 		}
+
+		EditorUtility.ClearProgressBar();
 	}
 
 	/// <summary>
@@ -491,7 +303,7 @@ public class Build {
 	/// </summary>
 	/// <returns>The file name.</returns>
 	/// <param name="szPath">Size path.</param>
-	static string	GetFileName(string szPath)
+	public static string	GetFileName(string szPath)
 	{
 		string szSplit = szPath.Replace('\\', '/');
 		if (!string.IsNullOrEmpty(szSplit))
@@ -508,7 +320,7 @@ public class Build {
 	/// Filiter the specified szName.
 	/// </summary>
 	/// <param name="szName">Size name.</param>
-	static bool		Filter(string path)
+	public static bool		Filter(string path)
 	{
 		string[] aryFilter = {
 			".meta", ".zip"
@@ -528,7 +340,7 @@ public class Build {
 	/// </summary>
 	/// <returns>The name.</returns>
 	/// <param name="szPath">Size path.</param>
-	static string	GetName(string szPath)
+	public static string	GetName(string szPath)
 	{
 		int nStart 	= szPath.LastIndexOf('/');
 		int nEnd	= szPath.LastIndexOf('.');
@@ -541,7 +353,7 @@ public class Build {
 	/// </summary>
 	/// <returns>The directory name.</returns>
 	/// <param name="szPath">Size path.</param>
-	static string	GetDirectoryName(string szPath)
+	public static string	GetDirectoryName(string szPath)
 	{
 		string szSplit = szPath.Replace('\\', '/');
 		if (!string.IsNullOrEmpty(szSplit))
@@ -559,7 +371,7 @@ public class Build {
 	/// </summary>
 	/// <returns><c>true</c>, if type was depended, <c>false</c> otherwise.</returns>
 	/// <param name="szUrl">Size URL.</param>
-	static bool		DependType(string szUrl)
+	public static bool		DependType(string szUrl)
 	{
 		string[] aryFileFormat = {
 			".cs"
@@ -584,7 +396,7 @@ public class Build {
 	/// </summary>
 	/// <returns>The temp path.</returns>
 	/// <param name="szPackageName">Size package name.</param>
-	static string	GetTempPath(string szPackageName)
+	public static string	GetTempPath(string szPackageName)
 	{
 #if UNITY_EDITOR_WIN
 		string szOutPath = string.Format("{0}/Temp/Win/{1}", 
