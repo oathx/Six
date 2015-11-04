@@ -52,6 +52,13 @@ public class SqlItem : ISqlPackage
 	{ get; private set; }
 
 	/// <summary>
+	/// Gets the part.
+	/// </summary>
+	/// <value>The part.</value>
+	public int				Part
+	{ get; private set; }
+
+	/// <summary>
 	/// Gets the icon.
 	/// </summary>
 	/// <value>The icon.</value>
@@ -68,6 +75,7 @@ public class SqlItem : ISqlPackage
 		Name 		= System.Convert.ToString(sdr["Name"]);
 		Url			= System.Convert.ToString(sdr["Url"]);
 		Type		= System.Convert.ToInt32(sdr["Type"]);
+		Part		= System.Convert.ToInt32(sdr["PartType"]);
 		Icon		= System.Convert.ToString(sdr["Icon"]);
 		ExtendUrl	= System.Convert.ToString(sdr["ExtendUrl"]);
 	}

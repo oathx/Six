@@ -19,6 +19,7 @@ public enum MountType
 	Dummy_Tail			= 12,
 	Dummy_L_Wings		= 13,
 	Dummy_R_Wings		= 14,
+	Dummy_R_HandGun		= 15,
 }
 
 // shape type define

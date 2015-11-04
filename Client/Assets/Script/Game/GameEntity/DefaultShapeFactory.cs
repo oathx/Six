@@ -38,6 +38,13 @@ public class DefaultShapeFactory : IEntityShapeFactory
 				if (!entityShape)
 					throw new System.NullReferenceException();
 
+				Dictionary<MountType, string> 
+					dict = new Dictionary<MountType, string>();
+
+				dict.Add(MountType.Dummy_R_Hand, "Dummy_R_Hand");
+				// add the shape all moune
+				entityShape.InstallMount(dict);
+
 				Apparel(sqlShape.Equip, entityShape);
 
 				callback(entityShape);
@@ -75,14 +82,25 @@ public class DefaultShapeFactory : IEntityShapeFactory
 							
 							StringHolder holder = abBoneFile.GetAsset<StringHolder>(sqlItem.ExtendUrl);
 							if (holder)
-								entityShape.ChangeEquip(0, mesh, holder);
+								entityShape.ChangeEquip((PartType)sqlItem.Part, mesh, holder);
 							
 							return true;
 						});
 					}
 					else
 					{
+						Transform mount = entityShape.GetMount(MountType.Dummy_R_Hand);
+						if (!mount)
+							throw new System.NullReferenceException(MountType.Dummy_R_Hand.ToString());
+
+						GameObject arm = GameObject.Instantiate(mesh) as GameObject;
+						arm.name					= mesh.name;
+						arm.transform.parent 		= mount;
+						arm.layer					= entityShape.gameObject.layer;
 						
+						arm.transform.localPosition = Vector3.zero;
+						arm.transform.localRotation = Quaternion.identity;
+						arm.transform.localScale 	= Vector3.one;
 					}
 					
 					return true;
