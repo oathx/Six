@@ -20,9 +20,6 @@ TextureImporter:
   isReadable: 0
   grayScaleToAlpha: 0
   generateCubemap: 0
-  cubemapConvolution: 0
-  cubemapConvolutionSteps: 8
-  cubemapConvolutionExponent: 1.5
   seamlessCubemap: 0
   textureFormat: 3
   maxTextureSize: 256
@@ -33,7 +30,6 @@ TextureImporter:
     wrapMode: 0
   nPOTScale: 1
   lightmap: 0
-  rGBM: 0
   compressionQuality: 100
   spriteMode: 0
   spriteExtrude: 1
@@ -57,5 +53,3 @@ TextureImporter:
     sprites: []
   spritePackingTag: 
   userData: 
-  assetBundleName: bd0204e59381a1a45a337a8f2407ffd2
-  assetBundleVariant: 

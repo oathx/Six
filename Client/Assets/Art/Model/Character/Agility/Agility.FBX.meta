@@ -146,6 +146,10 @@ ModelImporter:
     100280: Dummy_R_Follow
     100282: Dummy_R_Follow 1
     100284: Dummy_L_Follow
+    100286: Bone001
+    100288: Bone002
+    100290: PC_Gun_01
+    100292: Dummy_R_Weapon
     400000: //RootNode
     400002: Bip001
     400004: Bip001 Footsteps
@@ -289,6 +293,10 @@ ModelImporter:
     400280: Dummy_R_Follow
     400282: Dummy_R_Follow 1
     400284: Dummy_L_Follow
+    400286: Bone001
+    400288: Bone002
+    400290: PC_Gun_01
+    400292: Dummy_R_Weapon
     2300000: PC_HM_ABigSwrod_01
     2300002: PC_HM_ABigSword_06
     2300004: PC_HM_ABigSword_02
@@ -375,6 +383,7 @@ ModelImporter:
     4300146: PC_AM_Base_04
     4300148: PC_AM_Power_05
     4300150: PC_AM_Base_05
+    4300152: PC_Gun_01
     7400000: Take 001
     9500000: //RootNode
     13700000: PC_AM_LArmor_004
@@ -448,6 +457,7 @@ ModelImporter:
     13700136: PC_AM_Base_04
     13700138: PC_AM_Base_05
     13700140: PC_AM_Power_05
+    13700142: PC_Gun_01
     20500000: //RootNode
   materials:
     importMaterials: 1
@@ -474,7 +484,7 @@ ModelImporter:
     lODScreenPercentages:
     - .25
     - .00999999978
-    globalScale: 1
+    globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
