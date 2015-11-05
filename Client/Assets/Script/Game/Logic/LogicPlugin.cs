@@ -50,8 +50,6 @@ public class LogicPlugin : ITcpSession
 		if (observer)
 			observer.Active();
 
-		RegisterObserver<CharacterObserver>(typeof(CharacterObserver).Name);
-
 		// connect to game server
 		if (!string.IsNullOrEmpty(GlobalUserInfo.GateIPAddress))
 		{
@@ -65,7 +63,6 @@ public class LogicPlugin : ITcpSession
 	public override void 		Shutdown()
 	{
 		UnregisterObserver (typeof(GateConnectObserver).Name);
-		UnregisterObserver (typeof(CharacterObserver).Name);
 	}
 	
 	/// <summary>

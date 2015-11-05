@@ -7,28 +7,43 @@ using System.Collections.Generic;
 /// </summary>
 public class ICharacterEntity : IEntityMovable
 {
-	protected IEntityShape	m_EntityShape;
-	
+	public IEntityShape		Shape 
+	{ get; private set; }
+
 	/// <summary>
 	/// Sets the shape.
 	/// </summary>
 	/// <param name="shape">Shape.</param>
 	public virtual void 	SetShape(IEntityShape newShape)
 	{
-		// destroy current old entity shape
-		if (m_EntityShape != newShape)
-		{
-			if (m_EntityShape)
-				GameObject.Destroy(m_EntityShape.gameObject);
-		}
-	
-		m_EntityShape = newShape;
+		StartCoroutine(OnResetShape(newShape));
+	}
 
-		// apply new entity shape
-		if (m_EntityShape)
+	/// <summary>
+	/// Raises the reset shape event.
+	/// </summary>
+	/// <param name="newShape">New shape.</param>
+	IEnumerator				OnResetShape(IEntityShape newShape)
+	{
+		// destroy current old entity shape
+		if (Shape != newShape)
 		{
-			m_EntityShape.SetParent(transform);
+			if (Shape)
+				GameObject.Destroy(Shape.gameObject);
 		}
+
+		// bind new entity shape
+		Shape = newShape;
+
+		// set the shape parent
+		Shape.SetParent(
+			transform
+			);
+
+		yield return new WaitForEndOfFrame();
+
+		// reset
+		Shape.SetPosition(Vector3.zero);
 	}
 
 	/// <summary>
@@ -37,7 +52,7 @@ public class ICharacterEntity : IEntityMovable
 	/// <returns>The shape.</returns>
 	public IEntityShape		GetShape()
 	{
-		return m_EntityShape;
+		return Shape;
 	}
 
 	/// <summary>

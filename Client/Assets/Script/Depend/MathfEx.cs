@@ -58,4 +58,16 @@ public class MathfEx
 		angle = (angle + 90) * Mathf.Deg2Rad;
 		return new Vector3(-Mathf.Cos(angle), 0, Mathf.Sin(angle)).normalized;
 	}
+
+	/// <summary>
+	/// Coordinates the convert.
+	/// </summary>
+	/// <returns>The convert.</returns>
+	/// <param name="resCoordinate">Res coordinate.</param>
+	/// <param name="destCoordinate">Destination coordinate.</param>
+	/// <param name="resPosition">Res position.</param>
+	public static Vector2 	CoordinateConvert(Vector2 resCoordinate, Vector2 destCoordinate, Vector2 resPosition)
+	{
+		return new Vector2(resPosition.x * destCoordinate.x / resCoordinate.x, resPosition.y * destCoordinate.y / resCoordinate.y);
+	}
 }

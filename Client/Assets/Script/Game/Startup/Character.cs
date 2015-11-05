@@ -20,13 +20,7 @@ public class Character : MonoBehaviour
 	/// </summary>
 	void Start()
 	{
-		PlayerManager entityManager = GameEngine.GetSingleton().QueryPlugin<PlayerManager>();
-		if (entityManager)
-		{
-			entityManager.CreateEntity(EntityType.ET_MAIN.ToString(), EntityType.ET_MAIN,
-			                           0, string.Empty, Vector3.zero, Vector3.one, Vector3.zero, 0, 10000);
-			
-		}
+
 	}
 	
 	/// <summary>

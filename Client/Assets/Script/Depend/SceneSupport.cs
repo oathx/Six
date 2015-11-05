@@ -2,10 +2,9 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 
-public enum SceneFlag {
-	SCENE_LOGIN		= 1,
-	SCENE_CHARACTER = 2,
-	SCENE_PLAGING	= 3,
+public class SceneFlag {
+	public const int SCENE_LOGIN		= 1;
+	public const int SCENE_CHARACTER 	= 2;
 }
 
 public delegate bool SceneLoadingCallback(float fProgress, string szAssetName);
@@ -84,6 +83,15 @@ public class SceneSupport : MonoBehaviourSingleton<SceneSupport>
 		}
 
 		return true;
+	}
+
+	/// <summary>
+	/// Gets the scene I.
+	/// </summary>
+	/// <returns>The scene I.</returns>
+	public int 				GetSceneID()
+	{
+		return SceneID;
 	}
 	
 

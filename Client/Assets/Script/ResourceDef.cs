@@ -12,4 +12,5 @@ public class ResourceDef
 	public const string UI_LOGIN	= "UI/UI_LOGIN";
 	public const string UI_CHARITEM	= "UI/UI_CHARITEM";
 	public const string UI_CHARLIST	= "UI/UI_CHARLIST";
+	public const string UI_JOYSTICK	= "UI/UI_JOYSTICK";
 }

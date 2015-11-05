@@ -45,26 +45,21 @@ public class SceneObserver : IEventObserver
 				throw new System.NullReferenceException();
 
 			// display loading ui
-			if (v.SceneID != (int)SceneFlag.SCENE_LOGIN)
-				LoadUI.Show();
-
-			if (v.SceneID > (int)SceneFlag.SCENE_CHARACTER)
+			if (sqlScene.Type != SceneType.SCENE_LOGIN)
 			{
-				LogicPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LogicPlugin> ();
-				if (plugin)
-				{
-					// deative observer
-					string[] aryDetive = {
-						typeof(CharacterObserver).Name
-					};
-					foreach(string detive in aryDetive)
-					{
-						IEventObserver observer = plugin.QueryObserver(detive);
-						if (observer)
-							observer.Detive();
-					}
-				}
+				LoadUI.Show();
+			}
 
+			switch(sqlScene.Type)
+			{
+			case SceneType.SCENE_CITY:
+				UnregisterObserver(new string[]{
+					typeof(CharacterObserver).Name
+				});
+				break;
+
+			case SceneType.SCENE_SINGLE:
+				break;
 			}
 
 			// If this scenario is a stream file
@@ -103,9 +98,10 @@ public class SceneObserver : IEventObserver
 		CmdEvent.SceneLoadEventArgs v = evt.Args as CmdEvent.SceneLoadEventArgs;
 
 		// display loading progress
-		if (LoadUI) {
+		if (LoadUI)
+		{
 			LoadUI.Progress = v.Progress;
-			LoadUI.Text		= string.Format("{0}%", (int)(v.Progress * 100));
+			LoadUI.Text		= string.Format("{0}{1}%", LogicHelper.GetErrorText(ErrorCode.ERR_LOADING), (int)(v.Progress * 100));
 		}
 
 		return true;
@@ -143,9 +139,7 @@ public class SceneObserver : IEventObserver
 		if (LoadUI)
 			LoadUI.Hide();
 
-		Debug.Log((SceneFlag)result.SceneID);
-
-		switch((SceneFlag)result.SceneID)
+		switch(result.SceneID)
 		{
 		case SceneFlag.SCENE_LOGIN:
 
@@ -164,7 +158,7 @@ public class SceneObserver : IEventObserver
 			LogicPlugin logicPlugin = GameEngine.GetSingleton().QueryPlugin<LogicPlugin> ();
 			if (logicPlugin)
 			{
-				CharacterObserver observer = logicPlugin.QueryObserver<CharacterObserver>(
+				CharacterObserver observer = logicPlugin.RegisterObserver<CharacterObserver>(
 					typeof(CharacterObserver).Name
 					);
 				if (observer)
@@ -194,27 +188,31 @@ public class SceneObserver : IEventObserver
 	}
 
 	/// <summary>
-	/// Install this instance.
+	/// Unregisters the observer.
 	/// </summary>
-	protected bool	Install(CmdEvent.SceneLoadEventArgs result)
+	/// <returns><c>true</c>, if observer was unregistered, <c>false</c> otherwise.</returns>
+	/// <param name="aryObserverName">Ary observer name.</param>
+	protected bool	UnregisterObserver(string[] aryObserver)
 	{
 		LogicPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LogicPlugin> ();
 		if (plugin)
 		{
-			// deative observer
-			string[] aryDetive = {
-				typeof(CharacterObserver).Name
-			};
-			foreach(string detive in aryDetive)
+			foreach(string observer in aryObserver)
 			{
-				IEventObserver observer = plugin.QueryObserver(detive);
-				if (observer)
-					observer.Detive();
+				plugin.UnregisterObserver(observer);
 			}
-
-			// install open system
-			InstallSystem();
 		}
+
+		return true;
+	}
+
+	/// <summary>
+	/// Install this instance.
+	/// </summary>
+	protected bool	Install(CmdEvent.SceneLoadEventArgs result)
+	{
+		// install open system
+		InstallObserver();
 
 		return true;
 	}
@@ -223,8 +221,10 @@ public class SceneObserver : IEventObserver
 	/// Installs the system function.
 	/// </summary>
 	/// <returns><c>true</c>, if system function was installed, <c>false</c> otherwise.</returns>
-	protected bool	InstallSystem()
+	protected bool	InstallObserver()
 	{
+		Dispatcher.RegisterObserver<MainObserver>(typeof(MainObserver).Name, true);
+		/*
 		DataTable table = GameSqlLite.GetSingleton ().QueryTable (typeof(SqlSpread).Name);
 		foreach(DataRow row in table.Rows)
 		{
@@ -241,6 +241,7 @@ public class SceneObserver : IEventObserver
 					);
 			}
 		}
+		*/
 		
 		return true;
 	}

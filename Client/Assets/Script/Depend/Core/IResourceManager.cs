@@ -535,9 +535,9 @@ public class IResourceManager : IGamePlugin
 					// remove load flag
 					aryDependTask.Remove(depend);
 					
-#if OPEN_DEBUG_LOG
+					#if OPEN_DEBUG_LOG
 					Debug.Log("Load resource depend : " + depend);
-#endif
+					#endif
 					// save assetbundle ref
 					RefResource.Add(
 						depend, new AssetBundleResource(req.assetBundle, new string[]{})

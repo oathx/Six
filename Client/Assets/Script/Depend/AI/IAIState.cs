@@ -7,7 +7,8 @@ public class IAIAction
 	/// <summary>
 	/// The m_n action I.
 	/// </summary>
-	protected int 	m_nActionID = int.MinValue;
+	public int 		ActionID 
+	{ get; private set;}
 
 	/// <summary>
 	/// Sets the event I.
@@ -15,7 +16,7 @@ public class IAIAction
 	/// <param name="nEventID">N event I.</param>
 	public void 	SetActionID(int nActionID)
 	{
-		m_nActionID = nActionID;
+		ActionID = nActionID;
 	}
 	
 	/// <summary>
@@ -24,7 +25,7 @@ public class IAIAction
 	/// <returns>The event I.</returns>
 	public int 		GetActionID()
 	{
-		return m_nActionID;
+		return ActionID;
 	}
 }
 
@@ -39,7 +40,7 @@ abstract public class IAIState : IAIAction
 	/// <summary>
 	/// The state ID.
 	/// </summary>
-	protected int 			m_nStateID 	= 0;
+	public int 				StateID { get; private set; }
 	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="IAIState`1"/> class.
@@ -48,14 +49,17 @@ abstract public class IAIState : IAIAction
 	/// <param name="entity">Entity.</param>
 	public IAIState(int nStateID)
 	{
-		m_nStateID = nStateID;
+		StateID = nStateID;
 	}
 
 	/// <summary>
 	/// Gets the state I.
 	/// </summary>
 	/// <returns>The state I.</returns>
-	public virtual int		GetStateID() { return m_nStateID; }
+	public virtual int		GetStateID()
+	{
+		return StateID; 
+	}
 	
 	/// <summary>
 	/// Raises the condition event.

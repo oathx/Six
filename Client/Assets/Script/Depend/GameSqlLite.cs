@@ -376,7 +376,7 @@ public class GameSqlLite : ScriptableSingleton<GameSqlLite>
 		}
 		catch(System.Exception e)
 		{
-			//Debug.LogWarning(e.Message);
+			Debug.Log(e.Message);
 		}
 		
 		// query data from sql data base

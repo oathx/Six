@@ -108,6 +108,15 @@ public class IEntityShape : MonoBehaviour
 	}
 
 	/// <summary>
+	/// Sets the position.
+	/// </summary>
+	/// <param name="vTarget">V target.</param>
+	public virtual void 	SetPosition(Vector3 vTarget)
+	{
+		transform.localPosition = vTarget;
+	}
+
+	/// <summary>
 	/// Installs the mount.
 	/// </summary>
 	/// <param name="aryMountName">Ary mount name.</param>
@@ -267,19 +276,27 @@ public class IEntityShape : MonoBehaviour
 	/// <param name="assetBundle">Asset bundle.</param>
 	public virtual void 	ChangeEquip(PartType part, GameObject equipMesh, StringHolder holder)
 	{
-		if (part == PartType.PT_ARMAMENT)
+		/*
+		if (part == PartType.PT_ARM)
 		{
-			
+			Transform mount = GetMount(MountType.Dummy_R_HandGun);
+			if (!mount)
+				throw new System.NullReferenceException(MountType.Dummy_R_HandGun.ToString());
+
+			foreach(string content in holder.content)
+			{
+				Debug.Log(content);
+			}
 		}
-		else
-		{
-			m_dMesh [part] = new BoneBuffer (
-				equipMesh.GetComponent<SkinnedMeshRenderer>(), holder
-				);
-			
-			// megre equip
-			MegreEquip ();
-		}
+		*/
+	
+		m_dMesh [part] = new BoneBuffer (
+			equipMesh.GetComponent<SkinnedMeshRenderer>(), holder
+			);
+		
+		// megre equip
+		MegreEquip ();
+
 	}
 	
 	/// <summary>

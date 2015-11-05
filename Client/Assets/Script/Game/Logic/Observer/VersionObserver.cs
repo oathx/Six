@@ -321,7 +321,7 @@ public class VersionObserver : IEventObserver
 				RegisterUnitEntityFactory();
 				
 				// notify global plugin change to login
-				return LogicHelper.ChangeScene((int)SceneFlag.SCENE_LOGIN);
+				return LogicHelper.ChangeScene(SceneFlag.SCENE_LOGIN);
 			});
 		}
 	}
@@ -336,7 +336,10 @@ public class VersionObserver : IEventObserver
 #else
 		GameSqlLite.GetSingleton ().OpenDB (WUrl.SqlitePath, true);
 #endif
-		
+
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlJob).Name, new DefaultSqlPackageFactory<SqlJob>()
+			);
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlShape).Name, new DefaultSqlPackageFactory<SqlShape> ()
 			);
@@ -345,6 +348,9 @@ public class VersionObserver : IEventObserver
 			);
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlItem).Name, new DefaultSqlPackageFactory<SqlItem>()
+			);
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlCamera).Name, new DefaultSqlPackageFactory<SqlCamera>()
 			);
 	}
 
@@ -360,10 +366,10 @@ public class VersionObserver : IEventObserver
 		if (playerManager)
 		{
 			playerManager.RegisterEntityFactory (
-				EntityType.ET_MAIN.ToString (),new HumanEntityFactory ()
+				EntityType.ET_MAIN.ToString (),new PlayerEntityFactory ()
 				);
 			playerManager.RegisterEntityFactory (
-				EntityType.ET_PLAYER.ToString (), 	new HumanEntityFactory ()
+				EntityType.ET_PLAYER.ToString (), 	new PlayerEntityFactory ()
 				);
 		}
 

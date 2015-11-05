@@ -46,4 +46,34 @@ public class LogicHelper
 
 		return true;
 	}
+
+	/// <summary>
+	/// Active the specified szObserverName.
+	/// </summary>
+	/// <param name="szObserverName">Size observer name.</param>
+	public static void		Active(string szObserverName)
+	{
+		LogicPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LogicPlugin> ();
+		if (plugin)
+		{
+			IEventObserver observer = plugin.QueryObserver(szObserverName);
+			if (observer)
+				observer.Active();
+		}
+	}
+
+	/// <summary>
+	/// Detive the specified szObserverName.
+	/// </summary>
+	/// <param name="szObserverName">Size observer name.</param>
+	public static void 		Detive(string szObserverName)
+	{
+		LogicPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LogicPlugin> ();
+		if (plugin)
+		{
+			IEventObserver observer = plugin.QueryObserver(szObserverName);
+			if (observer)
+				observer.Detive();
+		}
+	}
 }

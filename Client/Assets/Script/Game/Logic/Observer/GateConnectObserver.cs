@@ -137,7 +137,7 @@ public class GateConnectObserver : IEventObserver
 			}
 		}
 		
-		return LogicHelper.ChangeScene((int)SceneFlag.SCENE_CHARACTER);
+		return LogicHelper.ChangeScene(SceneFlag.SCENE_CHARACTER);
 	}
 
 	/// <summary>

@@ -30,10 +30,11 @@ public class DefaultShapeFactory : IEntityShapeFactory
 			GameObject shape = GameObject.Instantiate(resource) as GameObject;
 			if (shape)
 			{
+				shape.transform.name				= resource.name;
 				shape.transform.position 			= Vector3.zero;
 				shape.transform.localScale			= Vector3.one;
 				shape.transform.localEulerAngles 	= Vector3.zero;
-				
+
 				IEntityShape entityShape = shape.AddComponent<IEntityShape>();
 				if (!entityShape)
 					throw new System.NullReferenceException();
@@ -41,11 +42,19 @@ public class DefaultShapeFactory : IEntityShapeFactory
 				Dictionary<MountType, string> 
 					dict = new Dictionary<MountType, string>();
 
-				dict.Add(MountType.Dummy_R_Hand, "Dummy_R_Hand");
+				for(MountType mount = MountType.Dummy_Head; 
+				    mount<=MountType.Dummy_R_HandGun; mount++)
+				{
+					dict.Add(mount, mount.ToString());
+				}
+
 				// add the shape all moune
 				entityShape.InstallMount(dict);
 
-				Apparel(sqlShape.Equip, entityShape);
+				// apparel character default equip
+				Apparel(
+					sqlShape.Equip, entityShape
+					);
 
 				callback(entityShape);
 			}
@@ -74,12 +83,12 @@ public class DefaultShapeFactory : IEntityShapeFactory
 					if (!mesh)
 						throw new System.NullReferenceException(sqlItem.Url);
 					
-					if (sqlItem.Type == (int)ItemType.IT_EQUIP)
+					if (sqlItem.Part != (int)PartType.PT_ARM)
 					{	
 						// load the equip mesh object
 						m_ResourceManager.LoadAssetBundleFromStream(sqlItem.ExtendUrl, 
 						                                            delegate(string szBoneName, AssetBundleResource abBoneFile) {
-							
+
 							StringHolder holder = abBoneFile.GetAsset<StringHolder>(sqlItem.ExtendUrl);
 							if (holder)
 								entityShape.ChangeEquip((PartType)sqlItem.Part, mesh, holder);
@@ -89,18 +98,21 @@ public class DefaultShapeFactory : IEntityShapeFactory
 					}
 					else
 					{
-						Transform mount = entityShape.GetMount(MountType.Dummy_R_Hand);
-						if (!mount)
-							throw new System.NullReferenceException(MountType.Dummy_R_Hand.ToString());
+						Transform mount = entityShape.GetMount(MountType.Dummy_R_HandGun);
+						if (mount)
+						{
+							GameObject arm = GameObject.Instantiate(mesh) as GameObject;
+							if (!arm)
+								throw new System.NullReferenceException();
 
-						GameObject arm = GameObject.Instantiate(mesh) as GameObject;
-						arm.name					= mesh.name;
-						arm.transform.parent 		= mount;
-						arm.layer					= entityShape.gameObject.layer;
-						
-						arm.transform.localPosition = Vector3.zero;
-						arm.transform.localRotation = Quaternion.identity;
-						arm.transform.localScale 	= Vector3.one;
+							arm.name					= mesh.name;
+							arm.transform.parent 		= mount;
+							arm.layer					= entityShape.gameObject.layer;
+							
+							arm.transform.localPosition = Vector3.zero;
+							arm.transform.localRotation = Quaternion.identity;
+							arm.transform.localScale 	= Vector3.one;
+						}
 					}
 					
 					return true;

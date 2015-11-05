@@ -26,6 +26,13 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 		DictWidget = new Dictionary<string, IUIWidget>();
 
 	/// <summary>
+	/// Gets the scaler.
+	/// </summary>
+	/// <value>The scaler.</value>
+	public CanvasScaler	Scaler
+	{ get; private set; }
+
+	/// <summary>
 	/// Awake this instance.
 	/// </summary>
 	void Awake()
@@ -38,9 +45,9 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 			canvas.renderMode = RenderMode.ScreenSpaceOverlay;
 		}
 
-		CanvasScaler scaler = GetComponent<CanvasScaler>();
-		scaler.uiScaleMode 	= CanvasScaler.ScaleMode.ScaleWithScreenSize;
-		scaler.referenceResolution = new Vector2(960, 640);
+		Scaler = GetComponent<CanvasScaler>();
+		Scaler.uiScaleMode 	= CanvasScaler.ScaleMode.ScaleWithScreenSize;
+		Scaler.referenceResolution = new Vector2(960, 640);
 	}
 
 	/// <summary>
@@ -188,5 +195,14 @@ public class UISystem : MonoBehaviourSingleton<UISystem>
 	{
 		// unload box widget
 		UnloadWidget(ResourceDef.UI_STATUS); 
+	}
+
+	/// <summary>
+	/// Gets the scale.
+	/// </summary>
+	/// <returns>The scale.</returns>
+	public Vector2		GetReferenceResolution()
+	{
+		return Scaler.referenceResolution;
 	}
 }

@@ -37,8 +37,37 @@ public enum EntityType
 /// </summary>
 public class IEntityProperty : MonoBehaviour
 {
-	public int 				ID;
-	public string			Name;
-	public EntityType		Type;
-	public int				Style;
+	public int 			ID;
+	public EntityType	Type;
+	public int			Style;
+	public float		Speed;
+	public float		JumpSpeed;
+	public float 		Gravity;
+	public string		Name;
+	public string		Describe;
+	public float		MaxMoveSpeed;
+	public float		MaxRotateSpeed;
+	public int 			Combat;
+	public int 			FireControl;
+	public int 			Protection;
+	public int 			Performance;
+	public int 			Energy;
+	public int 			CloseinAttack;
+	public int 			CloseinDefense;
+	public int 			DistanceAttack;
+	public int 			DistanceDefense;
+	public int 			Durable;
+	public int 			Crit;
+	public int 			AntiCrit;
+	public int 			Hit;
+	public int 			Dodge;
+	public int			FightValue;
+	public int			Honor;
+	public int 			HP;
+	public int 			MaxHP;
+	public int 			Exp;
+	public int 			Mp;
+	public int      	MaxMp;
+	public int 			BunchID;
+	public int 			ShapeID;
 }

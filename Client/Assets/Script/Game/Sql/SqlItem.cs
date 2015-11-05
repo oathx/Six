@@ -45,17 +45,17 @@ public class SqlItem : ISqlPackage
 	{ get; private set; }
 
 	/// <summary>
+	/// Gets the type of the part.
+	/// </summary>
+	/// <value>The type of the part.</value>
+	public int 				Part
+	{ get; private set; }
+
+	/// <summary>
 	/// Gets the extand URL.
 	/// </summary>
 	/// <value>The extand URL.</value>
 	public string			ExtendUrl
-	{ get; private set; }
-
-	/// <summary>
-	/// Gets the part.
-	/// </summary>
-	/// <value>The part.</value>
-	public int				Part
 	{ get; private set; }
 
 	/// <summary>

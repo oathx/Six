@@ -6,16 +6,69 @@ using System.Collections;
 /// </summary>
 public class IEntity : IEntityProperty
 {
-	protected virtual void 		Awake()		{}
-	protected virtual void 		Start()		{}
-	protected virtual void 		Update() 	{}
-	protected virtual void 		OnDestroy() {}
+	/// <summary>
+	/// Gets the machine.
+	/// </summary>
+	/// <value>The machine.</value>
+	public IAIMachine		Machine
+	{ get; private set; }
+
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
+	protected virtual void 	Awake()
+	{
+
+	}
+
+	/// <summary>
+	/// Start this instance.
+	/// </summary>
+	protected virtual void 	Start()	
+	{
+
+	}
+
+	/// <summary>
+	/// Update this instance.
+	/// </summary>
+	protected virtual void 	Update() 	
+	{
+		if (Machine)
+			Machine.UpdateMachine(Time.deltaTime);
+	}
+
+	/// <summary>
+	/// Raises the destroy event.
+	/// </summary>
+	protected virtual void 	OnDestroy()
+	{
+
+	}
+
+	/// <summary>
+	/// Sets the machine.
+	/// </summary>
+	/// <param name="machine">Machine.</param>
+	public void 			SetMachine(IAIMachine machine)
+	{
+		Machine = machine;
+	}
+
+	/// <summary>
+	/// Gets the machine.
+	/// </summary>
+	/// <returns>The machine.</returns>
+	public IAIMachine		GetMachine()
+	{
+		return Machine;
+	}
 
 	/// <summary>
 	/// Gets the position.
 	/// </summary>
 	/// <returns>The position.</returns>
-	public Vector3				GetPosition()
+	public Vector3			GetPosition()
 	{
 		return transform.position;
 	}
@@ -24,7 +77,7 @@ public class IEntity : IEntityProperty
 	/// Sets the position.
 	/// </summary>
 	/// <param name="vPosition">V position.</param>
-	public void 				SetPosition(Vector3 vPosition)
+	public void 			SetPosition(Vector3 vPosition)
 	{
 		transform.position = vPosition;
 	}
@@ -33,7 +86,7 @@ public class IEntity : IEntityProperty
 	/// Gets the euler angle.
 	/// </summary>
 	/// <returns>The euler angle.</returns>
-	public virtual Vector3		GetEulerAngle()
+	public virtual Vector3	GetEulerAngle()
 	{
 		return transform.localEulerAngles;
 	}
@@ -42,7 +95,7 @@ public class IEntity : IEntityProperty
 	/// Sets the euler angle.
 	/// </summary>
 	/// <param name="vEuler">V euler.</param>
-	public virtual void 		SetEulerAngle(Vector3 vEuler)
+	public virtual void 	SetEulerAngle(Vector3 vEuler)
 	{
 		transform.localEulerAngles = vEuler;
 	}
@@ -51,7 +104,7 @@ public class IEntity : IEntityProperty
 	/// Gets the forward.
 	/// </summary>
 	/// <returns>The forward.</returns>
-	public virtual Vector3		GetForward()
+	public virtual Vector3	GetForward()
 	{
 		return transform.forward;
 	}
@@ -61,7 +114,7 @@ public class IEntity : IEntityProperty
 	/// </summary>
 	/// <returns>The direction.</returns>
 	/// <param name="vDir">V dir.</param>
-	public virtual Vector3		GetDirection(Vector3 vDir)
+	public virtual Vector3	GetDirection(Vector3 vDir)
 	{
 		return transform.TransformDirection(vDir);
 	}
@@ -71,7 +124,7 @@ public class IEntity : IEntityProperty
 	/// </summary>
 	/// <returns>The target angle.</returns>
 	/// <param name="target">Target.</param>
-	public virtual float		GetTargetAngle(IEntity target)
+	public virtual float	GetTargetAngle(IEntity target)
 	{
 		return Vector3.Angle(transform.forward, target.GetPosition() - GetPosition());
 	}
@@ -80,7 +133,7 @@ public class IEntity : IEntityProperty
 	/// Move the specified vDirection.
 	/// </summary>
 	/// <param name="vDirection">V direction.</param>
-	public virtual void			MoveTo(Vector3 vPosition)
+	public virtual void		MoveTo(Vector3 vPosition)
 	{
 		transform.position = vPosition;
 	}
@@ -90,7 +143,7 @@ public class IEntity : IEntityProperty
 	/// </summary>
 	/// <param name="vRotation">V rotation.</param>
 	/// <param name="fSpeed">F speed.</param>
-	public virtual void 		RotateTo (Vector3 vRotation, float fSpeed)
+	public virtual void 	RotateTo (Vector3 vRotation, float fSpeed)
 	{
 		if (fSpeed > 0)
 		{
@@ -104,7 +157,7 @@ public class IEntity : IEntityProperty
 	/// Rotate to a value.
 	/// </summary>
 	/// <param name="vTarget">Target rotation.</param>
-	public virtual void			SetRotateTo(Vector3 vTarget)
+	public virtual void		SetRotateTo(Vector3 vTarget)
 	{
 		transform.eulerAngles = vTarget;
 	}
@@ -113,7 +166,7 @@ public class IEntity : IEntityProperty
 	/// Look at target.
 	/// </summary>
 	/// <param name="target"></param>
-	public virtual void			LookAt(IEntity target)
+	public virtual void		LookAt(IEntity target)
 	{
 		transform.LookAt(target.transform);
 		transform.eulerAngles = Vector3.up * transform.eulerAngles.y;
@@ -123,7 +176,7 @@ public class IEntity : IEntityProperty
 	/// Looks at postion.
 	/// </summary>
 	/// <param name="postion">Postion.</param>
-	public virtual void 		LookAt(Vector3 vPostion)
+	public virtual void 	LookAt(Vector3 vPostion)
 	{
 		transform.LookAt(vPostion);
 		transform.eulerAngles = Vector3.up * transform.eulerAngles.y;
@@ -133,7 +186,7 @@ public class IEntity : IEntityProperty
 	/// Sets the layer.
 	/// </summary>
 	/// <param name="nLayer">N layer.</param>
-	public virtual void 		SetLayer(int nLayer)
+	public virtual void 	SetLayer(int nLayer)
 	{
 		Transform[] aryTransform = GetComponentsInChildren<Transform> ();
 		foreach (Transform child in aryTransform)
