@@ -11,6 +11,14 @@ public class ICharacterEntity : IEntityMovable
 	{ get; private set; }
 
 	/// <summary>
+	/// Update this instance.
+	/// </summary>
+	protected override void 	Update()
+	{
+		base.Update();
+	}
+
+	/// <summary>
 	/// Sets the shape.
 	/// </summary>
 	/// <param name="shape">Shape.</param>
@@ -61,6 +69,7 @@ public class ICharacterEntity : IEntityMovable
 	/// <param name="szAnimationName">Size animation name.</param>
 	public virtual void 	Play(string szAnimationName, float fTransition, bool bReplay)
 	{
-
+		if (Shape)
+			Shape.Play(szAnimationName, fTransition, bReplay);
 	}
 }

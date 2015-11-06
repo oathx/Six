@@ -72,10 +72,34 @@ public class IEntityShape : MonoBehaviour
 		BoneBuffer> m_dMesh = new Dictionary<PartType, BoneBuffer> ();
 
 	/// <summary>
+	/// The animator.
+	/// </summary>
+	protected Animator m_Animator;
+
+	/// <summary>
+	/// Awake this instance.
+	/// </summary>
+	void Awake()
+	{
+		m_Animator 	= GetComponent<Animator> ();
+		if (m_Animator)
+			m_Animator.applyRootMotion = true;
+	}
+
+	/// <summary>
+	/// Applies the root motion.
+	/// </summary>
+	/// <param name="bFlag">If set to <c>true</c> b flag.</param>
+	public virtual void 		ApplyRootMotion(bool bFlag)
+	{
+		m_Animator.applyRootMotion = bFlag;
+	}
+
+	/// <summary>
 	/// Sets the enabled.
 	/// </summary>
 	/// <param name="bEnabled">If set to <c>true</c> b enabled.</param>
-	public virtual void		SetEnabled(bool bEnabled)
+	public virtual void			SetEnabled(bool bEnabled)
 	{
 		gameObject.SetActive(bEnabled);
 	}
@@ -84,7 +108,7 @@ public class IEntityShape : MonoBehaviour
 	/// Gets the enabled.
 	/// </summary>
 	/// <returns><c>true</c>, if enabled was gotten, <c>false</c> otherwise.</returns>
-	public bool				GetEnabled()
+	public bool					GetEnabled()
 	{
 		return gameObject.activeSelf;
 	}
@@ -93,7 +117,7 @@ public class IEntityShape : MonoBehaviour
 	/// Sets the scale.
 	/// </summary>
 	/// <param name="fScale">F scale.</param>
-	public virtual	void 	SetScale(float fScale)
+	public virtual	void 		SetScale(float fScale)
 	{
 		transform.localScale = Vector3.one * fScale;
 	}
@@ -102,7 +126,7 @@ public class IEntityShape : MonoBehaviour
 	/// Sets the parent.
 	/// </summary>
 	/// <param name="parent">Parent.</param>
-	public virtual void 	SetParent(Transform parent)
+	public virtual void 		SetParent(Transform parent)
 	{
 		transform.SetParent(parent);
 	}
@@ -111,7 +135,7 @@ public class IEntityShape : MonoBehaviour
 	/// Sets the position.
 	/// </summary>
 	/// <param name="vTarget">V target.</param>
-	public virtual void 	SetPosition(Vector3 vTarget)
+	public virtual void 		SetPosition(Vector3 vTarget)
 	{
 		transform.localPosition = vTarget;
 	}
@@ -120,7 +144,7 @@ public class IEntityShape : MonoBehaviour
 	/// Installs the mount.
 	/// </summary>
 	/// <param name="aryMountName">Ary mount name.</param>
-	public void 			InstallMount(Dictionary<MountType, string> dmt)
+	public void 				InstallMount(Dictionary<MountType, string> dmt)
 	{
 		Transform[] aryTransform = GetComponentsInChildren<Transform> ();
 		foreach(KeyValuePair<MountType, string> it in dmt)
@@ -140,7 +164,7 @@ public class IEntityShape : MonoBehaviour
 	/// </summary>
 	/// <returns>The mount.</returns>
 	/// <param name="type">Type.</param>
-	public Transform		GetMount(MountType type)
+	public Transform			GetMount(MountType type)
 	{
 		if (type == MountType.None)
 			return transform;
@@ -153,7 +177,7 @@ public class IEntityShape : MonoBehaviour
 	/// </summary>
 	/// <param name="type">Type.</param>
 	/// <param name="bind">Bind.</param>
-	public void 			Bind(MountType type, Object resource, float fDuration,  bool bFollow, string szBindName)
+	public void 				Bind(MountType type, Object resource, float fDuration,  bool bFollow, string szBindName)
 	{
 		Transform mount = GetMount(type);
 		if (mount)
@@ -190,7 +214,7 @@ public class IEntityShape : MonoBehaviour
 	/// </summary>
 	/// <param name="goBind">Go bind.</param>
 	/// <param name="fWaitTime">F wait time.</param>
-	IEnumerator			OnAppBind(GameObject goBind, float fWaitTime)
+	IEnumerator					OnAppBind(GameObject goBind, float fWaitTime)
 	{
 		yield return new WaitForSeconds (fWaitTime);
 		
@@ -206,7 +230,7 @@ public class IEntityShape : MonoBehaviour
 	/// <returns><c>true</c> if this instance cancel bind the specified type szBindName; otherwise, <c>false</c>.</returns>
 	/// <param name="type">Type.</param>
 	/// <param name="szBindName">Size bind name.</param>
-	public void 		CancelBind(MountType type, string szBindName)
+	public void 				CancelBind(MountType type, string szBindName)
 	{
 		Transform mount = GetMount (type);
 		if (mount)
@@ -222,7 +246,7 @@ public class IEntityShape : MonoBehaviour
 	/// <summary>
 	/// Megres the equip.
 	/// </summary>
-	public void 		MegreEquip()
+	public virtual void 		MegreEquip()
 	{
 		// add bones list
 		List<Transform> aryBones 	= new List<Transform>();
@@ -274,7 +298,7 @@ public class IEntityShape : MonoBehaviour
 	/// <param name="part">Part.</param>
 	/// <param name="szEquipName">Size equip name.</param>
 	/// <param name="assetBundle">Asset bundle.</param>
-	public virtual void 	ChangeEquip(PartType part, GameObject equipMesh, StringHolder holder)
+	public virtual void 		ChangeEquip(PartType part, GameObject equipMesh, StringHolder holder)
 	{
 		/*
 		if (part == PartType.PT_ARM)
@@ -303,7 +327,7 @@ public class IEntityShape : MonoBehaviour
 	/// Removes the equip.
 	/// </summary>
 	/// <param name="part">Part.</param>
-	public void 		RemoveEquip(PartType part)
+	public void 				RemoveEquip(PartType part)
 	{
 		if (m_dMesh.ContainsKey(part))
 		{
@@ -314,4 +338,127 @@ public class IEntityShape : MonoBehaviour
 			MegreEquip();
 		}
 	}
+
+	/// <summary>
+	/// Play the specified szAnimationName, fTransition and bReplay.
+	/// </summary>
+	/// <param name="szAnimationName">Size animation name.</param>
+	/// <param name="fTransition">F transition.</param>
+	/// <param name="bReplay">If set to <c>true</c> b replay.</param>
+	public virtual void			Play(string szAnimationName, float fTransition, bool bReplay)
+	{
+#if OPEN_DEBUG_LOG
+		Debug.Log("Play charecter name " + name + " clip " + szAnimationName);
+#endif
+
+		if (m_Animator && !string.IsNullOrEmpty(szAnimationName))
+		{
+			if (fTransition > 0)
+			{
+				AnimatorStateInfo state = GetStateInfo();
+				m_Animator.CrossFade(szAnimationName, fTransition / state.length, 0, 0);
+			}
+			else
+			{	
+				m_Animator.Play(szAnimationName, 0, 0);
+			}
+			
+			CurrentClipName = szAnimationName;
+		}
+	}
+
+	/// <summary>
+	/// Gets the name of the current clip.
+	/// </summary>
+	/// <value>The name of the current clip.</value>
+	public string				CurrentClipName
+	{ get; private set; }
+	
+	/// <summary>
+	/// Is current animation clip loop.
+	/// </summary>
+	public bool 				IsLoop 
+	{
+		get {
+			AnimatorStateInfo state = GetStateInfo();
+			return state.loop;
+		} 
+	}
+	
+	/// <summary>
+	/// Gets the normalized time.
+	/// </summary>
+	/// <value>The normalized time.</value>
+	public float 				NormalizedTime
+	{
+		get { 
+			AnimatorStateInfo state = GetStateInfo();
+			return state.normalizedTime;
+		} 
+	}
+	
+	/// <summary>
+	/// Gets a value indicating whether this instance is playing.
+	/// </summary>
+	/// <value><c>true</c> if this instance is playing; otherwise, <c>false</c>.</value>
+	public bool 				IsPlaying 
+	{
+		get { 
+			return IsLoop ? true : (NormalizedTime < 1);
+		} 
+	}
+	
+	/// <summary>
+	/// Gets or sets the animation time.
+	/// </summary>
+	/// <value>The animation time.</value>
+	public float 				AnimationTime
+	{
+		get{
+			return NormalizedTime * AnimationLength;
+		}
+		set{
+			m_Animator.ForceStateNormalizedTime(value / AnimationLength);
+		}
+	}
+	
+	/// Current animation clip length
+	/// </summary>
+	public float 				AnimationLength 
+	{ 
+		get { 
+			AnimatorStateInfo info = GetStateInfo();
+			return info.length;
+		}
+	}
+	
+	/// <summary>
+	/// Current animator play speed.
+	/// </summary>
+	public float 				AnimationSpeed 
+	{ 
+		get { 
+			return m_Animator.speed; 
+		} 
+		set { 
+			m_Animator.speed = value; 
+		} 
+	}
+
+	/// <summary>
+	/// Gets the state info.
+	/// </summary>
+	/// <returns>The state info.</returns>
+	public AnimatorStateInfo	GetStateInfo()
+	{
+		return m_Animator.IsInTransition (0) ? m_Animator.GetNextAnimatorStateInfo (0) : m_Animator.GetCurrentAnimatorStateInfo (0);
+	}
+
+	/// <summary>
+	/// Raises the animator move event.
+	/// </summary>
+	//protected void				OnAnimatorMove()
+	//{
+		//transform.parent.position = transform.position;
+	//}
 }

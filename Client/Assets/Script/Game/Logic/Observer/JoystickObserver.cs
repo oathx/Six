@@ -59,7 +59,7 @@ public class JoystickObserver : IEventObserver
 	{
 		SubscribeEvent(IJoystickPlugin.JOYSTICK_START, 	OnJoystickStart);
 		SubscribeEvent(IJoystickPlugin.JOYSTICK_MOVE, 	OnJoystickMove);
-		SubscribeEvent(IJoystickPlugin.JOYSTICK_START, 	OnJoystickEnd);
+		SubscribeEvent(IJoystickPlugin.JOYSTICK_END, 	OnJoystickEnd);
 	}
 
 	/// <summary>
@@ -68,6 +68,10 @@ public class JoystickObserver : IEventObserver
 	/// <param name="v">V.</param>
 	protected bool	 	OnJoystickStart(IEvent evt)
 	{
+		IAIMachine machine = MainPlayer.GetMachine();
+		if (machine)
+			machine.ChangeState(AITypeID.AI_MOVE);
+
 		return true;
 	}
 
@@ -80,7 +84,13 @@ public class JoystickObserver : IEventObserver
 		IJoystickPlugin.JoystickMoveArgs v = evt.Args as IJoystickPlugin.JoystickMoveArgs;
 		// get current move direction
 		Vector3 vDirection 	= MainCamera.GetDirection(v.direction);
+
+		float fMoveSpeed 	= MainPlayer.MaxMoveSpeed;
+		CurveTable.GetSingleton().OnMoveCurve(v.depth, ref fMoveSpeed);
 		
+		Vector3 vPosition	= MainPlayer.GetPosition();
+		MainPlayer.Move(vPosition + vDirection, fMoveSpeed);
+
 		float fRotateSpeed 	= MainPlayer.MaxRotateSpeed;
 		float fMoveAngle	= MainPlayer.GetMoveAngle();
 		
@@ -99,6 +109,10 @@ public class JoystickObserver : IEventObserver
 	/// <param name="v">V.</param>
 	protected bool	 	OnJoystickEnd(IEvent evt)
 	{
+		IAIMachine machine = MainPlayer.GetMachine();
+		if (machine)
+			machine.ChangeState(AITypeID.AI_IDLE);
+
 		return true;
 	}
 }

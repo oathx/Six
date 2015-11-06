@@ -527,7 +527,10 @@ public class IResourceManager : IGamePlugin
 				if (byFile.Length > 0)
 				{
 					aryDependTask.Add(depend, true);
-					
+
+#if UNITY_EDITOR
+					Debug.Log("Create assetbundle form memory " + depend + " length " + byFile.Length);
+#endif
 					// create the assetbundle form memory
 					AssetBundleCreateRequest req = AssetBundle.CreateFromMemory(byFile);
 					yield return req;

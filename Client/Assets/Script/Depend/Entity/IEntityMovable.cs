@@ -133,4 +133,29 @@ public class IEntityMovable : IEntity
 		}
 	}
 
+	/// <summary>
+	/// Move the specified vPosition and fSpeed.
+	/// </summary>
+	/// <param name="vPosition">V position.</param>
+	/// <param name="fSpeed">F speed.</param>
+	public virtual void 		Move(Vector3 vPosition, float fSpeed)
+	{
+		Vector3 direction = vPosition - GetPosition();
+		
+		if (Vector3.zero == direction || 0 == fSpeed)
+		{
+			Motor.inputMoveDirection = Vector3.zero;
+		}
+		else
+		{
+			Motor.inputMoveDirection = direction.normalized;
+			Motor.movement.maxForwardSpeed = Motor.movement.maxSidewaysSpeed = Motor.movement.maxBackwardsSpeed = fSpeed;
+			
+			if (Vector3.zero == GetMoveSpeed())
+			{
+				MoveableController.enabled = false;
+				MoveableController.enabled = true;
+			}
+		}
+	}
 }

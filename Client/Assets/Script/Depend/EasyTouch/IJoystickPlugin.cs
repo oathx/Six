@@ -40,6 +40,7 @@ public class IJoystickPlugin : IGamePlugin
 	protected EasyTouch			m_dEasyTouch;
 	protected Vector3			m_TouchPosition = Vector3.zero;
 	protected IJoystickShape	m_JoystickShape;
+	protected int 				m_FingerIndex = int.MinValue;
 	
 	/// <summary>
 	/// Awake this instance.
@@ -168,6 +169,7 @@ public class IJoystickPlugin : IGamePlugin
 	{
 		if (m_JoystickShape)
 		{
+			m_FingerIndex	= gesture.fingerIndex;
 			m_TouchPosition = m_JoystickShape.GetTouchPosition(gesture.position);
 		
 			// send joystick move end
@@ -186,7 +188,7 @@ public class IJoystickPlugin : IGamePlugin
 	/// <param name="gesture">Gesture.</param>
 	private void	 		OnTouchMove(Gesture gesture)
 	{
-		if (m_JoystickShape)
+		if (m_JoystickShape && m_FingerIndex == gesture.fingerIndex)
 		{
 			m_TouchPosition 			= m_JoystickShape.GetTouchPosition(gesture.position);
 
@@ -221,10 +223,11 @@ public class IJoystickPlugin : IGamePlugin
 	/// <param name="gesture">Gesture.</param>
 	private void 			OnTouchUp(Gesture gesture)
 	{
-		if (m_JoystickShape)
+		if (m_JoystickShape && m_FingerIndex == gesture.fingerIndex)
 		{
 			m_TouchPosition 	= Vector3.zero;
-			
+			m_FingerIndex		= int.MinValue;
+
 			m_JoystickShape.End();
 			
 			// send joystick move end

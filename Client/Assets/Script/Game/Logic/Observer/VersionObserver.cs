@@ -352,6 +352,9 @@ public class VersionObserver : IEventObserver
 		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
 			typeof(SqlCamera).Name, new DefaultSqlPackageFactory<SqlCamera>()
 			);
+		GameSqlLite.GetSingleton ().RegisterSqlPackageFactory (
+			typeof(SqlAction).Name, new DefaultSqlPackageFactory<SqlAction>()
+			);
 	}
 
 	/// <summary>

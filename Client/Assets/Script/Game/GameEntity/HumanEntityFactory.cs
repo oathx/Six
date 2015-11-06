@@ -8,6 +8,54 @@ using System.Collections.Generic;
 public class HumanEntityFactory : IEntityFactory
 {
 	/// <summary>
+	/// Game engine.
+	/// </summary>
+	public class AIConstruct
+	{
+		/// <summary>
+		/// Creates the machine.
+		/// </summary>
+		/// <returns>The machine.</returns>
+		/// <param name="nAIFlag">N AI flag.</param>
+		public static IAIMachine 	CreateMachine(int nAIFlag, IEntity entity)
+		{
+			IAIMachine machine = new IAIMachine ();
+			
+			if ((nAIFlag & AITypeID.AI_IDLE) != 0)
+			{
+				machine.RegisterState(
+					new AIIdle(AITypeID.AI_IDLE, entity)
+					);
+			}
+
+			if ((nAIFlag & AITypeID.AI_MOVE) != 0)
+			{
+				machine.RegisterState(
+					new AIMove(AITypeID.AI_MOVE, entity)
+					);
+			}
+			
+			return machine;
+		}
+	}
+
+	/// <summary>
+	/// Creates the machine.
+	/// </summary>
+	/// <returns>The machine.</returns>
+	/// <summary>
+	/// Creates the machine.
+	/// </summary>
+	/// <param name="entity">Entity.</param>
+	public IAIMachine 		CreateMachine(IEntity entity)
+	{
+		int nAIFlag = AITypeID.AI_IDLE;
+		
+		// create ai machine
+		return AIConstruct.CreateMachine (nAIFlag, entity);
+	}
+
+	/// <summary>
 	/// Creates the entity instance.
 	/// </summary>
 	/// <returns>The entity instance.</returns>
@@ -41,7 +89,7 @@ public class HumanEntityFactory : IEntityFactory
 		entity.Name 			= szName;
 		entity.Style 			= nStyle;
 		entity.Type 			= type;
-		entity.MaxMoveSpeed		= 40;
+		entity.MaxMoveSpeed		= 4;
 		entity.MaxRotateSpeed	= 360;
 
 		SqlShape sqlShape = GameSqlLite.GetSingleton().Query<SqlShape>((int)args);
@@ -58,7 +106,23 @@ public class HumanEntityFactory : IEntityFactory
 			
 			// create entity shape
 			factory.CreateShape(sqlShape.ID, delegate(IEntityShape entityShape) {
+
+				// set the entity shape
 				entity.SetShape(entityShape);
+
+				// create the entity machine, add entity state
+				int nAIFlag = AITypeID.AI_IDLE | AITypeID.AI_MOVE;
+
+				IAIMachine machine = AIConstruct.CreateMachine(nAIFlag, entity);
+				if (machine)
+				{
+					entity.SetMachine(machine);
+
+					// change to default state
+					machine.ChangeState(
+						machine.HasState(AITypeID.AI_BORN) ? AITypeID.AI_BORN : AITypeID.AI_IDLE
+						);
+				}
 			});
 			
 			if (!string.IsNullOrEmpty(sqlShape.Name))
