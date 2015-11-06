@@ -1,0 +1,163 @@
+<root>
+	<!--Npc-->
+	<type id="2">
+		<item id="1" animation="Idle_Normal" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2"  playspeed="1" startChangePosture="-1" />
+		<item id="2" animation="Chat" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2"  playspeed="1" startChangePosture="-1" />
+		<item id="7" animation="Move_Normal" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2"  playspeed="1" startChangePosture="-1" />
+	</type>
+	
+	<!--玩家-->
+	<type id="3">
+  <item id="1" animation="Sword_Idle_Normal" name="待机动画" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="2" animation="Land_Idle_Leisure1" name="休闲待机1" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="3" animation="Land_Idle_Leisure2" name="休闲待机2" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="4" animation="Land_Idle_Battle" name="战斗待机" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="5" animation="Sword_Move_Battle" name="移动状态" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="6" animation="Land_Dodge" name="闪避状态" commandType="4" hard="20" shift="20" interrupt="2" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="8" animation="Land_Attack_Combo_1_Recruit" name="第一招" commandType="2" hard="7" shift="2" interrupt="8" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="10" animation="Land_Attack_Combo_2_Recruit" name="第二招" commandType="2" hard="9" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="12" animation="Land_Attack_Combo_3_Recruit" name="第三招" commandType="2" hard="11" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="14" animation="Land_Attack_Combo_1_Charge" name="冲锋动作" commandType="2" hard="7" shift="2" interrupt="6" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="15" animation="Land_Attack_Combo_1_Recruit_2" name="冲锋第一招" commandType="2" hard="7" shift="2" interrupt="8" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="16" animation="Land_Attack_Combo_2_Recruit_2" name="冲锋第二招" commandType="2" hard="9" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="17" animation="Land_Attack_Combo_3_Recruit_2" name="冲锋第三招" commandType="2" hard="11" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="25" animation="General_Attack_Skill_1" name="技能1攻击" commandType="2" hard="11" shift="2" interrupt="12" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="26" animation="General_Attack_Skill_2" name="技能2攻击" commandType="2" hard="11" shift="2" interrupt="12" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="36" animation="General_Attack_Skill_3" name="技能3攻击" commandType="2" hard="11" shift="2" interrupt="12" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="35" animation="Land_Join_1" name="连招→技能1" commandType="10" hard="11" shift="10" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="39" animation="Land_Join_2" name="连招→技能2" commandType="10" hard="11" shift="10" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="9" animation="Land_Attack_Combo_1_Closing" name="第一招的收招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="11" animation="Land_Attack_Combo_2_Closing" name="第二招的收招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="13" animation="Land_Attack_Combo_3_Closing" name="第三招的收招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="2" startChangePosture="-1" />
+  <item id="32" animation="Land_Attack_Combo_1_Closing_2" name="收招，冲锋第一招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="33" animation="Land_Attack_Combo_2_Closing_2" name="收招，冲锋第二招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="34" animation="Land_Attack_Combo_3_Closing_2" name="收招，冲锋第三招" commandType="10" hard="1" shift="2" interrupt="0" transition="0" playspeed="2" startChangePosture="-1" />
+  <item id="20" animation="Land_Hit_Stand_Floating" name="站立到浮空受击" commandType="8" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+  <item id="21" animation="Land_Hit_Floating" name="浮空受击" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+  <item id="22" animation="Land_Hit_Drop" name="下落状态" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+  <item id="23" animation="Land_Hit_Getup" name="起身状态" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="24" animation="Land_Die_1" name="死亡状态" commandType="6" hard="15" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+  <item id="27" animation="Land_Hit_Skill_1_1" name="技能1的受击1" commandType="2" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="28" animation="Land_Hit_Skill_1_2" name="技能1的受击2" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="29" animation="Land_Hit_Skill_2_3" name="技能2的受击1" commandType="2" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="30" animation="Land_Hit_Skill_Getup" name="趴下起身" commandType="2" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="31" animation="Land_Hit_Skill_Getup2" name="平躺起身" commandType="2" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="43" animation="Land_Hit_Front_1" name="前受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="44" animation="Land_Hit_Front_2" name="前受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="45" animation="Land_Hit_Left_1" name="左受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="46" animation="Land_Hit_Left_2" name="左受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="47" animation="Land_Hit_Right_1" name="右受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="48" animation="Land_Hit_Right_2" name="右受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="49" animation="General_Attack_Skill_test" name="全屏技能" commandType="10" hard="9" shift="20" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="101" animation="Land_other_Collection" name="采集动作" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+  <item id="102" animation="Land_BUFF_Vertigo" name="眩晕动作" commandType="10" hard="9" shift="2" interrupt="0" transition="20" playspeed="1" startChangePosture="-1" />
+  <item id="103" animation="Land_BUFF_Paralysis" name="瘫痪动作" commandType="10" hard="9" shift="2" interrupt="0" transition="20" playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!--浮游炮-->
+	<type id="7">
+		<item id="1" animation="Idle_Normal" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2"  playspeed="1" startChangePosture="-1" />
+		<item id="2" animation="Attack_Normal" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2"  playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!--怪物-->
+	<type id="10">
+		<item id="1" animation="Idle_Normal" name="待机动画" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="5" animation="Move_Battle" name="移动状态" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="7" animation="Move_Normal" name="休闲移动" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="20" animation="Hit_Stand_Floating" name="站立到浮空受击" commandType="8" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="21" animation="Hit_Floating" name="浮空受击" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="22" animation="Hit_Drop" name="下落状态" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="23" animation="Hit_Getup" name="起身状态" commandType="8" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="24" animation="Die_Normal" name="死亡状态" commandType="6" hard="15" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="27" animation="Hit_Skill_1_1" name="技能1的受击1" commandType="2" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="28" animation="Hit_Skill_1_2" name="技能1的受击2" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="29" animation="Hit_Skill_2_3" name="技能2的受击1" commandType="2" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="30" animation="Hit_Skill_Getup" name="趴下起身" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="31" animation="Hit_Skill_Getup2" name="平躺起身" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="43" animation="Hit_Front_1" name="前受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="44" animation="Hit_Front_2" name="前受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="45" animation="Hit_Left_1" name="左受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="46" animation="Hit_Left_2" name="左受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="47" animation="Hit_Right_1" name="右受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="48" animation="Hit_Right_2" name="右受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="54" animation="Remote_1" name="怪物远程射击1" commandType="7" hard="5" shift="2" interrupt="3" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="55" animation="Melee_1" name="怪物近战攻击1" commandType="7" hard="5" shift="2" interrupt="3" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="56" animation="Melee_2" name="怪物近战攻击2" commandType="7" hard="5" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="57" animation="Appearance_1" name="怪物出场动作" commandType="7" hard="11" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="102" animation="BUFF_Vertigo" name="眩晕动作" commandType="10" hard="20" shift="20" interrupt="20" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="103" animation="BUFF_Paralysis" name="瘫痪动作" commandType="10" hard="20" shift="20" interrupt="20" transition="0" playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!-- 精英怪 -->
+	<type id="11">
+		<item id="1" animation="Idle_Normal" name="待机动画" commandType="1" hard="0" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="5" animation="Move_Battle" name="移动状态" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="7" animation="Move_Normal" name="休闲移动" commandType="7" hard="1" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="20" animation="Hit_Stand_Floating" name="站立到浮空受击" commandType="8" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="21" animation="Hit_Floating" name="浮空受击" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="22" animation="Hit_Drop" name="下落状态" commandType="8" hard="5" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="2" />
+		<item id="23" animation="Hit_Getup" name="起身状态" commandType="8" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="24" animation="Die_Normal" name="死亡状态" commandType="6" hard="15" shift="2" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="27" animation="Hit_Skill_1_1" name="技能1的受击1" commandType="2" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="28" animation="Hit_Skill_1_2" name="技能1的受击2" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="29" animation="Hit_Skill_2_3" name="技能2的受击1" commandType="2" hard="11" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="30" animation="Hit_Skill_Getup" name="趴下起身" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="31" animation="Hit_Skill_Getup2" name="平躺起身" commandType="2" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="43" animation="Hit_Front_1" name="前受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="44" animation="Hit_Front_2" name="前受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="45" animation="Hit_Left_1" name="左受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="46" animation="Hit_Left_2" name="左受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="47" animation="Hit_Right_1" name="右受击1" commandType="10" hard="7" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="48" animation="Hit_Right_2" name="右受击2" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="54" animation="Remote_1" name="怪物远程射击1" commandType="7" hard="5" shift="2" interrupt="3" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="55" animation="Melee_1" name="怪物近战攻击1" commandType="7" hard="5" shift="2" interrupt="3" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="56" animation="Melee_2" name="怪物近战攻击2" commandType="7" hard="5" shift="2" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="102" animation="BUFF_Vertigo" name="眩晕动作" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="103" animation="BUFF_Paralysis" name="瘫痪动作" commandType="10" hard="9" shift="2" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!--Boss-->
+	<type id="12">
+		<item id="1" animation="Idle_Normal" name="待机动画" commandType="1" hard="14" shift="15" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="5" animation="Move_Battle" name="移动状态" commandType="7" hard="14" shift="15" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+		<item id="7" animation="Move_Normal" name="休闲移动" commandType="4" hard="14" shift="15" interrupt="2" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="20" animation="Hit_Stand_Floating" name="站立到浮空受击" commandType="8" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="21" animation="Hit_Floating" name="浮空受击" commandType="8" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="22" animation="Hit_Drop" name="下落状态" commandType="8" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="23" animation="Hit_Getup" name="起身状态" commandType="8" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="24" animation="Die_Normal" name="死亡状态" commandType="6" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="27" animation="Hit_Skill_1_1" name="技能1的受击1" commandType="2" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="28" animation="Hit_Skill_1_2" name="技能1的受击2" commandType="2" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="29" animation="Hit_Skill_2_3" name="技能2的受击1" commandType="2" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="30" animation="Hit_Skill_Getup" name="趴下起身" commandType="2" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="31" animation="Hit_Skill_Getup2" name="平躺起身" commandType="2" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="43" animation="Hit_Front_1" name="前受击1" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="44" animation="Hit_Front_2" name="前受击2" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="45" animation="Hit_Left_1" name="左受击1" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="46" animation="Hit_Left_2" name="左受击2" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="47" animation="Hit_Right_1" name="右受击1" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="48" animation="Hit_Right_2" name="右受击2" commandType="10" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="54" animation="Remote_1" name="怪物远程射击1" commandType="7" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="55" animation="Melee_1" name="怪物近战攻击1" commandType="7" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="56" animation="Melee_2" name="怪物近战攻击2" commandType="7" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="57" animation="Appearance_1" name="怪物出场动作" commandType="7" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="301" animation="Hit_Paralysis" name="瘫痪状态" commandType="1" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="302" animation="Hit_Recovery" name="恢复动作" commandType="1" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="303" animation="Hit_Resist" name="抵抗受击" commandType="1" hard="14" shift="15" interrupt="0" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="304" animation="Skill_1" name="技能1" commandType="1" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="305" animation="Skill_2" name="技能2" commandType="1" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="306" animation="Appearance_Space" name="出场动作" commandType="1" hard="14" shift="15" interrupt="14" transition="0" playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!--陷阱-->
+	<type id="14">
+		<item id="1" animation="Idle_Normal" name="待机动画" commandType="7" hard="14" shift="15" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+		<item id="55" animation="Melee_1" name="怪物近战攻击1" commandType="7" hard="14" shift="15" interrupt="10" transition="0" playspeed="1" startChangePosture="-1" />
+	</type>
+
+	<!--友军-->
+	<type id="15">
+		<item id="1" animation="Idle_Normal" name="待机动画" commandType="1" hard="14" shift="15" interrupt="0" transition="0.2" playspeed="1" startChangePosture="-1" />
+	</type>
+</root>
