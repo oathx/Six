@@ -89,6 +89,12 @@ public class TypeHelper
 /// </summary>
 public class XmlStruct
 {
+	/// <param name="ep">Ep.</param>
+	public static implicit operator bool(XmlStruct xmlStruct)
+	{
+		return xmlStruct != default(XmlStruct);
+	}
+
 	/// <summary>
 	/// Initializes a new instance of the <see cref="XmlStruct"/> class.
 	/// </summary>
@@ -107,6 +113,7 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 	/// The xml struct instance.
 	/// </summary>
 	public T			target = new T();
+	public Vector2		scroll = Vector2.zero;
 
 	// invalidate return value define
 	public enum ResultType {
@@ -129,34 +136,77 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 	{
 
 	}
-
-	/// <summary>
-	/// Raises the GU event.
-	/// </summary>
-	public virtual void OnGUI()
-	{
-		if (target != default(T)) {
-			Invalidate (target, LayoutType.None);
-		}
-	}
-
-	/// <summary>
-	/// Raises the enable event.
-	/// </summary>
-	public virtual void OnEnable()
-	{
-
-	}
-
+	
 	/// <summary>
 	/// Invalidate the specified target and bReadOnly.
 	/// </summary>
 	/// <param name="target">Target.</param>
 	/// <param name="bReadOnly">If set to <c>true</c> b read only.</param>
-	public virtual ResultType Invalidate(object target, LayoutType layout)
+	public virtual ResultType 	Invalidate(object target, LayoutType layout)
 	{
+		if (target == default(object))
+			return ResultType.Failure;
+
+		System.Type targetType 		= target.GetType ();
+
+		// get the object all property
+		PropertyInfo[] aryProperty 	= targetType.GetProperties (
+			BindingFlags.Public | BindingFlags.Instance | BindingFlags.DeclaredOnly
+			);
+		foreach (PropertyInfo p in aryProperty) 
+		{
+			if (layout == LayoutType.Readonly)
+			{
+
+			}
+			else
+			{
+
+
+			}
+		}
+
 		return ResultType.Success;
 	}
+
+	/// <summary>
+	/// Raises the GU event.
+	/// </summary>
+	public virtual void 		OnGUI()
+	{
+		if (target != default(T)) 
+		{
+			// display target data type
+			GUILayout.Label(target.GetType().Name, EditorStyles.boldLabel);
+
+			// start scroll view
+			scroll = EditorGUILayout.BeginScrollView(scroll);
+
+			// Invalidate and layout target struct
+			Invalidate (
+				target, LayoutType.None
+				);
+
+			EditorGUILayout.EndScrollView();
+		}
+	}
+
+	/// <summary>
+	/// Raises the inspector update event.
+	/// </summary>
+	public virtual void 		OnInspectorUpdate()
+	{
+		Repaint ();
+	}
+
+	/// <summary>
+	/// Raises the enable event.
+	/// </summary>
+	public virtual void 		OnEnable()
+	{
+
+	}
+
 }
 
 
