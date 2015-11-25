@@ -13,14 +13,19 @@ using System.Reflection;
 /// </summary>
 public class XmlSqlLiteStruct : XmlStruct
 {
-	[DirectoryField]
-	public string			SqlExternTool
+	/// <summary>
+	/// Gets or sets the new sql.
+	/// </summary>
+	/// <value>The new sql.</value>
+	[ButtonField("NewSqlDatabse")]
+	public ButtonCallback	NewSqlCallback
 	{ get; set; }
 
 	/// <summary>
 	/// Gets or sets the name of the sql.
 	/// </summary>
 	/// <value>The name of the sql.</value>
+	[ReadonlyField]
 	public string			SqlName
 	{ get; set; }
 
@@ -28,18 +33,10 @@ public class XmlSqlLiteStruct : XmlStruct
 	/// Gets or sets the sql path.
 	/// </summary>
 	/// <value>The sql path.</value>
-	[DirectoryField]
+	[ReadonlyField]
 	public string			SqlPath
 	{ get; set; }
-
-	/// <summary>
-	/// Gets or sets the new sql.
-	/// </summary>
-	/// <value>The new sql.</value>
-	[ButtonField("NewSql")]
-	public ButtonCallback	NewSqlCallback
-	{ get; set; }
-
+	
 	/// <summary>
 	/// Initializes a new instance of the <see cref="XmlSceneStruct"/> class.
 	/// </summary>
