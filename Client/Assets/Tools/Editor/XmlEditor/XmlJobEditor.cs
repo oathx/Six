@@ -9,12 +9,12 @@ using System.Xml;
 /// <summary>
 /// Xml scene editor.
 /// </summary>
-public class XmlSceneEditor : XmlEditorWindow<XmlSceneStruct>
+public class XmlJobEditor : XmlEditorWindow<XmlJobStruct>
 {
-	[MenuItem("Window/Custom/Scene Editor")]
+	[MenuItem("Window/Custom/Job Editor")]
 	public static void Create()
 	{
-		XmlSceneEditor window = EditorWindow.GetWindow<XmlSceneEditor> ();
+		XmlJobEditor window = EditorWindow.GetWindow<XmlJobEditor> ();
 		if (window)
 		{
 			window.Show();
@@ -22,3 +22,4 @@ public class XmlSceneEditor : XmlEditorWindow<XmlSceneStruct>
 		}
 	}
 }
+
