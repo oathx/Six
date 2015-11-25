@@ -10,12 +10,12 @@ using System.Xml;
 /// <summary>
 /// Zip editor.
 /// </summary>
-public class ZipEditor : XmlEditorWindow<ZipXmlStruct>
+public class XmlZipEditor : XmlEditorWindow<XmlZipStruct>
 {
 	[MenuItem("Window/Custom/Zip Editor")]
 	public static void CreateSceneEditor()
 	{
-		ZipEditor window = EditorWindow.GetWindow<ZipEditor>();
+		XmlZipEditor window = EditorWindow.GetWindow<XmlZipEditor>();
 		if (window)
 		{
 			window.Show();

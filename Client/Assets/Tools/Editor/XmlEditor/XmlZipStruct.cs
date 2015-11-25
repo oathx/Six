@@ -170,7 +170,7 @@ public class ZipPack : XmlStruct
 /// <summary>
 /// Zip xml struct.
 /// </summary>
-public class ZipXmlStruct : XmlStruct
+public class XmlZipStruct : XmlStruct
 {
 	/// <summary>
 	/// Gets or sets the out URL.
@@ -189,7 +189,7 @@ public class ZipXmlStruct : XmlStruct
 	/// <summary>
 	/// Initializes a new instance of the <see cref="ZipXmlStruct"/> class.
 	/// </summary>
-	public ZipXmlStruct()
+	public XmlZipStruct()
 	{
 		OutDirectory = AssetBundleHelper.OutUrl.Substring(Application.dataPath.Length - 6);
 	}
