@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 // sqlite support
 using Mono.Data.Sqlite;
+using System.Data;
 
 /// <summary>
 /// Action effect.
@@ -37,21 +38,21 @@ public class SqlAction : ISqlPackage
 	/// </summary>
 	/// <value>The I.</value>
 	public int 				ID
-	{ get; private set; }
+	{ get; set; }
 
 	/// <summary>
 	/// Gets the name.
 	/// </summary>
 	/// <value>The name.</value>
 	public string			Name
-	{ get; private set; }
+	{ get; set; }
 
 	/// <summary>
 	/// Gets the animation I.
 	/// </summary>
 	/// <value>The animation I.</value>
 	public int 				AnimationID
-	{ get; private set; }
+	{ get; set; }
 
 	/// <summary>
 	/// The effect.
@@ -71,6 +72,21 @@ public class SqlAction : ISqlPackage
 
 		DecodeEffect(
 			System.Convert.ToString(sdr ["Effect"])
+			);
+	}
+
+	/// <summary>
+	/// Encode the specified row.
+	/// </summary>
+	/// <param name="row">Row.</param>
+	public override void 	Encode (DataRow row)
+	{
+		ID 					= System.Convert.ToInt32(row ["ID"]);
+		Name 				= System.Convert.ToString(row ["Name"]);
+		AnimationID 		= System.Convert.ToInt32(row ["AnimationID"]);
+		
+		DecodeEffect(
+			System.Convert.ToString(row ["Effect"])
 			);
 	}
 

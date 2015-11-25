@@ -1,8 +1,10 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 // sqlite support
 using Mono.Data.Sqlite;
+
 
 /// <summary>
 /// Sql shape.
@@ -14,7 +16,7 @@ public class SqlCamera : ISqlPackage
 	/// </summary>
 	/// <value>The shape I.</value>
 	public int 				ID
-	{ get; private set; }
+	{ get; set; }
 	
 	
 	/// <summary>
@@ -72,6 +74,21 @@ public class SqlCamera : ISqlPackage
 		OffsetEulerAnglesLerp 	= System.Convert.ToSingle(sdr ["lockRotationLerp"]);
 		FieldOfView 			= System.Convert.ToSingle(sdr ["fieldOfView"]);
 		IsRelative 				= System.Convert.ToInt32 (sdr ["Relative"]) != 0 ? true : false;
+	}
+
+	/// <summary>
+	/// Encode the specified row.
+	/// </summary>
+	/// <param name="row">Row.</param>
+	public override void 	Encode (DataRow row)
+	{
+		ID 						= System.Convert.ToInt32(row ["id"]);
+		OffsetPosition 			= MathfEx.ToVector3(System.Convert.ToString(row ["lockPosition"]));
+		OffsetPositionLerp 		= System.Convert.ToSingle(row ["lockPositionLerp"]);
+		OffsetEulerAngles 		= MathfEx.ToVector3(System.Convert.ToString(row ["lockRotation"]));
+		OffsetEulerAnglesLerp 	= System.Convert.ToSingle(row ["lockRotationLerp"]);
+		FieldOfView 			= System.Convert.ToSingle(row ["fieldOfView"]);
+		IsRelative 				= System.Convert.ToInt32 (row ["Relative"]) != 0 ? true : false;
 	}
 }
 

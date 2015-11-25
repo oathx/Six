@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 // sqlite support
 using Mono.Data.Sqlite;
+using System.Data;
 
 /// <summary>
 /// Sql shape.
@@ -14,35 +15,35 @@ public class SqlJob : ISqlPackage
 	/// </summary>
 	/// <value>The I.</value>
 	public int 				ID
-	{ get; private set; }
+	{ get; set; }
 
 	/// <summary>
 	/// Gets the name.
 	/// </summary>
 	/// <value>The name.</value>
 	public string			Name
-	{ get; private set; }
+	{ get; set; }
 
 	/// <summary>
 	/// Gets the shape I.
 	/// </summary>
 	/// <value>The shape I.</value>
 	public int 				ShapeID
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the weapon.
 	/// </summary>
 	/// <value>The weapon.</value>
 	public string			Weapon
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the describe.
 	/// </summary>
 	/// <value>The describe.</value>
 	public string			Describe
-	{ get; private set; }
+	{ get; set; }
 
 	
 	/// <summary>
@@ -56,6 +57,19 @@ public class SqlJob : ISqlPackage
 		ShapeID 	= System.Convert.ToInt32(sdr ["ShapeID"]);
 		Weapon 		= System.Convert.ToString(sdr ["Weapon"]);
 		Describe	= System.Convert.ToString(sdr ["Describe"]);
+	}
+
+	/// <summary>
+	/// Encode the specified row.
+	/// </summary>
+	/// <param name="row">Row.</param>
+	public override void 	Encode (DataRow row)
+	{
+		ID			= System.Convert.ToInt32(row ["ID"]);
+		Name 		= System.Convert.ToString(row ["Name"]);
+		ShapeID 	= System.Convert.ToInt32(row ["ShapeID"]);
+		Weapon 		= System.Convert.ToString(row ["Weapon"]);
+		Describe	= System.Convert.ToString(row ["Describe"]);
 	}
 }
 

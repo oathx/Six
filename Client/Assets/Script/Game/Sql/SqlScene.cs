@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mono.Data.Sqlite;
+using System.Data;
 
 public enum SceneType
 {
@@ -83,6 +84,23 @@ public class SqlScene : ISqlPackage
 	/// </summary>
 	/// <param name="sdr">Sdr.</param>
 	public override void 	Decode (SqliteDataReader sdr)
+	{
+		ID			= System.Convert.ToInt32(sdr["ID"]);
+		Name 		= System.Convert.ToString(sdr["Name"]);
+		Url			= System.Convert.ToString(sdr["Url"]);
+		Stream		= System.Convert.ToInt32(sdr["Stream"]) != 0;
+		Script 		= System.Convert.ToString(sdr["Script"]);
+		Describe 	= System.Convert.ToString(sdr["Describe"]);
+		Type 		= (SceneType)System.Convert.ToInt32(sdr["Type"]);
+		Born		= MathfEx.ToVector3(System.Convert.ToString(sdr["Born"]));
+		CameraID	= System.Convert.ToInt32(sdr["CameraID"]);
+	}
+
+	/// <summary>
+	/// Encode the specified row.
+	/// </summary>
+	/// <param name="row">Row.</param>
+	public override void 	Encode (DataRow sdr)
 	{
 		ID			= System.Convert.ToInt32(sdr["ID"]);
 		Name 		= System.Convert.ToString(sdr["Name"]);

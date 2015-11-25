@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using Mono.Data.Sqlite;
+using System.Data;
 
 public enum ItemType
 {
@@ -78,6 +79,21 @@ public class SqlItem : ISqlPackage
 		Part		= System.Convert.ToInt32(sdr["PartType"]);
 		Icon		= System.Convert.ToString(sdr["Icon"]);
 		ExtendUrl	= System.Convert.ToString(sdr["ExtendUrl"]);
+	}
+
+	/// <summary>
+	/// Encode the specified row.
+	/// </summary>
+	/// <param name="row">Row.</param>
+	public override void 	Encode (DataRow row)
+	{
+		ID			= System.Convert.ToInt32(row["ID"]);
+		Name 		= System.Convert.ToString(row["Name"]);
+		Url			= System.Convert.ToString(row["Url"]);
+		Type		= System.Convert.ToInt32(row["Type"]);
+		Part		= System.Convert.ToInt32(row["PartType"]);
+		Icon		= System.Convert.ToString(row["Icon"]);
+		ExtendUrl	= System.Convert.ToString(row["ExtendUrl"]);
 	}
 }
 

@@ -15,63 +15,63 @@ public class SqlSpread : ISqlPackage
 	/// </summary>
 	/// <value>The shape I.</value>
 	public int 				ID
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the weapon.
 	/// </summary>
 	/// <value>The weapon.</value>
 	public string			Name
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the describe.
 	/// </summary>
 	/// <value>The describe.</value>
 	public string			Icon
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the name.
 	/// </summary>
 	/// <value>The name.</value>
 	public int				Level
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the state.
 	/// </summary>
 	/// <value>The state.</value>
 	public int 				State
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the style.
 	/// </summary>
 	/// <value>The style.</value>
 	public int 				Area
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets the observer.
 	/// </summary>
 	/// <value>The observer.</value>
 	public string			Observer
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets a value indicating whether this <see cref="SqlSpread"/> enable menu.
 	/// </summary>
 	/// <value><c>true</c> if enable menu; otherwise, <c>false</c>.</value>
 	public bool				EnableMenu
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Gets a value indicating whether this <see cref="SqlSpread"/> enable joystick.
 	/// </summary>
 	/// <value><c>true</c> if enable joystick; otherwise, <c>false</c>.</value>
 	public bool				EnableJoystick
-	{ get; private set; }
+	{ get; set; }
 	
 	/// <summary>
 	/// Decode the specified sdr.
@@ -94,7 +94,7 @@ public class SqlSpread : ISqlPackage
 	/// Fill the specified dc.
 	/// </summary>
 	/// <param name="dc">Dc.</param>
-	public void 			Fill(DataRow row)
+	public override void 	Encode (DataRow row)
 	{
 		ID 				= System.Convert.ToInt32(row ["ID"]);
 		Name 			= System.Convert.ToString(row ["Name"]);
