@@ -1,0 +1,4 @@
+AISequence
+	AIPatrol Radius=30 ErrorRange=1
+	AIWaitForTime MinWaitTime=1 MaxWaitTime=10
+		

@@ -1,0 +1,788 @@
+<root>
+	<!-- -->
+    <plot id="11">
+		<text storyID="101" npcId="1" talk="恭喜你成为金刚战甲的正式驾驶员！"/>
+		<text storyID="102" npcId="0" talk="我迫不及待的想马上执行任务！"/>
+		<text storyID="103" npcId="1" talk="你有这份觉悟，我感到很欣慰，现在战况紧急，急需新鲜血液注入。"/>
+		<text storyID="104" npcId="0" talk="我已经做好准备！"/>
+		<text storyID="105" npcId="1" talk="你的第一个任务是前往【卡米尔星系】，情报显示那里有少量机械族怪物出没，第一站是小行星带的一个前哨站，你需要占领这个前哨站！"/>
+		<text storyID="106" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="12">
+		<text storyID="101" npcId="1" talk="年轻人，你怎么还傻傻待在这里。"/>
+		<text storyID="102" npcId="0" talk="我正准备出发，长官！"/>
+		<text storyID="103" npcId="1" talk="关卡1：初次考核！快出发吧！"/>
+		<text storyID="104" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="13">
+		<text storyID="101" npcId="1" talk="完成得不错，小伙子"/>
+		<text storyID="102" npcId="0" talk="这对我来说只是小意思，请快点给我派发下一个任务吧！"/>
+	</plot>
+
+    <!-- -->
+	<plot id="21">
+		<text storyID="101" npcId="1" talk="卡米尔星系的前哨站，我们已经拿下了！现在我把下一个任务的信息传输给你……"/>
+		<text storyID="102" npcId="0" talk="信息处理中心已经收到指令，开始分析！"/>
+		<text storyID="103" npcId="1" talk="别急，对于一名合格的机甲驾驶员来说，除了要熟练的操控机甲，对机甲的维护同样是必不可少的。"/>
+		<text storyID="104" npcId="0" talk="维护机甲？"/>
+		<text storyID="105" npcId="1" talk="没错，我已经给你一件装备，快点给你的【金刚】机甲组装上去吧！"/>
+	</plot>
+	 <plot id="22">
+		<text storyID="101" npcId="1" talk="快穿上装备吧！"/>
+		<text storyID="102" npcId="0" talk="明白！长官！"/>
+	</plot>
+	 <plot id="23">
+		<text storyID="101" npcId="1" talk="很好，你已经成功组装上装备，你拥有资格进行下面的任务。"/>
+		<text storyID="102" npcId="0" talk="我才刚热身呢，请快点给我派发下一个任务吧！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="31">
+		<text storyID="101" npcId="1" talk="现在我们已经占领了前哨站，下一个需要以此为跳板，进行星系纵深的推进。所以你需要继续深入这个小行星带，寻找一切情报。"/>
+		<text storyID="102" npcId="0" talk="遵命，长官！"/>
+	</plot>
+	 <plot id="32">
+		<text storyID="101" npcId="1" talk="还不快出发！在战场上，可没时间等你！"/>
+		<text storyID="102" npcId="0" talk="马上出发长官！"/>
+	</plot>
+	 <plot id="33">
+		<text storyID="101" npcId="1" talk="不错士兵，你已经越来越进入状态了。"/>
+		<text storyID="102" npcId="0" talk="考核第二阶段我已经完成了，赶快指派我下一个任务吧！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="41">
+		<text storyID="101" npcId="1" talk="我就喜欢你这样麻利的小伙子，当初没白救你。"/>
+		<text storyID="102" npcId="0" talk="我想继续战斗！"/>
+		<text storyID="103" npcId="1" talk="真正战场上太心急，可是会送命的，切记勿躁。"/>
+		<text storyID="104" npcId="0" talk="好的……"/>
+		<text storyID="105" npcId="1" talk="根据你在小行星带获得的情报，有大股敌人潜藏在一个秘密船坞之中。在攻占这个船坞之前，你需要强化一下你的装备。"/>
+		<text storyID="106" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="42">
+		<text storyID="101" npcId="1" talk="你的机甲战技控制芯片已经激活，快点打开面板吧。"/>
+		<text storyID="102" npcId="0" talk="遵命，长官！"/>
+	</plot>
+	 <plot id="43">
+		<text storyID="101" npcId="1" talk="恭喜你！已经成功将你的装备强化了！"/>
+		<text storyID="102" npcId="0" talk="我感觉机甲充满了能量！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="51">
+		<text storyID="101" npcId="1" talk="很好，接下来，你就需要前往卡米尔星系的船坞边缘，摧毁这些机械族怪物的据点！"/>
+		<text storyID="102" npcId="0" talk="我这就去！"/>
+	</plot>
+	 <plot id="52">
+		<text storyID="101" npcId="1" talk="还不快出发！在战场上，可没时间等你！"/>
+		<text storyID="102" npcId="0" talk="马上出发长官！"/>
+	</plot>
+	 <plot id="53">
+		<text storyID="101" npcId="1" talk="士兵，你越来越有正式驾驶员的范了。"/>
+		<text storyID="102" npcId="0" talk="距离成功只差一步，我会继续努力的！"/>
+	</plot>
+
+
+	<!-- -->
+	<plot id="61">
+		<text storyID="101" npcId="1" talk="下一个任务，需要船长授权，才能派发。"/>
+		<text storyID="102" npcId="0" talk="终于可以见到船长了！"/>
+		<text storyID="103" npcId="1" talk="不要激动试炼驾驶员，现在我会给你一封推荐信，你需要拿着它去找船长。"/>
+		<text storyID="104" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="62">
+		<text storyID="101" npcId="1" talk="还不快出发！船长正在等你！"/>
+		<text storyID="102" npcId="0" talk="马上出发长官！"/>
+	</plot>
+	 <plot id="63">
+		<text storyID="101" npcId="1" talk="我就是革命军母船的船长，士兵，你找我什么事情？"/>
+		<text storyID="102" npcId="0" talk="报告船长！试炼驾驶员前来报到！"/>
+	</plot>
+
+	
+	<!-- -->
+	<plot id="71">
+		<text storyID="101" npcId="1" talk="我听参谋长说过你，革命军需要你这样的新鲜血液。"/>
+		<text storyID="102" npcId="0" talk="奋勇杀敌，是我职责所在！"/>
+		<text storyID="103" npcId="1" talk="很好，接下来是这片区域的攻坚作战，占领它，我们就占领了这个星球！我命令你，攻占卡米尔星系的船坞！"/>
+		<text storyID="104" npcId="0" talk="保证完成任务！"/>
+	</plot>
+	 <plot id="72">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="73">
+		<text storyID="101" npcId="1" talk="你成功击杀了那头守卫船坞的头领级机械BOSS，实在让我有些刮目相看。"/>
+		<text storyID="102" npcId="0" talk="不辱使命！"/>
+		<text storyID="105" npcId="1" talk="不过，我们面对的是强大无比的机械帝国，我们需要推翻他们的统治！"/>
+		<text storyID="106" npcId="0" talk="我感觉我们舰队十分强大啊！一定可以打败机械族！ "/>
+		<text storyID="107" npcId="1" talk="我很欣赏你的斗志，少尉。但实际上，在和机械族的战争中，我们仍然处于绝对的弱势。"/>
+		<text storyID="108" npcId="0" talk="机械族竟然如此强大……"/>
+		<text storyID="109" npcId="1" talk="我们人类在和机械族漫长的斗争中，一度处于种族灭亡边缘，是金刚战甲的横空出世才让我们免于灭族之祸。"/>
+		<text storyID="110" npcId="0" talk="这就是我驾驶的金刚战甲么……"/>
+		<text storyID="111" npcId="1" talk="没错，但金刚战甲虽然强大，却对驾驶员的要求非常高。所以你肩负着全人类的希望，一定要好好努力！"/>
+		<text storyID="112" npcId="0" talk="我会的"/>
+	</plot>
+	<!-- -->
+	<plot id="81">
+		<text storyID="101" npcId="1" talk="接下来我会为你开启新的科技！"/>
+		<text storyID="102" npcId="0" talk="新的科技？"/>
+		<text storyID="103" npcId="1" talk="是的，这是金刚战甲的技能科技系统，它可以让你实力突飞猛进！"/>
+		<text storyID="104" npcId="0" talk="太好了，我要马上使用！"/>
+	</plot>
+	 <plot id="82">
+		<text storyID="101" npcId="1" talk="你的机甲战技控制芯片已经激活，快点打开面板吧。"/>
+		<text storyID="102" npcId="0" talk="遵命，长官！"/>
+	</plot>
+	 <plot id="83">
+		<text storyID="101" npcId="1" talk="恭喜你学会了金刚机甲技能！"/>
+		<text storyID="102" npcId="0" talk="我感觉自己现在变得很强大，我想要马上战斗！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="91">
+		<text storyID="101" npcId="1" talk="我理解你想要战斗的心情，你回去找参谋长吧，他会给你派发任务。"/>
+		<text storyID="102" npcId="0" talk="遵命船长！"/>
+	</plot>
+	 <plot id="92">
+		<text storyID="101" npcId="1" talk="去吧孩子，革命先驱与你同在！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="93">
+		<text storyID="101" npcId="1" talk="怎么样？船长是个很有威严的人吧？"/>
+		<text storyID="102" npcId="0" talk="我倒觉得他挺亲切的。"/>
+		<text storyID="103" npcId="1" talk="唉不是吧！他可是出了名的严厉呢！总之，我只能说你运气不错。"/>
+		<text storyID="104" npcId="0" talk="参谋长，我想前往前线战斗。"/>
+		<text storyID="105" npcId="1" talk="年轻真好啊，这么的热血……好吧，我会指派给你一个任务，你需要好好完成它。"/>
+		<text storyID="106" npcId="0" talk="没问题，我天生就是为了做这种事情。"/>
+		<text storyID="107" npcId="1" talk="我有必要提醒你，这不是演习和考核，而是实战。稍有不慎，就会失去性命！"/>
+		<text storyID="108" npcId="0" talk="我已经做好准备了！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="101">
+		<text storyID="101" npcId="1" talk="我们情报部门侦测到，在喀什利行星上，有一个机械迷城，这很有可能是机械帝国的秘密研究基地，我们需要潜入，然后破坏它，明白了吗？"/>
+		<text storyID="102" npcId="0" talk="明白长官！"/>
+		<text storyID="103" npcId="1" talk="这个计划分4个阶段步骤，每完成一个阶段步骤，你都要回来找我报告，现在我已经把第一阶段的计划发送到你的信息面板。"/>
+		<text storyID="104" npcId="0" talk="保证完成任务！"/>
+	</plot>
+	 <plot id="102">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="103">
+		<text storyID="101" npcId="1" talk="能看到你活着回来，我很高兴。"/>
+		<text storyID="102" npcId="0" talk="报告参谋长！第一阶段任务已经完成！"/>
+		<text storyID="103" npcId="1" talk="有没有发现什么异常？"/>
+		<text storyID="104" npcId="0" talk="这是一个机械空间站的内部，根据我的查看，其深处拥有巨大的能量波动，十分可疑！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="111">
+		<text storyID="101" npcId="1" talk="参谋部根据你提交的情报分析，这个机械迷城恐怕是存放机械火种的一个据点，你需要继续深入，探取更多情报！"/>
+		<text storyID="102" npcId="0" talk="明白长官！"/>
+	</plot>
+	 <plot id="112">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="113">
+		<text storyID="101" npcId="1" talk="很高兴看你活着提交任务，少尉。"/>
+		<text storyID="102" npcId="0" talk="这次我有重大发现，长官！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="121">
+		<text storyID="101" npcId="1" talk="这次收获的情报很重要，我们已经探明机械迷城深处隐藏一个巨大的机械仓库，在仓库深处储藏着一个机械火种。"/>
+		<text storyID="102" npcId="0" talk="看来我的目标就是去吧这个机械火种取回来。"/>
+		<text storyID="103" npcId="1" talk="没错，这个机械火种对我们革命军很重要，它可以帮助我们更加了解机械帝国。所以你接下来，需要先探查这个仓库。"/>
+		<text storyID="104" npcId="0" talk="明白长官！"/>
+	</plot>
+	 <plot id="122">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="123">
+		<text storyID="101" npcId="1" talk="怎么样少尉？"/>
+		<text storyID="102" npcId="0" talk="我已经基本查明整个仓库的结构了。"/>
+		<text storyID="103" npcId="1" talk="嗯，我已经收到你的情报数据，参谋部正在分析。母船的传感器侦测到巨大的能量波动，可能会有机械族头领守卫这片区域。"/>
+		<text storyID="104" npcId="0" talk="哦？机械族头领很强吗？"/>
+		<text storyID="105" npcId="1" talk="嗯，没错，机械族头领是神秘的机械生命，我们的金刚机甲，正是通过研究机械族科技制造出来的。"/>
+		<text storyID="106" npcId="0" talk="不管他有多强，我都会打败他。"/>
+	</plot>
+	<plot id="131">
+		<text storyID="101" npcId="1" talk="不要太自信，这会让你送命的。"/>
+		<text storyID="102" npcId="0" talk="那我要怎么做？"/>
+		<text storyID="103" npcId="1" talk="在和这头强大机械族怪物战斗前，我会为你开启的是能量块系统！"/>
+		<text storyID="104" npcId="0" talk="能量块系统？"/>
+		<text storyID="105" npcId="1" talk="是的，系统引导步骤已近发送到你的信息处理中心了，按照指示操作吧！"/>
+		<text storyID="106" npcId="0" talk="遵命船长！"/>
+	</plot>
+	 <plot id="132">
+		<text storyID="101" npcId="1" talk="快打开能量块系统吧！"/>
+		<text storyID="102" npcId="0" talk="马上执行！"/>
+	</plot>
+	 <plot id="133">
+		<text storyID="101" npcId="1" talk="很好，你已经开启了能量块系统。"/>
+		<text storyID="102" npcId="0" talk="我能感受到机甲能量十分澎湃的喷涌！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="141">
+		<text storyID="101" npcId="1" talk="很好，这样你就提高了胜利的可能性了！"/>
+		<text storyID="102" npcId="0" talk="我已经做好准备，随时准备出发！"/>
+		<text storyID="103" npcId="1" talk="有自信是好事，但你需要用战功来证明你的实力！去吧，攻占机械迷城最后核心！夺回火种！？"/>
+		<text storyID="104" npcId="0" talk="为了人类复兴而战！"/>
+	</plot>
+	 <plot id="142">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="143">
+		<text storyID="101" npcId="1" talk="火种已经拿下，这下我们的科技又可以得到提升。"/>
+		<text storyID="102" npcId="0" talk="幸不辱命！"/>
+		<text storyID="103" npcId="1" talk="不过机械族居然跟虫族还有勾结，这对我们可不是什么好消息。关于这一点，在以后的作战中，你需要更加注意。"/>
+		<text storyID="104" npcId="0" talk="嗯，这些虫子有点机械化的迹象"/>
+		<text storyID="105" npcId="1" talk="是的，我们已经收集了一些样本进行分析，但具体结果出来，还需要等待一段时间。"/>
+		<text storyID="106" npcId="0" talk="好的，这个机械迷城的任务已经完成了，接下来，要派我去哪里？"/>
+	</plot>
+
+	<plot id="151">
+		<text storyID="101" npcId="1" talk="别着急，你这次立下大功，船长要召见你。"/>
+		<text storyID="102" npcId="0" talk="又有什么好事吗？"/>
+		<text storyID="103" npcId="1" talk="要给你颁发勋章，快去找船长吧！"/>
+		<text storyID="104" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="152">
+		<text storyID="101" npcId="1" talk="快去找船长吧！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="153">
+		<text storyID="101" npcId="1" talk="你立下的战功，已经得到银河舰队的认可，我将给你颁发星海勋章！"/>
+		<text storyID="102" npcId="0" talk="谢谢船长！"/>
+		<text storyID="103" npcId="1" talk="勋章已经颁发，这代表一种荣耀，希望你以后能再创辉煌！"/>
+		<text storyID="104" npcId="1" talk="我会努力的！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="161">
+		<text storyID="101" npcId="1" talk="咳咳，接下来嘛，需要你为革命军寻找一些后勤补给。"/>
+		<text storyID="102" npcId="0" talk="这个任务听上去好像没什么难度。"/>
+		<text storyID="103" npcId="1" talk="在古代地球有个伟大文明，曾经流传一句古话，“兵马未动，粮草先行”，战争打的就是后勤，所以你可不能小瞧这个任务。"/>
+		<text storyID="104" npcId="0" talk="好的，我只希望能有战斗。"/>
+		<text storyID="105" npcId="1" talk="放心吧，我们革命军面临的局势，可比你想象中的要艰巨多了。实际上，在战争还未全面打响的现在，后勤补给是我们和机械帝国摩擦最多的地方。"/>
+		<text storyID="106" npcId="0" talk="也就是说，这样的任务，只会交给有实力的驾驶员？"/>
+		<text storyID="107" npcId="1" talk="你可以这么理解，接下来我为委派你前往盖亚星，去寻找能补充金刚机甲能源的钻石矿脉。"/>
+		<text storyID="108" npcId="0" talk="交给我吧！"/>
+	</plot>
+	 <plot id="162">
+		<text storyID="101" npcId="1" talk="后勤补给可是重任，请谨慎面对"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="163">
+		<text storyID="101" npcId="1" talk="你居然发现一个完整的钻石矿脉，实在太让我惊喜了。"/>
+		<text storyID="102" npcId="0" talk="我也是无意间发现的，看来我运气不错。"/>
+		<text storyID="103" npcId="1" talk="这样一个钻石矿脉，能足够满足我们一段时间后勤补给了，这实在是雪中送炭。"/>
+		<text storyID="104" npcId="0" talk="另外，我还有一个情报想要汇报。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="171">
+		<text storyID="101" npcId="1" talk="先别着急，我们刚获得这么多钻石，正好可以给你锻造一下装备。"/>
+		<text storyID="102" npcId="0" talk="锻造装备？"/>
+		<text storyID="103" npcId="1" talk="是的，你可以自己锻造金刚机甲所需要的部件，具体我已经发到你的信息处理中心了。"/>
+		<text storyID="104" npcId="0" talk="这就弄！"/>
+	</plot>
+	 <plot id="173">
+		<text storyID="101" npcId="1" talk="快打开锻造面板，锻造装备！"/>
+		<text storyID="102" npcId="0" talk="马上执行！"/>
+	</plot>
+	 <plot id="173">
+		<text storyID="101" npcId="1" talk="很好，我已经看到你焕然一新了！"/>
+		<text storyID="102" npcId="0" talk="自己做的装备，果然是最匹配的！"/>
+	</plot>
+
+
+	<!-- -->
+	<plot id="181">
+		<text storyID="101" npcId="1" talk="对了，你刚才说有什么情报？"/>
+		<text storyID="102" npcId="0" talk="我在发现矿脉的时候，能量监测器，发现了有一处异常能量源。"/>
+		<text storyID="103" npcId="1" talk="唔……我看下……这好像是一个古代文明遗留的痕迹，一般来说，只有被幻象力场遮蔽的地方，才会释放出这样的波动。"/>
+		<text storyID="104" npcId="0" talk="我想申请前去探查一下。"/>
+		<text storyID="105" npcId="1" talk="我允许你的申请。"/>
+	</plot>
+	 <plot id="182">
+		<text storyID="101" npcId="1" talk="快去查探吧！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="183">
+		<text storyID="101" npcId="1" talk="这个末日火山果然有异常。"/>
+		<text storyID="102" npcId="0" talk="我也感觉到有些诡异，但就是找不到原因。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="191">
+		<text storyID="101" npcId="1" talk="这不是你的问题，这个末日火山被一个迷幻力场所覆盖，你所看到的只是表象。我们探测分析，已经破解了这个力场。"/>
+		<text storyID="102" npcId="0" talk="那我现在应该怎么做？"/>
+		<text storyID="103" npcId="1" talk="打破表象，进入真正的末日火山。我已经将坐标传送给你了，接下来你要去攻打“末日火山”的精英关卡。"/>
+		<text storyID="104" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="192">
+		<text storyID="101" npcId="1" talk="你还磨磨蹭蹭什么，这是实战！不要贻误战机！"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="193">
+		<text storyID="101" npcId="1" talk="能从精英关卡中活下来，说明你已经 拥有独当一面的实力。"/>
+		<text storyID="102" npcId="0" talk="原来真正的末日火山是如此恐怖，我差点就回不来了。"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="201">
+		<text storyID="101" npcId="1" talk="你现在已经有独当一面的实力了，我会安排你更艰巨的任务，你要做好心理准备。"/>
+		<text storyID="102" npcId="0" talk="没问题！"/>
+		<text storyID="103" npcId="1" talk="根据你之前获得机械卷轴的地方，我们发现了一个坐标信息。"/>
+		<text storyID="104" npcId="0" talk="噢？"/>
+		<text storyID="105" npcId="1" talk="这个坐标信息，我们进行技术破解后，发现里面居然指向了机械族的一个秘密据点。我们现在需要你前往查探一下。"/>
+		<text storyID="106" npcId="0" talk="我马上出发！"/>
+	</plot>
+	 <plot id="202">
+		<text storyID="101" npcId="1" talk="请小心行事。"/>
+		<text storyID="102" npcId="0" talk="放心吧。"/>
+	</plot>
+	 <plot id="203">
+		<text storyID="101" npcId="1" talk="情况可能有些严重。"/>
+		<text storyID="102" npcId="0" talk="怎么了？"/>
+		<text storyID="103" npcId="1" talk="这个机械族的秘密据点，居然是一个大型船坞，机械族可以通过火种的能量，配合船坞恐怖的制造能力，批量生产机械族的士兵出来。"/>
+		<text storyID="104" npcId="0" talk="那我们直接把这个船坞破坏，不就可以了吗？"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="211">
+		<text storyID="101" npcId="1" talk="事情没你想的那么简单，这样一个大型船坞，机械族怎么可能不派重兵把守。"/>
+		<text storyID="102" npcId="0" talk="只要是战斗的事情，就交给我吧。"/>
+		<text storyID="103" npcId="1" talk="你虽然充满斗志，但太热血，往往更容易牺牲。我并不想我们的苦心培养的金刚驾驶员，草率的牺牲。"/>
+		<text storyID="104" npcId="0" talk="那我现在要怎么做？"/>
+		<text storyID="105" npcId="1" talk="你需要进一步提升你的实力，金刚科技中有一项是专门提升装备等阶的，我已经把提升方法发送到你的信息处理中心了。"/>
+		<text storyID="106" npcId="0" talk="马上去提升！"/>
+	</plot>
+	 <plot id="212">
+		<text storyID="101" npcId="1" talk="快点提升装备等阶！"/>
+		<text storyID="102" npcId="0" talk="马上执行！"/>
+	</plot>
+	 <plot id="213">
+		<text storyID="101" npcId="1" talk="很好，你现在越发的成熟了。"/>
+		<text storyID="102" npcId="0" talk="我感觉到前所未有的强大！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="221">
+		<text storyID="101" npcId="1" talk="你的实力虽然提升了，但机械族的怪物更加强大，不可掉以轻心。"/>
+		<text storyID="102" npcId="0" talk="我会小心的。"/>
+		<text storyID="103" npcId="1" talk="高科技战争，情报是最重要的。我已经获得了关于机械族驻守这个据点指挥官的资料，他是一艘“弥陀级”战舰形态的机械生命体，你需要利用船坞的地形优势，和它作战。"/>
+		<text storyID="104" npcId="0" talk="我明白了！"/>
+	</plot>
+	 <plot id="222">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="223">
+		<text storyID="101" npcId="1" talk="我很高兴，能看着你活着回来。"/>
+		<text storyID="102" npcId="0" talk="这就是真正机械族BOSS的实力吗？的确很强大，但可惜还是被我击爆了。"/>
+		<text storyID="103" npcId="1" talk="你的成长超过我的预计，看来接下来，是时候给你委派一些更加艰巨的任务，你要做好心理准备。"/>
+		<text storyID="104" npcId="0" talk="我等着就是这一刻！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="231">
+		<text storyID="101" npcId="1" talk="经过这一段的实战，你积累的战功已经足够开启更多权限了。"/>
+		<text storyID="102" npcId="0" talk="又有什么好东西？"/>
+		<text storyID="103" npcId="1" talk="你已经学会了两个技能，现在给你解锁第三个技能，快打开技能面板查看吧。"/>
+		<text storyID="104" npcId="0" talk="我明白了！"/>
+	</plot>
+	 <plot id="232">
+		<text storyID="101" npcId="1" talk="快去学习技能。"/>
+		<text storyID="102" npcId="0" talk="马上！"/>
+	</plot>
+	 <plot id="233">
+		<text storyID="101" npcId="1" talk="看来你已经学完了技能。"/>
+		<text storyID="102" npcId="0" talk="是的，我现在迫不及待赶紧上战场试一下新技能。"/>
+	</plot>
+
+	
+	<!-- -->
+	<plot id="241">
+		<text storyID="101" npcId="1" talk="你已经可以独当一面了，接下来我会安排你进行一系列新任务，你要做好准备。"/>
+		<text storyID="102" npcId="0" talk="交给我吧。"/>
+		<text storyID="103" npcId="1" talk="我们最近截获一个空间站的信息，据悉这个可能是机械族的一个据点，我们需要打下他。"/>
+		<text storyID="104" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="242">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="243">
+		<text storyID="101" npcId="1" talk="你提供的情报很重要，可以确定这就是机械族的一个军事据点。"/>
+		<text storyID="102" npcId="0" talk="那我们现在要打掉它吗？"/>
+		<text storyID="103" npcId="1" talk="这个据点的兵力超出我们预料，我们需要重新布置一下。"/>
+		<text storyID="104" npcId="0" talk="随时待命。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="251">
+		<text storyID="101" npcId="1" talk="为了对付这个空间站，你需要再增强下实力。"/>
+		<text storyID="102" npcId="0" talk="是不是又要开启什么系统了？"/>
+		<text storyID="103" npcId="1" talk="是的，晶体系统，所有金刚机甲必备之物，已经给你开启了权限了。"/>
+	</plot>
+	 <plot id="252">
+		<text storyID="101" npcId="1" talk="晶石系统，快去开启吧。"/>
+		<text storyID="102" npcId="0" talk="马上！"/>
+	</plot>
+	 <plot id="253">
+		<text storyID="101" npcId="1" talk="嗯，相信你已经做好准备了。"/>
+		<text storyID="102" npcId="0" talk="请下达指令！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="261">
+		<text storyID="101" npcId="1" talk="根据情报，敌人摆下了激光阵，你需要小心行事。"/>
+		<text storyID="102" npcId="0" talk="交给我吧！"/>
+	</plot>
+	 <plot id="262">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="263">
+		<text storyID="101" npcId="1" talk="唔……是吗，竟然有这么多敌人。"/>
+		<text storyID="102" npcId="0" talk="是的，要不是开启了晶石系统，我估计都顶不住。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="271">
+		<text storyID="101" npcId="1" talk="现在局势有些吃紧，虽然很危险，但探查空间站的任务还是只能交给你了。"/>
+		<text storyID="102" npcId="0" talk="做事要有始有终，肯定只能交给我。"/>
+		<text storyID="103" npcId="1" talk="根据情报，这个空间站深处有一个电梯能直达顶层，我需要你把这个电梯找出来。"/>
+		<text storyID="104" npcId="0" talk="我明白了！"/>
+	</plot>
+	 <plot id="272">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="273">
+		<text storyID="101" npcId="1" talk="这个电梯果然存在。"/>
+		<text storyID="102" npcId="0" talk="下一步我需要怎么做？"/>
+	</plot>
+
+	<!-- -->
+	<plot id="281">
+		<text storyID="101" npcId="1" talk="这个电梯很可能是通往敌人的老巢，所以我还需要给你再加点实力。"/>
+		<text storyID="102" npcId="0" talk="又要开启系统了吗，我很期待！"/>
+		<text storyID="103" npcId="1" talk="不是，这次要给你进行额外的试炼。让你去进行夺宝奇兵！"/>
+		<text storyID="104" npcId="0" talk="夺宝奇兵？"/>
+		<text storyID="105" npcId="1" talk="是的，夺宝奇兵是我们银河联邦舰队，为了奖励驾驶员而设立的试炼场，你可以在里面获得大量金币，用来增强力的实力！"/>
+		<text storyID="106" npcId="0" talk="有金币？！我要马上参加！"/>
+	</plot>
+	 <plot id="282">
+		<text storyID="101" npcId="1" talk="快去进行夺宝奇兵吧。"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="283">
+		<text storyID="101" npcId="1" talk="怎么样，收获如何？"/>
+		<text storyID="102" npcId="0" talk="哈哈，拿到了好多金币！"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="291">
+		<text storyID="101" npcId="1" talk="嗯，你可以用得到的这些金币增强你的实力，马上就有一个艰巨任务交给你。"/>
+		<text storyID="102" npcId="0" talk="什么任务？"/>
+		<text storyID="103" npcId="1" talk="这段时间我们已经探明，机械族的一个精英头目就在空间站的顶部，他的实力很强大。你一定要小心。"/>
+		<text storyID="104" npcId="0" talk="我明白了！"/>
+	</plot>
+	 <plot id="292">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="293">
+		<text storyID="101" npcId="1" talk="你又干掉一头机械族精英头目了，你的军功履历越发夺目了。"/>
+		<text storyID="102" npcId="0" talk="我倒总有一天，我要当上将军！觉得他挺亲切的。"/>
+		<text storyID="103" npcId="1" talk="不想成为将军的士兵，不是一个好士兵，我很赞赏的你决心。"/>
+		<text storyID="104" npcId="0" talk="盖伦空间站已经被我们占领，接下来要去哪？"/>
+	</plot>
+
+	<!-- -->
+	<plot id="301">
+		<text storyID="101" npcId="1" talk="你已经洗尽铅华，开始崭露头角了。看来你能在接下来的大战里出一份力了。"/>
+		<text storyID="102" npcId="0" talk="要开始决战了吗？"/>
+		<text storyID="103" npcId="1" talk="我们已经集结全部兵力，要夺下机械族在本星系的一个星门要塞。若能成功，我们就能突破机械族的封锁。若失败，机械族大军将毁灭我们最后的家园。"/>
+		<text storyID="104" npcId="0" talk="我决不允许这种情况发生！"/>
+		<text storyID="105" npcId="1" talk="所以接下来的战斗至关重要，你一定要加倍努力！"/>
+		<text storyID="106" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="302">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="303">
+		<text storyID="101" npcId="1" talk="很好，作战的第一阶段成功了。这是万千金刚战士用生命拼搏的结果！"/>
+		<text storyID="102" npcId="0" talk="战争太残酷了，好多战友都牺牲了！"/>
+		<text storyID="103" npcId="1" talk="战争的确很残酷，所以我们更应该挺身而出，让人类有机会享受和平的安宁！"/>
+		<text storyID="104" npcId="0" talk="我誓将拼尽最后一滴血！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="311">
+		<text storyID="101" npcId="1" talk="要塞之战的第一阶段已经结束，接下来我们要深入这座要塞，收集情报。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="312">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="313">
+		<text storyID="101" npcId="1" talk="很好，部队已经成功将要塞外围清理完毕，但我们为此也付出了巨大的牺牲。"/>
+		<text storyID="102" npcId="0" talk="我会连同战友的份，一起活下去！"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="321">
+		<text storyID="101" npcId="1" talk="下一阶段的战役至关重要，我们要寻找寻找星门的突破口，能不能攻入星门，就看这一役了！"/>
+		<text storyID="102" npcId="0" talk="众志成城！誓夺胜利！"/>
+	</plot>
+	 <plot id="322">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="323">
+		<text storyID="101" npcId="1" talk="我们人类对抗机械族的历史性战役就要到来了，我们已经攻占了这座要塞，只要最后夺得星门的控制权，就可以解放这个星系！"/>
+		<text storyID="102" npcId="0" talk="为了人类而战！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="331">
+		<text storyID="101" npcId="1" talk="可以确定的是，机械族已经派出了他们五大战将之一，驻守在星门内部，这可是场艰难的战役。"/>
+		<text storyID="102" npcId="0" talk="不管它有多厉害，我也会把它变成一堆破铜烂铁！"/>
+	</plot>
+	 <plot id="332">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="333">
+		<text storyID="101" npcId="1" talk="此时已经没有语言能表达我内心的激动，这是我们人类对机械族取得的最大胜利！"/>
+		<text storyID="102" npcId="0" talk="能参与到这样的史诗战役中，我也很激动！"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="341">
+		<text storyID="101" npcId="1" talk="虽然我们是取得了历史性胜利，但这只是漫漫长征的第一步而已。机械族控制着90%的星系，我们现在只解放了第一个而已。 "/>
+		<text storyID="102" npcId="0" talk="我想申请取消休假，加入新星系的探索！"/>
+		<text storyID="103" npcId="1" talk="不错，要是人人都跟你一样，人类就有希望了！"/>
+		<text storyID="104" npcId="0" talk="安排任务吧！"/>
+		<text storyID="105" npcId="1" talk="新星系是一个双恒星星系，名字叫远古星系。该星系拥有许多上古科技文明，我们需要从中搜索到能被我们利用的科技。我会先安排你去七星阵探索，请收集一切情报。"/>
+		<text storyID="106" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="342">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="343">
+		<text storyID="101" npcId="1" talk="情况如何？"/>
+		<text storyID="102" npcId="0" talk="这是在位于星空的一个七星连环阵，是一种古代文明的机械科技，我只探索了第一个阵盘，还需要继续探索。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="351">
+		<text storyID="101" npcId="1" talk="探索七星阵第二个阵盘的任务就交给你了，这一次要寻求破解这个机械阵的方法。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="352">
+		<text storyID="101" npcId="1" talk="古代文明据说跟机械族的传承有千丝万缕的关系，请注意探查。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="353">
+		<text storyID="101" npcId="1" talk="情况如何？"/>
+		<text storyID="102" npcId="0" talk="这个古代文明真是不可思议，我感觉到奇异的能量纹路。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="361">
+		<text storyID="101" npcId="1" talk="这种能量传输方式，对我们改造机甲会有很大启发，我需要你送封信给船长。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="362">
+		<text storyID="101" npcId="1" talk="船长在等着你呢。"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="363">
+		<text storyID="101" npcId="1" talk="好久不见年轻人，之前的大战，我已经见识了你的英勇，这次找我什么事情？"/>
+		<text storyID="102" npcId="0" talk="我之前在七星阵中发现了一种全新的能量纹路，参谋长让我把资料送给你。"/>
+		<text storyID="103" npcId="1" talk="很好，这是一个很重大的发现，我这就让研究所进行反向推导工程。"/>
+		<text storyID="104" npcId="0" talk="太好了！"/>
+		<text storyID="105" npcId="1" talk="好了，你回去找参谋长接任务吧，继续探查七星阵！"/>
+		<text storyID="106" npcId="0" talk="遵命长官！"/>
+	</plot>
+
+	<!-- -->
+	<plot id="371">
+		<text storyID="101" npcId="1" talk="刚才情报部根据你提供的调查情报，已经发现了七星阵的阵眼。根据古代文明解密的资料来看，这个机械阵眼就是破解七星阵的关键，我需要你把它找出来。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="372">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="373">
+		<text storyID="101" npcId="1" talk="情况如何？"/>
+		<text storyID="102" npcId="0" talk="已经找到阵眼了，这是它的位置信息。"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="381">
+		<text storyID="101" npcId="1" talk="很好，找到阵眼，剩下的就容易多了。这是它的破解方法，我需要你再进一次七星阵，把阵眼破解掉！"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="382">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="383">
+		<text storyID="101" npcId="1" talk="情况如何？"/>
+		<text storyID="102" npcId="0" talk="我已经破解了阵眼，发现极其强大的能量波动。"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="391">
+		<text storyID="101" npcId="1" talk="这股能量波动来自七星阵最后一个阵盘中，那里潜藏着机械族怪物。"/>
+		<text storyID="102" npcId="0" talk="有机械族怪物在七星阵里？"/>
+		<text storyID="103" npcId="1" talk="是的，而且是他们的头领。古代文明一直都跟机械族文明有千丝万缕的关系，看来这的确是真的。"/>
+		<text storyID="104" npcId="0" talk="只要是机械族的怪物，就交给我吧！"/>
+	</plot>
+	 <plot id="392">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="393">
+		<text storyID="101" npcId="1" talk="我已经监测到七星阵解除了能量护罩。"/>
+		<text storyID="102" npcId="0" talk="没错，我已经击杀了躲藏阵中的机械族头领。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="401">
+		<text storyID="101" npcId="1" talk="我们的大军已经进驻七星阵进行扫荡，根据收集来的情报发现，七星阵指向着遥远星空中的另外一个大阵——八卦阵！"/>
+		<text storyID="102" npcId="0" talk="八卦阵？"/>
+		<text storyID="103" npcId="1" talk="八卦阵也是古代文明遗留下来的机械科技文明，据说蕴含玄奥的计算逻辑，我需要你前去探查一下。"/>
+		<text storyID="104" npcId="0" talk="我明白了！"/>
+	</plot>
+	 <plot id="402">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="403">
+		<text storyID="101" npcId="1" talk="情况如何？"/>
+		<text storyID="102" npcId="0" talk="八卦阵看上去就像是一个迷宫，我差点出不来了！"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="411">
+		<text storyID="101" npcId="1" talk="要破解这个八卦阵可不是一件容易的事情，我们需要你搜集更多的情报。"/>
+		<text storyID="102" npcId="0" talk="嗯，这事就交给我吧！"/>
+	</plot>
+	 <plot id="412">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="413">
+		<text storyID="101" npcId="1" talk="很高兴看到你。"/>
+		<text storyID="102" npcId="0" talk="我搜集了一些机械卦体，不知道有没有用？"/>
+	</plot>
+
+	<!-- -->
+	<plot id="421">
+		<text storyID="101" npcId="1" talk="这些卦体经过研究发现，上面竟然有塞伯坦的文字。船长是塞伯坦的专家，你可以去找他问问。"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="422">
+		<text storyID="101" npcId="1" talk="船长正等着你"/>
+		<text storyID="102" npcId="0" talk="马上出发！"/>
+	</plot>
+	 <plot id="423">
+		<text storyID="101" npcId="1" talk="嗯？塞伯坦文字的机械卦体？我看看。"/>
+		<text storyID="102" npcId="0" talk="破解八卦阵的关键，应该就在这上面。"/>
+		<text storyID="103" npcId="1" talk="没错，而且这个卦体上除了记录破解之法，还讲述了一段历史……总之我把相关情报转换成数据，记录在这个芯片上了，你把它交给参谋长吧。"/>
+		<text storyID="104" npcId="0" talk="遵命长官"/>
+	</plot>
+	
+	
+	<!-- -->
+	<plot id="431">
+		<text storyID="101" npcId="1" talk="船长提供的情报显示破解八卦阵的关键在于拼凑卦体。"/>
+		<text storyID="102" npcId="0" talk="具体要怎么做？"/>
+		<text storyID="103" npcId="1" talk="八卦阵的卦位和其方位是一一对应的，你需要将每一个卦体，按照所在的方位拼凑成正确图案，就可以前往阵眼中枢。"/>
+		<text storyID="104" npcId="0" talk="虽然很复杂，但我会努力尝试！"/>
+	</plot>
+	 <plot id="432">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="433">
+		<text storyID="101" npcId="1" talk="有什么收获了吗？"/>
+		<text storyID="102" npcId="0" talk="我觉得我快成功了。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="441">
+		<text storyID="101" npcId="1" talk="研究所的人，又研发了一个新科技，我马上为你开启！"/>
+		<text storyID="102" npcId="0" talk="什么科技？"/>
+		<text storyID="103" npcId="0" talk="核心装置系统，它能极大增强你的战斗力，快去体验吧！"/>
+	</plot>
+	 <plot id="442">
+		<text storyID="101" npcId="1" talk="快点打开核心装置面板吧！"/>
+		<text storyID="102" npcId="0" talk="马上开启！"/>
+	</plot>
+	 <plot id="443">
+		<text storyID="101" npcId="1" talk="很好，核心装置系统已经开启，接下来，你就拥有继续挑战八卦阵的实力了！"/>
+		<text storyID="102" npcId="0" talk="我接下来要怎么做？"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="451">
+		<text storyID="101" npcId="1" talk="嗯，根据你的完成情况来看，还差两个卦体就可以将整个八卦阵拼凑完毕。"/>
+		<text storyID="102" npcId="0" talk="那我就继续破解这个八卦阵了！"/>
+	</plot>
+	 <plot id="452">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="453">
+		<text storyID="101" npcId="1" talk="很好，整个八卦阵都已经打开了！"/>
+		<text storyID="102" npcId="0" talk="那我现在可以进阵眼中枢了吗？"/>
+	</plot>
+	
+	<!-- -->
+	<plot id="461">
+		<text storyID="101" npcId="1" talk="这个阵眼中枢必然有强大的怪物把守，请千万小心！"/>
+		<text storyID="102" npcId="0" talk="嗯，我会注意的！"/>
+	</plot>
+	 <plot id="462">
+		<text storyID="101" npcId="1" talk="这次战斗凶险万分，请务必小心。"/>
+		<text storyID="102" npcId="0" talk="我会注意的。"/>
+	</plot>
+	 <plot id="463">
+		<text storyID="101" npcId="1" talk="八卦阵已经成功占领，科研部队已经前往八卦阵，分解核心数据，这对我们很重要。"/>
+		<text storyID="102" npcId="0" talk="这么久的辛苦，总算没白费。"/>
+	</plot>
+
+	<!-- -->
+	<plot id="20031">
+		<text storyID="101" npcId="1" talk="我们是军队，讲究的是集体意识！现在我就教你怎么进行世界发言。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="20032">
+		<text storyID="101" npcId="1" talk="请按照引导提示操作。"/>
+		<text storyID="102" npcId="0" talk="遵命长官！"/>
+	</plot>
+	 <plot id="20033">
+		<text storyID="101" npcId="1" talk="很好，相信你也明白如何跟大家交流了"/>
+		<text storyID="102" npcId="0" talk="有了更多战友，相信以后战斗会更加刺激！"/>
+	</plot>
+
+
+</root>
