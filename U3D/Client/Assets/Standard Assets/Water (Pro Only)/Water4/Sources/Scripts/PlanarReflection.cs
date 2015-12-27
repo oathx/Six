@@ -160,7 +160,9 @@ public class PlanarReflection : MonoBehaviour
 				
 		Vector4 clipPlane = CameraSpacePlane(reflectCamera, pos, normal, 1.0f);
 				
-		reflectCamera.projectionMatrix = cam.CalculateObliqueMatrix(clipPlane);
+		Matrix4x4 projection =  cam.projectionMatrix;
+		projection = CalculateObliqueMatrix(projection, clipPlane);
+		reflectCamera.projectionMatrix = projection;
 		
 		reflectCamera.transform.position = newpos;
 		Vector3 euler = cam.transform.eulerAngles;
@@ -177,7 +179,25 @@ public class PlanarReflection : MonoBehaviour
 		helperCam.backgroundColor = Color.black;				
 		helperCam.clearFlags = CameraClearFlags.SolidColor;				
 		helperCam.renderingPath = RenderingPath.Forward;	
-	}
+	}	
+		
+	static Matrix4x4 CalculateObliqueMatrix (Matrix4x4 projection, Vector4 clipPlane) 
+	{
+		Vector4 q = projection.inverse * new Vector4(
+			sgn(clipPlane.x),
+			sgn(clipPlane.y),
+			1.0F,
+			1.0F
+		);
+		Vector4 c = clipPlane * (2.0F / (Vector4.Dot (clipPlane, q)));
+		// third row = clip plane - fourth row
+		projection[2] = c.x - projection[3];
+		projection[6] = c.y - projection[7];
+		projection[10] = c.z - projection[11];
+		projection[14] = c.w - projection[15];
+		
+		return projection;
+	}	
 	 
 	static Matrix4x4 CalculateReflectionMatrix (Matrix4x4 reflectionMat, Vector4 plane) 
 	{

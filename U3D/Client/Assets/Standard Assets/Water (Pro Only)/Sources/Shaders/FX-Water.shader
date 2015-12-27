@@ -108,7 +108,7 @@ uniform float4 _HorizonColor;
 #endif
 sampler2D _BumpMap;
 
-half4 frag( v2f i ) : SV_Target
+half4 frag( v2f i ) : COLOR
 {
 	i.viewDir = normalize(i.viewDir);
 	
