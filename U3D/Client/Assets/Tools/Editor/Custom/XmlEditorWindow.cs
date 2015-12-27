@@ -54,6 +54,8 @@ public enum SearchFileType
 	unity3d,
 	zip,
 	cs,
+	dds,
+	asset,
 }
 
 

@@ -16,6 +16,7 @@ using System.Text;
 /// </summary>
 public class DesignXmlStruct : XmlStruct
 {
+
 }
 
 /// <summary>
@@ -31,6 +32,26 @@ public class DesignXmlEditor : XmlEditorWindow<DesignXmlStruct>
 		{
 			window.Show();
 			window.Focus();
+		}
+	}
+
+	/// <summary>
+	/// Converts the DD.
+	/// </summary>
+	[MenuItem("Convert/DDS")]
+	public static void ConvertDDS()
+	{
+		Material mat = AssetDatabase.LoadAssetAtPath<Material>("Assets/Environment/Building/Materials/environment_Building_caopeng_001_01.mat");
+		Debug.Log (mat);
+		string szTextureFile = AssetDatabase.GetAssetPath (mat.mainTexture);
+		if (szTextureFile.Contains(".dds"))
+		{
+			Texture t = AssetDatabase.LoadAssetAtPath<Texture>(szTextureFile.Replace(".dds", ".png"));
+			if (t)
+			{
+				mat.mainTexture = t;
+				AssetDatabase.ImportAsset(AssetDatabase.GetAssetPath(mat));
+			}
 		}
 	}
 }
