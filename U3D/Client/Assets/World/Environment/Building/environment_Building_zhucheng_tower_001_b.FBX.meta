@@ -1,0 +1,111 @@
+fileFormatVersion: 2
+guid: 7f3040a8176b86747b464e593a253b0f
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: environment_Building_zhucheng_tower_001_b01
+    100004: environment_Building_zhucheng_tower_001_b02
+    100006: environment_Building_zhucheng_tower_001_b03
+    100008: environment_Building_zhucheng_tower_001_b04
+    100010: environment_Building_zhucheng_tower_001_b05
+    100012: Particle View 01
+    100014: Particle View 01 1
+    100016: Particle View 01 10
+    100018: Particle View 01 11
+    100020: Particle View 01 12
+    100022: Particle View 01 13
+    100024: Particle View 01 2
+    100026: Particle View 01 3
+    100028: Particle View 01 4
+    100030: Particle View 01 5
+    100032: Particle View 01 6
+    100034: Particle View 01 7
+    100036: Particle View 01 8
+    100038: Particle View 01 9
+    400000: //RootNode
+    400002: environment_Building_zhucheng_tower_001_b01
+    400004: environment_Building_zhucheng_tower_001_b02
+    400006: environment_Building_zhucheng_tower_001_b03
+    400008: environment_Building_zhucheng_tower_001_b04
+    400010: environment_Building_zhucheng_tower_001_b05
+    400012: Particle View 01
+    400014: Particle View 01 1
+    400016: Particle View 01 10
+    400018: Particle View 01 11
+    400020: Particle View 01 12
+    400022: Particle View 01 13
+    400024: Particle View 01 2
+    400026: Particle View 01 3
+    400028: Particle View 01 4
+    400030: Particle View 01 5
+    400032: Particle View 01 6
+    400034: Particle View 01 7
+    400036: Particle View 01 8
+    400038: Particle View 01 9
+    2300000: environment_Building_zhucheng_tower_001_b01
+    2300002: environment_Building_zhucheng_tower_001_b02
+    2300004: environment_Building_zhucheng_tower_001_b03
+    2300006: environment_Building_zhucheng_tower_001_b04
+    2300008: environment_Building_zhucheng_tower_001_b05
+    3300000: environment_Building_zhucheng_tower_001_b01
+    3300002: environment_Building_zhucheng_tower_001_b02
+    3300004: environment_Building_zhucheng_tower_001_b03
+    3300006: environment_Building_zhucheng_tower_001_b04
+    3300008: environment_Building_zhucheng_tower_001_b05
+    4300000: environment_Building_zhucheng_tower_001_b05
+    4300002: environment_Building_zhucheng_tower_001_b01
+    4300004: environment_Building_zhucheng_tower_001_b02
+    4300006: environment_Building_zhucheng_tower_001_b03
+    4300008: environment_Building_zhucheng_tower_001_b04
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 

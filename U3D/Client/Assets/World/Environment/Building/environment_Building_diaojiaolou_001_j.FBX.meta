@@ -1,0 +1,108 @@
+fileFormatVersion: 2
+guid: e5fabd0c733dcf447a410ee8c09051bb
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: environment_Building_diaojiaolou_001_j01
+    100004: environment_Building_diaojiaolou_001_j02
+    100006: environment_Building_diaojiaolou_001_j03
+    100008: environment_Building_diaojiaolou_001_j04
+    100010: environment_Building_diaojiaolou_001_j05
+    100012: environment_Building_diaojiaolou_001_j06
+    100014: environment_Building_diaojiaolou_001_j07
+    100016: environment_Building_diaojiaolou_001_j08
+    100018: environment_Building_diaojiaolou_001_j09
+    100020: environment_Building_diaojiaolou_001_j10
+    400000: //RootNode
+    400002: environment_Building_diaojiaolou_001_j01
+    400004: environment_Building_diaojiaolou_001_j02
+    400006: environment_Building_diaojiaolou_001_j03
+    400008: environment_Building_diaojiaolou_001_j04
+    400010: environment_Building_diaojiaolou_001_j05
+    400012: environment_Building_diaojiaolou_001_j06
+    400014: environment_Building_diaojiaolou_001_j07
+    400016: environment_Building_diaojiaolou_001_j08
+    400018: environment_Building_diaojiaolou_001_j09
+    400020: environment_Building_diaojiaolou_001_j10
+    2300000: environment_Building_diaojiaolou_001_j01
+    2300002: environment_Building_diaojiaolou_001_j02
+    2300004: environment_Building_diaojiaolou_001_j03
+    2300006: environment_Building_diaojiaolou_001_j04
+    2300008: environment_Building_diaojiaolou_001_j05
+    2300010: environment_Building_diaojiaolou_001_j06
+    2300012: environment_Building_diaojiaolou_001_j07
+    2300014: environment_Building_diaojiaolou_001_j08
+    2300016: environment_Building_diaojiaolou_001_j09
+    2300018: environment_Building_diaojiaolou_001_j10
+    3300000: environment_Building_diaojiaolou_001_j01
+    3300002: environment_Building_diaojiaolou_001_j02
+    3300004: environment_Building_diaojiaolou_001_j03
+    3300006: environment_Building_diaojiaolou_001_j04
+    3300008: environment_Building_diaojiaolou_001_j05
+    3300010: environment_Building_diaojiaolou_001_j06
+    3300012: environment_Building_diaojiaolou_001_j07
+    3300014: environment_Building_diaojiaolou_001_j08
+    3300016: environment_Building_diaojiaolou_001_j09
+    3300018: environment_Building_diaojiaolou_001_j10
+    4300000: environment_Building_diaojiaolou_001_j01
+    4300002: environment_Building_diaojiaolou_001_j02
+    4300004: environment_Building_diaojiaolou_001_j03
+    4300006: environment_Building_diaojiaolou_001_j04
+    4300008: environment_Building_diaojiaolou_001_j05
+    4300010: environment_Building_diaojiaolou_001_j06
+    4300012: environment_Building_diaojiaolou_001_j07
+    4300014: environment_Building_diaojiaolou_001_j08
+    4300016: environment_Building_diaojiaolou_001_j09
+    4300018: environment_Building_diaojiaolou_001_j10
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 

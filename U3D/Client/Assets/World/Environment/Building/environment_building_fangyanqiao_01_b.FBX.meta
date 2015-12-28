@@ -1,0 +1,123 @@
+fileFormatVersion: 2
+guid: bbf18001ff4944a4d8dbe74e9254de61
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: environment_building_fangyanqiao_01_c03
+    100002: environment_building_fangyanqiao_01_a02
+    100004: environment_building_fangyanqiao_01_b003
+    100006: environment_building_fangyanqiao_01_c004
+    100008: environment_building_fangyanqiao_01_a003
+    100010: environment_building_fangyanqiao_01_d01
+    100012: //RootNode
+    100014: environment_building_fangyanqiao_01_e0
+    100016: environment_building_fangyanqiao_01_f0
+    100018: environment_building_fangyanqiao_01_g0
+    100020: environment_building_fangyanqiao_01_b02
+    100022: environment_building_fangyanqiao_01_c01
+    100024: environment_building_fangyanqiao_01_b01
+    100026: environment_building_fangyanqiao_01_a01
+    400000: environment_building_fangyanqiao_01_c03
+    400002: environment_building_fangyanqiao_01_a02
+    400004: environment_building_fangyanqiao_01_b003
+    400006: environment_building_fangyanqiao_01_c004
+    400008: environment_building_fangyanqiao_01_a003
+    400010: environment_building_fangyanqiao_01_d01
+    400012: //RootNode
+    400014: environment_building_fangyanqiao_01_e0
+    400016: environment_building_fangyanqiao_01_f0
+    400018: environment_building_fangyanqiao_01_g0
+    400020: environment_building_fangyanqiao_01_b02
+    400022: environment_building_fangyanqiao_01_c01
+    400024: environment_building_fangyanqiao_01_b01
+    400026: environment_building_fangyanqiao_01_a01
+    2300000: environment_building_fangyanqiao_01_c03
+    2300002: environment_building_fangyanqiao_01_a02
+    2300004: environment_building_fangyanqiao_01_b003
+    2300006: environment_building_fangyanqiao_01_c004
+    2300008: environment_building_fangyanqiao_01_a003
+    2300010: environment_building_fangyanqiao_01_d01
+    2300012: environment_building_fangyanqiao_01_e0
+    2300014: environment_building_fangyanqiao_01_f0
+    2300016: environment_building_fangyanqiao_01_g0
+    2300018: environment_building_fangyanqiao_01_b02
+    2300020: environment_building_fangyanqiao_01_c01
+    2300022: environment_building_fangyanqiao_01_b01
+    2300024: environment_building_fangyanqiao_01_a01
+    3300000: environment_building_fangyanqiao_01_c03
+    3300002: environment_building_fangyanqiao_01_a02
+    3300004: environment_building_fangyanqiao_01_b003
+    3300006: environment_building_fangyanqiao_01_c004
+    3300008: environment_building_fangyanqiao_01_a003
+    3300010: environment_building_fangyanqiao_01_d01
+    3300012: environment_building_fangyanqiao_01_e0
+    3300014: environment_building_fangyanqiao_01_f0
+    3300016: environment_building_fangyanqiao_01_g0
+    3300018: environment_building_fangyanqiao_01_b02
+    3300020: environment_building_fangyanqiao_01_c01
+    3300022: environment_building_fangyanqiao_01_b01
+    3300024: environment_building_fangyanqiao_01_a01
+    4300000: environment_building_fangyanqiao_01_a01
+    4300002: environment_building_fangyanqiao_01_b01
+    4300004: environment_building_fangyanqiao_01_c01
+    4300006: environment_building_fangyanqiao_01_d01
+    4300008: environment_building_fangyanqiao_01_a003
+    4300010: environment_building_fangyanqiao_01_c004
+    4300012: environment_building_fangyanqiao_01_b003
+    4300014: environment_building_fangyanqiao_01_a02
+    4300016: environment_building_fangyanqiao_01_c03
+    4300018: environment_building_fangyanqiao_01_b02
+    4300020: environment_building_fangyanqiao_01_g0
+    4300022: environment_building_fangyanqiao_01_f0
+    4300024: environment_building_fangyanqiao_01_e0
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 3
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

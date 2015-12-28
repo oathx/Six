@@ -1,0 +1,93 @@
+fileFormatVersion: 2
+guid: fcb2471ce3a91f54f8679309bf94f40d
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: //RootNode
+    100002: environment_Building_zhucheng_002_h07
+    100004: environment_Building_zhucheng_002_h06
+    100006: environment_Building_zhucheng_002_h05
+    100008: environment_Building_zhucheng_002_h04
+    100010: environment_Building_zhucheng_002_h03
+    100012: environment_Building_zhucheng_002_h02
+    100014: environment_Building_zhucheng_002_h01
+    400000: //RootNode
+    400002: environment_Building_zhucheng_002_h07
+    400004: environment_Building_zhucheng_002_h06
+    400006: environment_Building_zhucheng_002_h05
+    400008: environment_Building_zhucheng_002_h04
+    400010: environment_Building_zhucheng_002_h03
+    400012: environment_Building_zhucheng_002_h02
+    400014: environment_Building_zhucheng_002_h01
+    2300000: environment_Building_zhucheng_002_h07
+    2300002: environment_Building_zhucheng_002_h06
+    2300004: environment_Building_zhucheng_002_h05
+    2300006: environment_Building_zhucheng_002_h04
+    2300008: environment_Building_zhucheng_002_h03
+    2300010: environment_Building_zhucheng_002_h02
+    2300012: environment_Building_zhucheng_002_h01
+    3300000: environment_Building_zhucheng_002_h07
+    3300002: environment_Building_zhucheng_002_h06
+    3300004: environment_Building_zhucheng_002_h05
+    3300006: environment_Building_zhucheng_002_h04
+    3300008: environment_Building_zhucheng_002_h03
+    3300010: environment_Building_zhucheng_002_h02
+    3300012: environment_Building_zhucheng_002_h01
+    4300000: environment_Building_zhucheng_002_h01
+    4300002: environment_Building_zhucheng_002_h02
+    4300004: environment_Building_zhucheng_002_h03
+    4300006: environment_Building_zhucheng_002_h04
+    4300008: environment_Building_zhucheng_002_h05
+    4300010: environment_Building_zhucheng_002_h06
+    4300012: environment_Building_zhucheng_002_h07
+    11100000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 3
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 1
+  userData: 

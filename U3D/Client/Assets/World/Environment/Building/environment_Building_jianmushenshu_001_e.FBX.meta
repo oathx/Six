@@ -1,0 +1,197 @@
+fileFormatVersion: 2
+guid: 5d7ef6a7862640141aa53388db385a14
+ModelImporter:
+  serializedVersion: 15
+  fileIDToRecycleName:
+    100000: 1
+    100002: 34
+    100004: 34646
+    100006: 34646 1
+    100008: 75
+    100010: 9089
+    100012: ADAd
+    100014: adf
+    100016: aff
+    100018: ASFAFAF
+    100020: asfafsf
+    100022: asgsdg
+    100024: dadad
+    100026: dDad
+    100028: dhretye
+    100030: //RootNode
+    100032: environment_Building_jianmushenshu_001_e01
+    100034: environment_Building_jianmushenshu_001_e02
+    100036: environment_Building_jianmushenshu_001_e03
+    100038: fdsf
+    100040: FGG
+    100042: fsasfaff
+    100044: gsg
+    100046: hg
+    100048: kjk
+    100050: NMN0100
+    100052: NMN0106
+    100054: NMN0106SA
+    100056: NMN0107
+    100058: NMN0107ASDASD
+    100060: NMN0108
+    100062: NMN0109
+    100064: NMN0110
+    100066: NMN0112
+    100068: Particle View 01
+    100070: Particle View 01 1
+    100072: Particle View 01 2
+    100074: Particle View 01 3
+    100076: Particle View 01 4
+    100078: Particle View 01 5
+    100080: Particle View 01 6
+    100082: Particle View 01 7
+    100084: Particle View 01 8
+    100086: Particle View 01 9
+    100088: Particle View 02
+    100090: Particle View 02 1
+    100092: Particle View 02 2
+    100094: Particle View 03
+    100096: Particle View 03 1
+    100098: Particle View 03 2
+    100100: Particle View 04
+    100102: Particle View 04 1
+    100104: Particle View 04 2
+    100106: Particle View 05
+    100108: Particle View 06
+    100110: Particle View 07
+    100112: Particle View 08
+    100114: Particle View 09
+    100116: Particle View 10
+    100118: sas
+    100120: sas 1
+    100122: SDADAD
+    100124: sdg
+    100126: sqa
+    100128: SS
+    100130: ttttt
+    400000: 1
+    400002: 34
+    400004: 34646
+    400006: 34646 1
+    400008: 75
+    400010: 9089
+    400012: ADAd
+    400014: adf
+    400016: aff
+    400018: ASFAFAF
+    400020: asfafsf
+    400022: asgsdg
+    400024: dadad
+    400026: dDad
+    400028: dhretye
+    400030: //RootNode
+    400032: environment_Building_jianmushenshu_001_e01
+    400034: environment_Building_jianmushenshu_001_e02
+    400036: environment_Building_jianmushenshu_001_e03
+    400038: fdsf
+    400040: FGG
+    400042: fsasfaff
+    400044: gsg
+    400046: hg
+    400048: kjk
+    400050: NMN0100
+    400052: NMN0106
+    400054: NMN0106SA
+    400056: NMN0107
+    400058: NMN0107ASDASD
+    400060: NMN0108
+    400062: NMN0109
+    400064: NMN0110
+    400066: NMN0112
+    400068: Particle View 01
+    400070: Particle View 01 1
+    400072: Particle View 01 2
+    400074: Particle View 01 3
+    400076: Particle View 01 4
+    400078: Particle View 01 5
+    400080: Particle View 01 6
+    400082: Particle View 01 7
+    400084: Particle View 01 8
+    400086: Particle View 01 9
+    400088: Particle View 02
+    400090: Particle View 02 1
+    400092: Particle View 02 2
+    400094: Particle View 03
+    400096: Particle View 03 1
+    400098: Particle View 03 2
+    400100: Particle View 04
+    400102: Particle View 04 1
+    400104: Particle View 04 2
+    400106: Particle View 05
+    400108: Particle View 06
+    400110: Particle View 07
+    400112: Particle View 08
+    400114: Particle View 09
+    400116: Particle View 10
+    400118: sas
+    400120: sas 1
+    400122: SDADAD
+    400124: sdg
+    400126: sqa
+    400128: SS
+    400130: ttttt
+    2300000: environment_Building_jianmushenshu_001_e01
+    2300002: environment_Building_jianmushenshu_001_e02
+    2300004: environment_Building_jianmushenshu_001_e03
+    3300000: environment_Building_jianmushenshu_001_e01
+    3300002: environment_Building_jianmushenshu_001_e02
+    3300004: environment_Building_jianmushenshu_001_e03
+    4300000: environment_Building_jianmushenshu_001_e02
+    4300002: environment_Building_jianmushenshu_001_e01
+    4300004: environment_Building_jianmushenshu_001_e03
+    9500000: //RootNode
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    animationCompression: 1
+    animationRotationError: .5
+    animationPositionError: .5
+    animationScaleError: .5
+    animationWrapMode: 0
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: .00999999978
+    meshCompression: 0
+    addColliders: 0
+    swapUVChannels: 0
+    generateSecondaryUV: 1
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+  tangentSpace:
+    normalSmoothAngle: 60
+    splitTangentsAcrossUV: 1
+    normalImportMode: 0
+    tangentImportMode: 1
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    handles: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: 
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  additionalBone: 1
+  animationType: 2
+  userData: 
