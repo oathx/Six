@@ -57,8 +57,8 @@ public enum SearchFileType
 	dds,
 	DDS,
 	asset,
+	controller,
 }
-
 
 /// <summary>
 /// Button event handle.
