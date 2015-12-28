@@ -439,4 +439,152 @@ public class XmlEditorHelper
 			}
 		}
 	}
+
+	/// <summary>
+	/// Creates the empty prefab.
+	/// </summary>
+	/// <returns>The empty prefab.</returns>
+	/// <param name="goItem">Go item.</param>
+	/// <param name="szPath">Size path.</param>
+	public static GameObject	CreateEmptyPrefab(GameObject goItem, string szPath)
+	{
+		string szFilePath	= szPath.Replace("\\", "/");
+		
+		// get the assetbundl file path
+		string szAssetPath 	= szFilePath.Substring(
+			Application.dataPath.Length - 6, szFilePath.Length - Application.dataPath.Length + 6
+			);
+		
+		Object prefab = PrefabUtility.CreateEmptyPrefab(szAssetPath);
+		if (!prefab)
+			throw new System.NullReferenceException();
+		
+		prefab = PrefabUtility.ReplacePrefab(goItem, prefab);
+		GameObject.DestroyImmediate(goItem);
+		
+		return prefab as GameObject;
+	}
+
+	/// <summary>
+	/// Gets the asset path.
+	/// </summary>
+	/// <returns>The asset path.</returns>
+	/// <param name="szPath">Size path.</param>
+	public static string		GetAssetPath(string szPath)
+	{
+		string szFilePath	= szPath.Replace("\\", "/");
+		
+		// get the assetbundl file path
+		return szFilePath.Substring(
+			Application.dataPath.Length - 6, szFilePath.Length - Application.dataPath.Length + 6
+			);
+	}
+
+	/// <summary>
+	/// Extracts the skeleton.
+	/// </summary>
+	/// <returns>The skeleton.</returns>
+	/// <param name="resource">Resource.</param>
+	/// <param name="szOutPath">Size out path.</param>
+	public static GameObject	ExtractSkeleton(Object resource, string szOutPath)
+	{
+		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
+		if (!fbx)
+			throw new System.NullReferenceException();
+
+		// destroy all mesh render object
+		Transform[] aryTransform = fbx.GetComponentsInChildren<Transform>();
+		foreach(Transform t in aryTransform)
+		{
+			MeshRenderer render = t.GetComponent<MeshRenderer>();
+			if (render)
+				GameObject.DestroyImmediate(t.gameObject);
+		}
+		
+		// destroy all skinned mesh render
+		foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>())
+		{
+			GameObject.DestroyImmediate(mesh.gameObject);
+		}
+
+		SkinnedMeshRenderer skin = fbx.AddComponent<SkinnedMeshRenderer>();
+		if (skin)
+		{
+			GameObject prefab = CreateEmptyPrefab(fbx, string.Format("{0}{1}.prefab", szOutPath, resource.name));
+			if (!prefab)
+				throw new System.NullReferenceException();
+		}
+
+		GameObject.DestroyImmediate(fbx);
+	}
+
+	public enum SkinMeshType {
+		mesh, bone,
+	}
+
+	/// <summary>
+	/// Extracts the skin mesh.
+	/// </summary>
+	/// <param name="resource">Resource.</param>
+	/// <param name="szOutPath">Size out path.</param>
+	/// <param name="bSingleFile">If set to <c>true</c> b single file.</param>
+	public static void 		ExtractSkinMesh(Object[] aryResource, string szOutPath, bool bSingleFile)
+	{
+		foreach(Object resource in aryResource)
+		{
+			GameObject fbx = GameObject.Instantiate(resource) as GameObject;
+			if (!fbx)
+				throw new System.NullReferenceException();
+			
+			Transform[] aryTransform = fbx.GetComponentsInChildren<Transform>();
+			foreach(Transform t in aryTransform)
+			{
+				MeshRenderer render = t.GetComponent<MeshRenderer>();
+				if (render)
+				{
+					GameObject clones = GameObject.Instantiate(render.gameObject) as GameObject;
+					if (!clones)
+						throw new System.NullReferenceException();
+					
+					// create skinmesh prefab
+					GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}{1}@{2}.prefab", 
+					                                                            szOutPath, SkinMeshType.mesh.ToString(), render.name));
+					if (!prefab)
+						throw new System.NullReferenceException();
+				}
+			}
+
+			foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>(true))
+			{
+				GameObject clones = GameObject.Instantiate(mesh.gameObject) as GameObject;
+				if (!clones)
+					throw new System.NullReferenceException();
+				
+				// create skinmesh prefab
+				GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}{1}@{2}.prefab", 
+				                                                            szOutPath, SkinMeshType.mesh.ToString(), mesh.name));
+				if (!prefab)
+					throw new System.NullReferenceException();
+				
+				// create skinmesh bone asset
+				StringHolder holder = ScriptableObject.CreateInstance<StringHolder>();
+				if (holder)
+				{
+					List<string> boneName = new List<string>();
+					foreach(Transform t in mesh.bones)
+						boneName.Add(t.name);
+					
+					holder.content 	= boneName.ToArray();
+					
+					string szHolderPath = string.Format("{0}{1}@{2}.asset", GetAssetPath(szOutPath), SkinMeshType.bone.ToString(), mesh.name);
+					AssetDatabase.CreateAsset(holder, 
+					                          szHolderPath);
+				}
+				
+				GameObject.DestroyImmediate(clones);
+			}
+			
+			GameObject.DestroyImmediate(fbx);
+		}
+	}
 }
