@@ -55,6 +55,7 @@ public enum SearchFileType
 	zip,
 	cs,
 	dds,
+	DDS,
 	asset,
 }
 

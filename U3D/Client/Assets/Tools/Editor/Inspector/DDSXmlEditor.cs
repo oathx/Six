@@ -63,25 +63,33 @@ public class DDSXmlStruct : XmlStruct
 				Material mat = AssetDatabase.LoadAssetAtPath<Material>(path);
 				if (mat)
 				{
-					string szAssetPath = AssetDatabase.GetAssetPath (mat.mainTexture);
-					if (szAssetPath.Contains(".dds"))
-					{
-						string szPngPath = szAssetPath.Replace(".dds", ".png");
-						if (!File.Exists(szPngPath))
-							Debug.LogError("Can't find png " + szAssetPath);
+					string szAssetPath = AssetDatabase.GetAssetPath (mat.mainTexture).ToLower();
 
-						Texture pngTexture = AssetDatabase.LoadAssetAtPath<Texture>(szPngPath);
-						if (pngTexture)
+					int nStart 	= 0;
+					int nEnd	= szAssetPath.LastIndexOf('.') + 1;
+
+					string szExtName = szAssetPath.Substring(nEnd);
+					if (szExtName == SearchFileType.dds.ToString())
+					{
+						string szPngPath = string.Format("{0}{1}", szAssetPath.Substring(0, nEnd), SearchFileType.png.ToString());
+						if (!File.Exists(szPngPath))
 						{
+							Debug.LogError(szPngPath);
+						}
+						else
+						{
+							Texture pngTexture = AssetDatabase.LoadAssetAtPath<Texture>(szPngPath);
+							if (!pngTexture)
+								throw new System.NullReferenceException();
+
 							mat.mainTexture = pngTexture;
+
 							AssetDatabase.ImportAsset(path);
 						}
 					}
 				}
 			}
 		}
-
-		Terrain t;
 	}
 
 	/// <summary>
