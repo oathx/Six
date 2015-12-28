@@ -486,7 +486,7 @@ public class XmlEditorHelper
 	/// <returns>The skeleton.</returns>
 	/// <param name="resource">Resource.</param>
 	/// <param name="szOutPath">Size out path.</param>
-	public static GameObject	ExtractSkeleton(Object resource, string szOutPath)
+	public static void		ExtractSkeleton(Object resource, string szOutPath)
 	{
 		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
 		if (!fbx)
