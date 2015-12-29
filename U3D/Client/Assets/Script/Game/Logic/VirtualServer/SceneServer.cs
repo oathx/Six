@@ -50,7 +50,7 @@ public class SceneServer : VirtualServer
 			TcpEvent.SCNetCharacterSpawnInfo spawn = new TcpEvent.SCNetCharacterSpawnInfo ();
 			spawn.Position 	= new Vector3 (-81.0f, 2.0f, 100.0f);
 			spawn.Level 	= (short)item.Level;
-			spawn.MapID		= 1010;
+			spawn.MapID		= 3100;
 			spawn.Job 		= (sbyte)item.Job;
 			spawn.Name 		= GlobalUserInfo.MapID.ToString();
 			
