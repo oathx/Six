@@ -211,7 +211,7 @@ public class XmlEditorHelper
 	}
 	
 	public enum PType {
-		m_HumanDescription, m_RootMotionBoneName, m_LastHumanDescriptionAvatarSource,
+		m_HumanDescription, m_RootMotionBoneName, m_LastHumanDescriptionAvatarSource, m_AnimationType,
 	}
 
 	/// <summary>
@@ -239,7 +239,10 @@ public class XmlEditorHelper
 		SerializedObject impSO 			= new SerializedObject(imp);
 		SerializedProperty rootMotion 	= impSO.FindProperty(PType.m_HumanDescription.ToString()).FindPropertyRelative(PType.m_RootMotionBoneName.ToString());
 		rootMotion.stringValue 			= szValue;
-		
+
+		SerializedProperty type			= impSO.FindProperty(PType.m_AnimationType.ToString());
+		type.enumValueIndex				= 2;
+
 		impSO.ApplyModifiedProperties();
 		impSO.Dispose();
 	}
@@ -263,110 +266,116 @@ public class XmlEditorHelper
 		return true;
 	}
 
+	
 	/// <summary>
-	/// Imports the state.
+	/// Imports the clip.
 	/// </summary>
-	/// <param name="szAssetPath">Size asset path.</param>
+	/// <returns>The clip.</returns>
 	/// <param name="animator">Animator.</param>
-	/// <param name="machine">Machine.</param>
-	public static void 	ImportState(string szAssetPath, Animator animator, UnityEditor.Animations.AnimatorStateMachine machine)
+	/// <param name="aryClip">Ary clip.</param>
+	public static void	ImportClip(string szAssetPath, Animator animator, List<string> aryClip)
 	{
-		string szFbxPath 	= Application.dataPath + szAssetPath.Substring(6, szAssetPath.Length - 6);
-
-		// get animation fbx search directory
-		string szDirectory 	= szFbxPath.Remove(
-			szFbxPath.LastIndexOf("/")
+		UnityEditor.Animations.AnimatorController ac = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(
+			GetAssetPathName(szAssetPath, SearchFileType.controller.ToString())
 			);
-		if (!Directory.Exists(szDirectory))
-			throw new System.NullReferenceException(szDirectory);
-
-		int nOffsetX = 100;
-		int nOffsetY = 60;
-
-		// set machine base position
+		// set animation controller
+		animator.runtimeAnimatorController = ac;
+		
+		// clearup old animation state
+		for(int i=0; i<ac.layers[0].stateMachine.states.Length; i++)
+		{
+			ac.layers[0].stateMachine.RemoveState(ac.layers[0].stateMachine.states[i].state);
+		}
+		
+		ImprtState(animator, aryClip, ac.layers[0].stateMachine, 100, 60);
+	}
+	
+	/// <summary>
+	/// Imprts the state.
+	/// </summary>
+	/// <param name="animator">Animator.</param>
+	/// <param name="aryClip">Ary clip.</param>
+	/// <param name="machine">Machine.</param>
+	public static void 	ImprtState(Animator animator, List<string> aryClipPath,
+	                               UnityEditor.Animations.AnimatorStateMachine machine, int nOffsetX, int nOffsetY)
+	{
 		machine.entryPosition 		= new Vector3(machine.entryPosition.x + nOffsetX, machine.entryPosition.y, 0);
 		machine.anyStatePosition	= new Vector3(machine.entryPosition.x, machine.entryPosition.y - nOffsetY, 0);
 		machine.exitPosition		= new Vector3(machine.entryPosition.x, machine.entryPosition.y + nOffsetY, 0);
-
-		string[] aryFile = System.IO.Directory.GetFiles(szDirectory, "*@*.fbx", SearchOption.AllDirectories);
-		for(int i=0; i<aryFile.Length; i++)
+		
+		for(int i=0; i<aryClipPath.Count; i++)
 		{
-			string szAnimationFile = aryFile[i].Substring(Application.dataPath.Length - 6, 
-			                                              aryFile[i].Length - Application.dataPath.Length + 6);
-			if (!string.IsNullOrEmpty(szAnimationFile))
+			ModelImporter imp = ModelImporter.GetAtPath(aryClipPath[i]) as ModelImporter;
+			if (!imp)
+				throw new System.NullReferenceException(aryClipPath[i]);
+			
+			ApplyRootMotionBoneName(imp, imp.transformPaths[1]);
+			
+			string szClipName 	= imp.assetPath.Substring(
+				imp.assetPath.LastIndexOf('@') + 1);
+			szClipName 			= szClipName.Remove(szClipName.LastIndexOf('.'));
+			
+			ModelImporterClipAnimation clipImp = new ModelImporterClipAnimation ();
+			if (imp.clipAnimations.Length > 0)
+				clipImp = imp.clipAnimations[0];
+			
+			// load animation clip
+			AnimationClip clip = AssetDatabase.LoadAssetAtPath(imp.assetPath, typeof(AnimationClip)) as AnimationClip;
+			if (clip)
 			{
-				ModelImporter imp = ModelImporter.GetAtPath(szAnimationFile) as ModelImporter;
-				if (!imp)
-					throw new System.NullReferenceException(szAnimationFile);
-
-				ApplyRootMotionBoneName(imp, imp.transformPaths[1]);
-
-				string szClipName 	= imp.assetPath.Substring(
-					imp.assetPath.LastIndexOf('@') + 1);
-				szClipName 			= szClipName.Remove(szClipName.LastIndexOf('.'));
-
-				ModelImporterClipAnimation clipImp = new ModelImporterClipAnimation ();
-				if (imp.clipAnimations.Length > 0)
-					clipImp = imp.clipAnimations[0];
-
-				// load animation clip
-				AnimationClip clip = AssetDatabase.LoadAssetAtPath(imp.assetPath, typeof(AnimationClip)) as AnimationClip;
-				if (clip)
+				AnimationClipSettings set = AnimationUtility.GetAnimationClipSettings(clip);
+				if (set != default(AnimationClipSettings))
 				{
-					AnimationClipSettings set = AnimationUtility.GetAnimationClipSettings(clip);
-					if (set != default(AnimationClipSettings))
-					{
-						clipImp.firstFrame 	= set.startTime * clip.frameRate;
-						clipImp.lastFrame 	= set.stopTime  * clip.frameRate;
-					}
+					clipImp.firstFrame 	= set.startTime * clip.frameRate;
+					clipImp.lastFrame 	= set.stopTime  * clip.frameRate;
 				}
-
-				clipImp.maskType				= ClipAnimationMaskType.CreateFromThisModel;
-				clipImp.keepOriginalOrientation = true;
-				clipImp.keepOriginalPositionXZ	= true;
-				clipImp.keepOriginalPositionY	= true;
-				clipImp.lockRootRotation		= true;
-				clipImp.lockRootHeightY			= true;
-				clipImp.name					= szClipName;
-
-				// set loop animation
-				string[] aryFiliter = {
-					"idle", "move", "run", "walk", "fly", "turn"
-				};
-				foreach(string fliter in aryFiliter)
+			}
+			
+			clipImp.maskType				= ClipAnimationMaskType.CreateFromThisModel;
+			clipImp.keepOriginalOrientation = true;
+			clipImp.keepOriginalPositionXZ	= true;
+			clipImp.keepOriginalPositionY	= true;
+			clipImp.lockRootRotation		= true;
+			clipImp.lockRootHeightY			= true;
+			clipImp.name					= szClipName;
+			
+			// set loop animation
+			string[] aryFiliter = {
+				"idle", "move", "run", "walk", "fly", "turn"
+			};
+			foreach(string fliter in aryFiliter)
+			{
+				if (szClipName.ToLower().Contains(fliter))
 				{
-					if (szClipName.ToLower().Contains(fliter))
-					{
-						clipImp.loopTime = true;
-						break;
-					}
+					clipImp.loopTime = true;
+					break;
 				}
-
-				imp.clipAnimations = new ModelImporterClipAnimation[]{clipImp};
+			}
+			
+			imp.clipAnimations = new ModelImporterClipAnimation[]{clipImp};
+			
+			// reset model importer
+			imp.SaveAndReimport();
+			
+			Object[] aryClip = AssetDatabase.LoadAllAssetsAtPath(imp.assetPath);
+			for(int c=0; c<aryClip.Length; c++)
+			{
+				Object o = aryClip[c];
 				
-				// reset model importer
-				imp.SaveAndReimport();
-
-				Object[] aryClip = AssetDatabase.LoadAllAssetsAtPath(imp.assetPath);
-				for(int c=0; c<aryClip.Length; c++)
+				if (o.GetType() == typeof(AnimationClip) && !o.name.Contains(SearchFileType.preview.ToString()))
 				{
-					Object o = aryClip[c];
+					Vector3 vStatePosition = new Vector3(machine.entryPosition.x + 200, machine.entryPosition.y + i * 65, 0);
 					
-					if (o.GetType() == typeof(AnimationClip))
+					// create animator state
+					UnityEditor.Animations.AnimatorState state = machine.AddState(o.name, vStatePosition);
+					if (state)
 					{
-						Vector3 vStatePosition = new Vector3(machine.entryPosition.x + 200, machine.entryPosition.y + i * 65, 0);
-
-						// create animator state
-						UnityEditor.Animations.AnimatorState state = machine.AddState(o.name, vStatePosition);
-						if (state)
+						state.motion = o as Motion;
+						
+						// set default state
+						if (state.name.ToLower().Contains(aryFiliter[0]))
 						{
-							state.motion = o as Motion;
-
-							// set default state
-							if (state.name.ToLower().Contains(aryFiliter[0]))
-							{
-								machine.defaultState = state;
-							}
+							machine.defaultState = state;
 						}
 					}
 				}
@@ -375,67 +384,27 @@ public class XmlEditorHelper
 	}
 
 	/// <summary>
-	/// Imports the clip.
-	/// </summary>
-	/// <param name="animator">Animator.</param>
-	public static void 	ImportClip(Animator animator)
-	{
-		string szAssetPath = AssetDatabase.GetAssetPath(animator.avatar);
-		if (string.IsNullOrEmpty(szAssetPath))
-			throw new System.NullReferenceException();
-
-		// get animator controller asset path
-		string szAssetName = GetAssetPathName(szAssetPath, SearchFileType.controller.ToString());
-		if (!string.IsNullOrEmpty(szAssetName))
-		{
-			// create animator controller
-			UnityEditor.Animations.AnimatorController ac = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(szAssetName);
-			if (!ac)
-				throw new System.NullReferenceException();
-
-			// set new animator controller
-			animator.runtimeAnimatorController = ac;
-
-			if (ac.layers.Length > 0)
-			{
-				// remove all old state
-				for(int i=0; i<ac.layers[0].stateMachine.states.Length; i++)
-				{
-					ac.layers[0].stateMachine.RemoveState(ac.layers[0].stateMachine.states[i].state);
-				}
-
-				// import all new fbx animation
-
-			}
-		}
-	}
-
-	/// <summary>
 	/// Creates the animator.
 	/// </summary>
-	/// <param name="target">Target.</param>
-	public static void 	CreateAnimator(GameObject target)
+	/// <param name="skeleton">Skeleton.</param>
+	/// <param name="aryClip">Ary clip.</param>
+	public static void 	CreateAnimator(GameObject skeleton, List<string> aryClip, string szModelPath)
 	{
-		string szAssetPath = AssetDatabase.GetAssetPath(target);
-		if (string.IsNullOrEmpty(szAssetPath))
-			throw new System.NullReferenceException();
-
-		if (ImportModel(szAssetPath))
+		if (ImportModel(szModelPath))
 		{
-			string szAssetName = GetAssetPathName(szAssetPath, SearchFileType.prefab.ToString());
-			if (!string.IsNullOrEmpty(szAssetName))
+			Animation old = skeleton.GetComponent<Animation>();
+			if (old)
+				GameObject.DestroyImmediate(old);
+
+			// add a animator contorller
+			Animator animator = skeleton.GetComponent<Animator>();
+			if (!animator)
+				animator = skeleton.AddComponent<Animator>();
+
+			string skeletonAssetPath = AssetDatabase.GetAssetPath(skeleton);
+			if (!string.IsNullOrEmpty(skeletonAssetPath))
 			{
-				// create the model prefab object
-				GameObject prefab = PrefabUtility.CreatePrefab(szAssetName, target);
-				if (!prefab)
-					throw new System.NullReferenceException(szAssetName);
-
-				// add a animator contorller
-				Animator animator = prefab.GetComponent<Animator>();
-				if (!animator)
-					animator = prefab.AddComponent<Animator>();
-
-				ImportClip(animator);
+				ImportClip(skeletonAssetPath, animator, aryClip);
 			}
 		}
 	}
@@ -486,7 +455,7 @@ public class XmlEditorHelper
 	/// <returns>The skeleton.</returns>
 	/// <param name="resource">Resource.</param>
 	/// <param name="szOutPath">Size out path.</param>
-	public static void		ExtractSkeleton(Object resource, string szOutPath)
+	public static GameObject	ExtractSkeleton(Object resource, string szOutPath)
 	{
 		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
 		if (!fbx)
@@ -510,12 +479,17 @@ public class XmlEditorHelper
 		SkinnedMeshRenderer skin = fbx.AddComponent<SkinnedMeshRenderer>();
 		if (skin)
 		{
-			GameObject prefab = CreateEmptyPrefab(fbx, string.Format("{0}{1}.prefab", szOutPath, resource.name));
+			GameObject prefab = CreateEmptyPrefab(fbx, szOutPath);
 			if (!prefab)
 				throw new System.NullReferenceException();
+
+			GameObject.DestroyImmediate(fbx);
+
+			return prefab;
 		}
 
 		GameObject.DestroyImmediate(fbx);
+		return default(GameObject);
 	}
 
 	public enum SkinMeshType {
@@ -528,7 +502,7 @@ public class XmlEditorHelper
 	/// <param name="resource">Resource.</param>
 	/// <param name="szOutPath">Size out path.</param>
 	/// <param name="bSingleFile">If set to <c>true</c> b single file.</param>
-	public static void 		ExtractSkinMesh(Object[] aryResource, string szOutPath, bool bSingleFile)
+	public static void 		ExtractSkinMesh(UnityEngine.Object[] aryResource, string szOutPath)
 	{
 		foreach(Object resource in aryResource)
 		{
@@ -547,7 +521,7 @@ public class XmlEditorHelper
 						throw new System.NullReferenceException();
 					
 					// create skinmesh prefab
-					GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}{1}@{2}.prefab", 
+					GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}/{1}@{2}.prefab", 
 					                                                            szOutPath, SkinMeshType.mesh.ToString(), render.name));
 					if (!prefab)
 						throw new System.NullReferenceException();
@@ -561,7 +535,7 @@ public class XmlEditorHelper
 					throw new System.NullReferenceException();
 				
 				// create skinmesh prefab
-				GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}{1}@{2}.prefab", 
+				GameObject prefab = CreateEmptyPrefab(clones, string.Format("{0}/{1}@{2}.prefab", 
 				                                                            szOutPath, SkinMeshType.mesh.ToString(), mesh.name));
 				if (!prefab)
 					throw new System.NullReferenceException();
@@ -576,7 +550,7 @@ public class XmlEditorHelper
 					
 					holder.content 	= boneName.ToArray();
 					
-					string szHolderPath = string.Format("{0}{1}@{2}.asset", GetAssetPath(szOutPath), SkinMeshType.bone.ToString(), mesh.name);
+					string szHolderPath = string.Format("{0}/{1}@{2}.asset", GetAssetPath(szOutPath), SkinMeshType.bone.ToString(), mesh.name);
 					AssetDatabase.CreateAsset(holder, 
 					                          szHolderPath);
 				}
@@ -585,6 +559,22 @@ public class XmlEditorHelper
 			}
 			
 			GameObject.DestroyImmediate(fbx);
+		}
+	}
+
+	/// <summary>
+	/// Clears the directory.
+	/// </summary>
+	/// <param name="szPath">Size path.</param>
+	public static void 	ClearDirectory(string szPath)
+	{
+		// clear old file
+		string[] aryDelete = System.IO.Directory.GetFiles(
+			szPath, "*.*", SearchOption.AllDirectories
+			);
+		foreach(string delete in aryDelete)
+		{
+			File.Delete(delete);
 		}
 	}
 }

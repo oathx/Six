@@ -58,6 +58,7 @@ public enum SearchFileType
 	DDS,
 	asset,
 	controller,
+	preview,
 }
 
 /// <summary>
@@ -529,7 +530,7 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 		}
 		catch(System.Exception e)
 		{
-
+			Debug.LogException(e);
 		}
 	}
 	
