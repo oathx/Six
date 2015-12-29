@@ -41,24 +41,24 @@ public enum KeyWord
 
 public enum SearchFileType
 {
-	png,
-	prefab,
-	unity,
-	fbx,
-	mat,
-	jpg,
-	tag,
-	xml,
-	bytes,
-	pass,
-	unity3d,
-	zip,
-	cs,
-	dds,
-	DDS,
-	asset,
-	controller,
-	preview,
+	png			= 1,
+	prefab		= 1 << 1,
+	unity		= 1 << 2,
+	fbx			= 1 << 3,
+	mat			= 1 << 4,
+	jpg			= 1 << 5,
+	tag			= 1 << 6,
+	xml			= 1 << 7,
+	bytes		= 1 << 8,
+	pass		= 1 << 9,
+	unity3d		= 1 << 10,
+	zip			= 1 << 11,
+	cs			= 1 << 12,
+	dds			= 1 << 13,
+	DDS			= 1 << 14,
+	asset		= 1 << 15,
+	controller	= 1 << 16,
+	preview		= 1 << 17,
 }
 
 /// <summary>
@@ -114,6 +114,12 @@ public class ButtonField
 	{
 		Name = name; 
 	}
+}
+
+public class EnumMaskField 
+	: System.Attribute
+{
+
 }
 
 /// <summary>
@@ -556,7 +562,7 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 	/// </summary>
 	public virtual void 	OnCustomGUIPrev()
 	{
-		
+
 	}
 
 	/// <summary>
@@ -750,7 +756,7 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 
 								EditorGUILayout.BeginVertical(EditorStyles.helpBox);
 
-								SearchFileType newType = (SearchFileType)EditorGUILayout.EnumPopup(typeof(SearchFileType).Name, (System.Enum)dir.FileType);
+								SearchFileType newType = (SearchFileType)EditorGUILayout.EnumMaskField(typeof(SearchFileType).Name, (System.Enum)dir.FileType);
 								if (dir.FileType != newType)
 								{
 									dir.FileType = newType;
@@ -796,7 +802,16 @@ public class XmlEditorWindow<T> : EditorWindow where T : XmlStruct, new()
 							{
 								if (value.GetType().IsEnum)
 								{
-									value = EditorGUILayout.EnumPopup(py.Name, (System.Enum)value);
+									EnumMaskField em = TypeHelper.GetAttribute<EnumMaskField>(py);
+									if (em == default(EnumMaskField))
+									{
+										value = EditorGUILayout.EnumPopup(py.Name, (System.Enum)value);
+									}
+									else
+									{
+										value = EditorGUILayout.EnumMaskField(py.Name, (System.Enum)value);
+									}
+
 									py.SetValue(target, value, new object[]{});
 								}
 								else if (value is ButtonClicked)

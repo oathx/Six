@@ -56,17 +56,45 @@ public class XmlEditorHelper
 		List<string> 
 			aryReturn = new List<string>();
 
-		// Priority search prefab file
-		string pattern = string.Format("*.{0}", 
-		                               type.ToString().ToLower());
+		SearchFileType[] aryMask = new SearchFileType[]{
+			SearchFileType.png,
+			SearchFileType.prefab,
+			SearchFileType.unity,
+			SearchFileType.fbx,
+			SearchFileType.mat,
+			SearchFileType.jpg,
+			SearchFileType.tag,
+			SearchFileType.xml,
+			SearchFileType.bytes,
+			SearchFileType.pass,
+			SearchFileType.unity3d,
+			SearchFileType.zip,
+			SearchFileType.cs,
+			SearchFileType.dds,
+			SearchFileType.DDS,
+			SearchFileType.asset,
+			SearchFileType.controller,
+			SearchFileType.preview,
+		};
 
-		string[] aryFile = System.IO.Directory.GetFiles(szInputPath, pattern, SearchOption.AllDirectories);
-		foreach(string path in aryFile)
+		foreach(SearchFileType mask in aryMask)
 		{
-			string szPath = path.Substring(Application.dataPath.Length - 6);
-			aryReturn.Add(
-				szPath.Replace("\\", "/")
-				);
+			if ((type & mask) != 0)
+			{
+				// Priority search prefab file
+				string pattern = string.Format(
+					"{0}.{1}", "*", mask.ToString().ToLower()
+					);
+
+				string[] aryFile = System.IO.Directory.GetFiles(szInputPath, pattern, SearchOption.AllDirectories);
+				foreach(string path in aryFile)
+				{
+					string szPath = path.Substring(Application.dataPath.Length - 6);
+					aryReturn.Add(
+						szPath.Replace("\\", "/")
+						);
+				}
+			}
 		}
 
 		return aryReturn;
