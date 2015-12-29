@@ -34,6 +34,7 @@ public class ZipPackage
 	public ZipPackage()
 	{
 		InputPath = new DirectoryStruct ();
+
 	}
 }
 
