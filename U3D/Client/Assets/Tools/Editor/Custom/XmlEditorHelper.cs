@@ -394,7 +394,7 @@ public class XmlEditorHelper
 		{
 			Animation old = skeleton.GetComponent<Animation>();
 			if (old)
-				GameObject.DestroyImmediate(old);
+				GameObject.DestroyImmediate(old, true);
 
 			// add a animator contorller
 			Animator animator = skeleton.GetComponent<Animator>();
