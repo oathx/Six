@@ -252,7 +252,7 @@ public class XmlEditorHelper
 	/// </summary>
 	/// <returns><c>true</c>, if model was imported, <c>false</c> otherwise.</returns>
 	/// <param name="szAssetPath">Size asset path.</param>
-	public static bool	ImportModel(string szAssetPath)
+	public static bool		ImportModel(string szAssetPath)
 	{
 		ModelImporter imp = ModelImporter.GetAtPath(szAssetPath) as ModelImporter;
 		if (!imp)
@@ -273,7 +273,7 @@ public class XmlEditorHelper
 	/// <returns>The clip.</returns>
 	/// <param name="animator">Animator.</param>
 	/// <param name="aryClip">Ary clip.</param>
-	public static void	ImportClip(string szAssetPath, Animator animator, List<string> aryClip)
+	public static void		ImportClip(string szAssetPath, Animator animator, List<string> aryClip)
 	{
 		UnityEditor.Animations.AnimatorController ac = UnityEditor.Animations.AnimatorController.CreateAnimatorControllerAtPath(
 			GetAssetPathName(szAssetPath, SearchFileType.controller.ToString())
@@ -296,8 +296,8 @@ public class XmlEditorHelper
 	/// <param name="animator">Animator.</param>
 	/// <param name="aryClip">Ary clip.</param>
 	/// <param name="machine">Machine.</param>
-	public static void 	ImprtState(Animator animator, List<string> aryClipPath,
-	                               UnityEditor.Animations.AnimatorStateMachine machine, int nOffsetX, int nOffsetY)
+	public static void 		ImprtState(Animator animator, List<string> aryClipPath,
+	                               	UnityEditor.Animations.AnimatorStateMachine machine, int nOffsetX, int nOffsetY)
 	{
 		machine.entryPosition 		= new Vector3(machine.entryPosition.x + nOffsetX, machine.entryPosition.y, 0);
 		machine.anyStatePosition	= new Vector3(machine.entryPosition.x, machine.entryPosition.y - nOffsetY, 0);
@@ -388,7 +388,7 @@ public class XmlEditorHelper
 	/// </summary>
 	/// <param name="skeleton">Skeleton.</param>
 	/// <param name="aryClip">Ary clip.</param>
-	public static void 	CreateAnimator(GameObject skeleton, List<string> aryClip, string szModelPath)
+	public static void 		CreateAnimator(GameObject skeleton, List<string> aryClip, string szModelPath)
 	{
 		if (ImportModel(szModelPath))
 		{
