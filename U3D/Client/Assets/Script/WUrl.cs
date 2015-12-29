@@ -53,9 +53,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/character/character.unity3d", DataURL);
+			return string.Format("{0}/resource/model.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/character.unity3d", DataURL);
+			return string.Format("{0}/resource/model.unity3d", DataURL);
 #endif
 		}
 	}

@@ -26,14 +26,12 @@ public enum MountType
 public enum PartType
 {
 	PT_NONE 			= 0,
-	PT_ARMAMENT 		= 1,
-	PT_ENGINE 			= 2,
-	PT_CONTROL 			= 3,
-	PT_HEAD 			= 4,
-	PT_ARMOUR 			= 5,
-	PT_ARM 				= 6,
-	PT_LEG 				= 7,
-	PT_PROTECT 			= 8,
+	PT_HAIR 			= 1,
+	PT_FACE 			= 2,
+	PT_BODY 			= 3,
+	PT_LEG 				= 4,
+	PT_ARM 				= 5,
+	PT_PROTECT 			= 6,
 }
 
 public class EntityLayer
