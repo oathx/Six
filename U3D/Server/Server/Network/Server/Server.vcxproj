@@ -1,0 +1,219 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="Debug|Win32">
+      <Configuration>Debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="Release|Win32">
+      <Configuration>Release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{873B17AA-BB77-4679-890B-B194480D9202}</ProjectGuid>
+    <RootNamespace>Server</RootNamespace>
+    <Keyword>Win32Proj</Keyword>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
+    <ConfigurationType>StaticLibrary</ConfigurationType>
+    <CharacterSet>Unicode</CharacterSet>
+    <PlatformToolset>v120</PlatformToolset>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(Configuration)\</IntDir>
+    <OutDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(SolutionDir)$(Configuration)\</OutDir>
+    <IntDir Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">$(Configuration)\</IntDir>
+    <LinkIncremental Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">false</LinkIncremental>
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" />
+    <CodeAnalysisRuleSet Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">AllRules.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRules Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+    <CodeAnalysisRuleAssemblies Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" />
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile>
+      <Optimization>Disabled</Optimization>
+      <AdditionalIncludeDirectories>..\..\..\libevent\libevent-2.0.21-stable\WIN32-Code;..\..\..\libevent\libevent-2.0.21-stable\include;..\..\..\libevent\libevent-2.0.21-stable;..\..\..\lua-5.2.3\src;..\..\..\jsoncpp\include\json;..\..\..\cjson\src;.\EventSet\include;..\..\..\jsoncpp\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <MinimalRebuild>true</MinimalRebuild>
+      <BasicRuntimeChecks>EnableFastChecks</BasicRuntimeChecks>
+      <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+    </ClCompile>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <ClCompile>
+      <Optimization>MaxSpeed</Optimization>
+      <IntrinsicFunctions>true</IntrinsicFunctions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
+      <FunctionLevelLinking>true</FunctionLevelLinking>
+      <PrecompiledHeader>
+      </PrecompiledHeader>
+      <WarningLevel>Level3</WarningLevel>
+      <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
+    </ClCompile>
+    <Link>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
+      <SubSystem>Console</SubSystem>
+      <OptimizeReferences>true</OptimizeReferences>
+      <EnableCOMDATFolding>true</EnableCOMDATFolding>
+      <TargetMachine>MachineX86</TargetMachine>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp" />
+    <ClCompile Include="ClientManager.cpp" />
+    <ClCompile Include="JsonProtocol.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="PlayerEvent.cpp" />
+    <ClCompile Include="PlayerManager.cpp" />
+    <ClCompile Include="ProtocolTranslate.cpp" />
+    <ClCompile Include="ScriptManager.cpp" />
+    <ClCompile Include="Session.cpp" />
+    <ClCompile Include="BoundSlot.cpp" />
+    <ClCompile Include="EventArgs.cpp" />
+    <ClCompile Include="EventSet.cpp" />
+    <ClCompile Include="FunctorEvent.cpp" />
+    <ClCompile Include="SubscriberSlot.cpp" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lapi.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lauxlib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lbaselib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lbitlib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lcode.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lcorolib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lctype.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldblib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldebug.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldo.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldump.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lfunc.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lgc.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\linit.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\liolib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\llex.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lmathlib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lmem.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\loadlib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lobject.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lopcodes.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\loslib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lparser.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstate.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstring.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstrlib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltable.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltablib.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltm.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lua.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\luac.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lundump.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lvm.c" />
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lzio.c" />
+    <ClCompile Include="..\..\..\cjson\src\fpconv.c" />
+    <ClCompile Include="..\..\..\cjson\src\lua_cjson.c" />
+    <ClCompile Include="..\..\..\cjson\src\lua_extensions.c" />
+    <ClCompile Include="..\..\..\cjson\src\strbuf.c" />
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_reader.cpp" />
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_value.cpp" />
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_writer.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h" />
+    <ClInclude Include="ClientManager.h" />
+    <ClInclude Include="JsonProtocol.h" />
+    <ClInclude Include="NetProtocol.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="PlayerEvent.h" />
+    <ClInclude Include="PlayerManager.h" />
+    <ClInclude Include="ProtocolTranslate.h" />
+    <ClInclude Include="ScriptManager.h" />
+    <ClInclude Include="Session.h" />
+    <ClInclude Include="Singleton.h" />
+    <ClInclude Include="TypeDef.h" />
+    <ClInclude Include="BoundSlot.h" />
+    <ClInclude Include="EventArgs.h" />
+    <ClInclude Include="EventSet.h" />
+    <ClInclude Include="FreeFunctionSlot.h" />
+    <ClInclude Include="FunctorCopySlot.h" />
+    <ClInclude Include="FunctorEvent.h" />
+    <ClInclude Include="FunctorPointerSlot.h" />
+    <ClInclude Include="FunctorReferenceBinder.h" />
+    <ClInclude Include="FunctorReferenceSlot.h" />
+    <ClInclude Include="MemberFunctionSlot.h" />
+    <ClInclude Include="RefCounted.h" />
+    <ClInclude Include="SlotFunctorBase.h" />
+    <ClInclude Include="SubscriberSlot.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lapi.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lauxlib.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lcode.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lctype.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ldebug.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ldo.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lfunc.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lgc.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\llex.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\llimits.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lmem.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lobject.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lopcodes.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lparser.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lstate.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lstring.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ltable.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ltm.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lua.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lua.hpp" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\luaconf.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lualib.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lundump.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lvm.h" />
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lzio.h" />
+    <ClInclude Include="..\..\..\cjson\src\fpconv.h" />
+    <ClInclude Include="..\..\..\cjson\src\lua_cjson.h" />
+    <ClInclude Include="..\..\..\cjson\src\lua_extensions.h" />
+    <ClInclude Include="..\..\..\cjson\src\strbuf.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\autolink.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\config.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\features.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\forwards.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\json.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\reader.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\value.h" />
+    <ClInclude Include="..\..\..\jsoncpp\include\json\writer.h" />
+    <ClInclude Include="..\..\..\jsoncpp\src\lib_json\json_batchallocator.h" />
+    <ClInclude Include="DefProtocol.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_internalarray.inl" />
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_internalmap.inl" />
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_valueiterator.inl" />
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>

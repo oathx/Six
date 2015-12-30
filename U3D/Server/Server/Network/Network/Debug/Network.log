@@ -1,0 +1,23 @@
+﻿生成启动时间为 2015/12/25 18:52:32。
+     1>项目“D:\SixU3D\trunk\Server\Server\Network\Network\Network.vcxproj”在节点 2 上(Build 个目标)。
+     1>ClCompile:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\CL.exe /c /I"..\..\..\libevent\libevent-2.0.21-stable\WIN32-Code" /I"..\..\..\libevent\libevent-2.0.21-stable\include" /I"..\..\..\libevent\libevent-2.0.21-stable" /I"..\..\..\json-c-0.11" /I"..\..\..\lua-5.2.3\src" /I..\..\..\cjson\src /I..\Server /I..\..\..\jsoncpp\include\json /ZI /nologo /W3 /WX- /Od /Oy- /D WIN32 /D _DEBUG /D _CONSOLE /D _UNICODE /D UNICODE /Gm /EHsc /RTC1 /MDd /GS /fp:precise /Zc:wchar_t /Zc:forScope /Yu"stdafx.h" /Fp"Debug\LoginServer.pch" /Fo"Debug\\" /Fd"Debug\vc120.pdb" /Gd /TP /analyze- /errorReport:prompt DataBaseClient.cpp LoginEvent.cpp LoginServer.cpp
+         LoginEvent.cpp
+         正在生成代码...
+         正在编译...
+         LoginServer.cpp
+         DataBaseClient.cpp
+         正在生成代码...
+       Link:
+         D:\Program Files (x86)\Microsoft Visual Studio 12.0\VC\bin\link.exe /ERRORREPORT:PROMPT /OUT:"D:\SixU3D\trunk\Server\Server\Network\Debug\LoginServer.exe" /INCREMENTAL /NOLOGO /LIBPATH:"..\..\..\libevent\libevent-2.0.21-stable" /LIBPATH:"..\..\..\lua-5.2.3\lua-5.2.3\Debug" /LIBPATH:..\..\..\cjson\Debug /LIBPATH:..\Debug /LIBPATH:..\..\..\jsoncpp\build\vs71\debug\lib_json libevent.lib libevent_core.lib libevent_extras.lib ws2_32.lib Server.lib kernel32.lib user32.lib gdi32.lib winspool.lib comdlg32.lib advapi32.lib shell32.lib ole32.lib oleaut32.lib uuid.lib odbc32.lib odbccp32.lib /NODEFAULTLIB:LIBCMT.lib /MANIFEST /MANIFESTUAC:"level='asInvoker' uiAccess='false'" /manifest:embed /DEBUG /PDB:"D:\SixU3D\trunk\Server\Server\Network\Debug\LoginServer.pdb" /SUBSYSTEM:CONSOLE /TLBID:1 /DYNAMICBASE /NXCOMPAT /IMPLIB:"D:\SixU3D\trunk\Server\Server\Network\Debug\LoginServer.lib" /MACHINE:X86 /SAFESEH Debug\DataBaseClient.obj
+         Debug\LoginEvent.obj
+         Debug\LoginServer.obj
+         Debug\stdafx.obj
+         D:\SixU3D\trunk\Server\Server\Network\Debug\Server.lib
+     1>DataBaseClient.obj : warning LNK4075: 忽略“/EDITANDCONTINUE”(由于“/SAFESEH”规范)
+         Network.vcxproj -> D:\SixU3D\trunk\Server\Server\Network\Debug\LoginServer.exe
+     1>已完成生成项目“D:\SixU3D\trunk\Server\Server\Network\Network\Network.vcxproj”(Build 个目标)的操作。
+
+生成成功。
+
+已用时间 00:00:00.79

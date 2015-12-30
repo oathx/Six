@@ -1,0 +1,419 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hpp;hxx;hm;inl;inc;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav</Extensions>
+    </Filter>
+    <Filter Include="eventset">
+      <UniqueIdentifier>{3ebc8bd5-ecd1-47f3-b030-7580fd1b0d9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eventset\include">
+      <UniqueIdentifier>{9a652314-812e-4fcc-89c4-62fbb3e64fcf}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="eventset\src">
+      <UniqueIdentifier>{8e7e5dd8-2572-406c-90c5-0514de057611}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua">
+      <UniqueIdentifier>{3bfe81b2-c7a2-44bd-9458-42f6b56bdfe3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua\lua">
+      <UniqueIdentifier>{853b2f7d-5142-4ce8-b5ff-8f2e65ac079d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="lua\cjson">
+      <UniqueIdentifier>{41b43fe7-4dba-41a8-a861-2519d3caa696}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsoncpp">
+      <UniqueIdentifier>{1e24a975-947a-44f4-8b34-e3e9573bc616}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsoncpp\include">
+      <UniqueIdentifier>{20243af6-9499-4441-9452-59f1a820634c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="jsoncpp\src">
+      <UniqueIdentifier>{4e65982d-107a-4b9a-a294-75c1592a5487}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="defprotocol">
+      <UniqueIdentifier>{0d89b71a-3cab-41fe-a783-710db754948c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="Client.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ClientManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="JsonProtocol.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerEvent.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ProtocolTranslate.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="ScriptManager.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Session.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="BoundSlot.cpp">
+      <Filter>eventset\src</Filter>
+    </ClCompile>
+    <ClCompile Include="EventArgs.cpp">
+      <Filter>eventset\src</Filter>
+    </ClCompile>
+    <ClCompile Include="EventSet.cpp">
+      <Filter>eventset\src</Filter>
+    </ClCompile>
+    <ClCompile Include="FunctorEvent.cpp">
+      <Filter>eventset\src</Filter>
+    </ClCompile>
+    <ClCompile Include="SubscriberSlot.cpp">
+      <Filter>eventset\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lapi.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lauxlib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lbaselib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lbitlib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lcode.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lcorolib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lctype.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldblib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldebug.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldo.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ldump.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lfunc.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lgc.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\linit.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\liolib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\llex.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lmathlib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lmem.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\loadlib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lobject.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lopcodes.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\loslib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lparser.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstate.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstring.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lstrlib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltable.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltablib.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\ltm.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lua.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\luac.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lundump.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lvm.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\lua-5.2.3\src\lzio.c">
+      <Filter>lua\lua</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cjson\src\fpconv.c">
+      <Filter>lua\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cjson\src\lua_cjson.c">
+      <Filter>lua\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cjson\src\lua_extensions.c">
+      <Filter>lua\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\cjson\src\strbuf.c">
+      <Filter>lua\cjson</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_reader.cpp">
+      <Filter>jsoncpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_value.cpp">
+      <Filter>jsoncpp\src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\jsoncpp\src\lib_json\json_writer.cpp">
+      <Filter>jsoncpp\src</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Client.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ClientManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="JsonProtocol.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="NetProtocol.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerEvent.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ProtocolTranslate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="ScriptManager.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Session.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Singleton.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="TypeDef.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="BoundSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="EventArgs.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="EventSet.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FreeFunctionSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctorCopySlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctorEvent.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctorPointerSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctorReferenceBinder.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="FunctorReferenceSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="MemberFunctionSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="RefCounted.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="SlotFunctorBase.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="SubscriberSlot.h">
+      <Filter>eventset\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lapi.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lauxlib.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lcode.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lctype.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ldebug.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ldo.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lfunc.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lgc.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\llex.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\llimits.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lmem.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lobject.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lopcodes.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lparser.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lstate.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lstring.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ltable.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\ltm.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lua.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lua.hpp">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\luaconf.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lualib.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lundump.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lvm.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\lua-5.2.3\src\lzio.h">
+      <Filter>lua\lua</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cjson\src\fpconv.h">
+      <Filter>lua\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cjson\src\lua_cjson.h">
+      <Filter>lua\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cjson\src\lua_extensions.h">
+      <Filter>lua\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\cjson\src\strbuf.h">
+      <Filter>lua\cjson</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\autolink.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\config.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\features.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\forwards.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\json.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\reader.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\value.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\include\json\writer.h">
+      <Filter>jsoncpp\include</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\jsoncpp\src\lib_json\json_batchallocator.h">
+      <Filter>jsoncpp\src</Filter>
+    </ClInclude>
+    <ClInclude Include="DefProtocol.h">
+      <Filter>defprotocol</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_internalarray.inl">
+      <Filter>jsoncpp\src</Filter>
+    </None>
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_internalmap.inl">
+      <Filter>jsoncpp\src</Filter>
+    </None>
+    <None Include="..\..\..\jsoncpp\src\lib_json\json_valueiterator.inl">
+      <Filter>jsoncpp\src</Filter>
+    </None>
+  </ItemGroup>
+</Project>
