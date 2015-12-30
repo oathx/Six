@@ -123,20 +123,11 @@ public class HumanEntityFactory : IEntityFactory
 		entity.MoveableController.height	= sqlShape.Height;
 
 		Dictionary<MountType, string> dmt = new Dictionary<MountType, string> ();
-		dmt.Add(MountType.Dummy_L_Hand, 	"Dummy_L_Hand");
-		dmt.Add(MountType.Dummy_R_Hand, 	"Dummy_R_Hand");
-		dmt.Add(MountType.Dummy_L_Foot, 	"Dummy_L_Foot");
-		dmt.Add(MountType.Dummy_R_Foot, 	"Dummy_R_Foot");
-		dmt.Add(MountType.Dummy_L_Clavicle, "Dummy_L_Clavicle");
-		dmt.Add(MountType.Dummy_R_Clavicle, "Dummy_R_Clavicle");
-		dmt.Add(MountType.Dummy_Spine1, 	"Dummy_Spine1");
-		dmt.Add(MountType.Dummy_NPower, 	"Dummy_NPower");
-		dmt.Add(MountType.Dummy_Pelvis, 	"Dummy_Pelvis");
-		dmt.Add(MountType.Dummy_Head, 		"Dummy_Head");
-		dmt.Add(MountType.Dummy_Spine, 		"Dummy_Spine");
-		dmt.Add(MountType.Dummy_Tail, 		"Dummy_Tail");
-		dmt.Add(MountType.Dummy_L_Wings, 	"Dummy_L_Wings");
-		dmt.Add(MountType.Dummy_R_Wings, 	"Dummy_R_Wings");
+		dmt.Add(MountType.DUMMY_WING, 		"Bone_Chibang");
+		dmt.Add(MountType.DUMMY_PICK, 		"Bone_Caiji");
+		dmt.Add(MountType.DUMMY_ARM, 		"Bone_Staff");
+		dmt.Add(MountType.DUMMY_GIDDINESS, 	"Bone_Yun");
+		dmt.Add(MountType.DUMMY_HORSE, 		"Bone_Zuoqi");
 		
 		// add the shape all moune
 		entity.InstallMount(dmt);
@@ -161,7 +152,7 @@ public class HumanEntityFactory : IEntityFactory
 				}
 				else
 				{
-					Transform mount = entity.GetMount(MountType.Dummy_R_Hand);
+					Transform mount = entity.GetMount(MountType.DUMMY_ARM);
 					if (mount)
 					{
 						// load the equip mesh

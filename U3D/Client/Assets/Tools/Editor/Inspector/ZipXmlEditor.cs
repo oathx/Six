@@ -68,6 +68,13 @@ public class ZipXmlStruct : XmlStruct
 	{ get; set; }
 
 	/// <summary>
+	/// Gets or sets a value indicating whether this <see cref="ZipXmlStruct"/> generate version.
+	/// </summary>
+	/// <value><c>true</c> if generate version; otherwise, <c>false</c>.</value>
+	public bool					GenerateVersion
+	{ get; set; }
+
+	/// <summary>
 	/// Gets or sets the build clicked.
 	/// </summary>
 	/// <value>The build clicked.</value>
@@ -145,6 +152,11 @@ public class ZipXmlStruct : XmlStruct
 		string szTimeString = System.DateTime.Now.ToString ().Replace("/", string.Empty).Replace(" ", string.Empty).Replace(":", string.Empty);
 		XmlEditorHelper.CreateZipFile (XmlEditorHelper.MidPath, 
 		                             string.Format ("{0}/{1}.zip", Application.streamingAssetsPath, szTimeString), "*", SearchFileType.unity3d);
+
+		if (GenerateVersion)
+		{
+
+		}
 	}
 
 	/// <summary>

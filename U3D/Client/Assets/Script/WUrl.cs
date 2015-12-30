@@ -81,9 +81,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/arm.unity3d", DataURL);
+			return string.Format("{0}/resource/weapon.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/arm.unity3d", DataURL);
+			return string.Format("{0}/resource/weapon.unity3d", DataURL);
 #endif
 		}
 	}

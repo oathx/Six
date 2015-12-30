@@ -72,7 +72,7 @@ public class SqlSystem : ISqlPackage
 	/// <value>The weapon.</value>
 	public string			MainScript
 	{ get; set; }
-	
+
 	/// <summary>
 	/// Decode the specified sdr.
 	/// </summary>

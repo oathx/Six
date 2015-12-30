@@ -136,6 +136,8 @@ public class AssetBundleResource : IResource<AssetBundle>
 	/// <typeparam name="T">The 1st type parameter.</typeparam>
 	public T				GetAsset<T>(string szAssetName) where T : UnityEngine.Object
 	{
+		szAssetName = szAssetName.ToLower();
+
 		if (!Handle.Contains(szAssetName))
 			throw new System.NullReferenceException("Can't find asset " + szAssetName);
 

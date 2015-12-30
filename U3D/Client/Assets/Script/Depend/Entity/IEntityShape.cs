@@ -5,21 +5,11 @@ using System.Collections.Generic;
 public enum MountType
 {
 	None				= 0,
-	Dummy_L_Hand		= 1,
-	Dummy_R_Hand		= 2,
-	Dummy_L_Foot		= 3,
-	Dummy_R_Foot		= 4,
-	Dummy_L_Clavicle	= 5,
-	Dummy_R_Clavicle	= 6,
-	Dummy_Spine1		= 7,
-	Dummy_NPower		= 8,
-	Dummy_Pelvis		= 9,
-	Dummy_Head			= 10,
-	Dummy_Spine			= 11,
-	Dummy_Tail			= 12,
-	Dummy_L_Wings		= 13,
-	Dummy_R_Wings		= 14,
-	Dummy_R_HandGun		= 15,
+	DUMMY_GIDDINESS		= 1,
+	DUMMY_HORSE			= 2,
+	DUMMY_WING			= 3,
+	DUMMY_PICK			= 4,
+	DUMMY_ARM			= 5,
 }
 
 // shape type define
