@@ -1,7 +1,7 @@
 #include "stdafx.h"
 #include "PlayerManager.h"
 #include "ScriptManager.h"
-#include "DataBaseEvent.h"
+#include "LoginServerObserver.h"
 
 #ifndef IDP_DATABASE_EVENT
 #define IDP_DATABASE_EVENT 0
@@ -125,7 +125,7 @@ void on_event_accept(int nSocket, short evt, void* arg)
 						EV_READ|EV_WRITE|EV_PERSIST
 						);
 					
-					player->RegisterEventListener(new DataBaseEvent(IDP_DATABASE_EVENT));
+					player->RegisterEventListener(new LoginServerObserver(IDP_DATABASE_EVENT));
 
 					// set buffer event
 					player->SetBufferEvent(pBufferEvent);
