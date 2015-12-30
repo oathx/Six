@@ -61,6 +61,8 @@ public sealed class MeshCompiler
     /// </summary>
     public bool DuplicatesAllowed { get { return false; } }
 
+	public List<MeshFilter> ExtraMeshFilter = new List<MeshFilter>();
+
     /// <summary>
     /// Processes the context.
     /// </summary>
@@ -98,9 +100,11 @@ public sealed class MeshCompiler
     {
         context.info.loaderCount++;
 
-        int count = context.LoadFromScene<MeshFilter>();
-
-        context.Log(string.Format("{0}: Loaded {1} MeshFilters", name, count), this);
+		if (colocationOption == MeshColocationOption.MeshFilter)
+		{
+			int count = context.LoadFromScene<MeshFilter>();
+			context.Log(string.Format("{0}: Loaded {1} MeshFilters", name, count), this);
+		}
     }
 
     private void Compile(InputBuildContext context)
@@ -110,70 +114,74 @@ public sealed class MeshCompiler
         ColliderHelper colliderHelper = (colocationOption == MeshColocationOption.Collider)
             ? new ColliderHelper()
             : null;
-
+		
         InputGeometryCompiler compiler = context.geomCompiler;
 
         List<Component> master = new List<Component>(context.components);
         List<byte> areas = new List<byte>(context.areas);
+		Queue<MeshFilter> filters = new Queue<MeshFilter>();
 
-        Queue<MeshFilter> filters = new Queue<MeshFilter>();
+		if (colliderHelper != null)
+		{
+			CombineMeshes(filters, 0, compiler, colliderHelper);
+			colliderHelper.Dispose();
+		}
+		else
+		{
+	        int count = 0;
+	        int ignored = 0;
+	        while (master.Count > 0)
+	        {
+	            byte area = 0;
 
-        int count = 0;
-        int ignored = 0;
-        while (master.Count > 0)
-        {
-            byte area = 0;
+	            for (int i = master.Count - 1; i >= 0; i--)
+	            {
+	                Component item = master[i];
 
-            for (int i = master.Count - 1; i >= 0; i--)
-            {
-                Component item = master[i];
+	                if (item is MeshFilter)
+	                {
+	                    MeshFilter filter = (MeshFilter)item;
+	                    if (filter.sharedMesh == null)
+	                    {
+	                        ignored++;
+	                        areas.RemoveAt(i);
+	                        master.RemoveAt(i);
+	                    }
+	                    else
+	                    {
+	                        if (filters.Count == 0)
+	                            area = areas[i];
 
-                if (item is MeshFilter)
-                {
-                    MeshFilter filter = (MeshFilter)item;
-                    if (filter.sharedMesh == null)
-                    {
-                        ignored++;
-                        areas.RemoveAt(i);
-                        master.RemoveAt(i);
-                    }
-                    else
-                    {
-                        if (filters.Count == 0)
-                            area = areas[i];
+	                        if (areas[i] == area)
+	                        {
+	                            count++;
+	                            filters.Enqueue(filter);
+	                            areas.RemoveAt(i);
+	                            master.RemoveAt(i);
+	                        }
+	                    }
+	                }
+	                else
+	                {
+	                    areas.RemoveAt(i);
+	                    master.RemoveAt(i);
+	                }
+	            }
 
-                        if (areas[i] == area)
-                        {
-                            count++;
-                            filters.Enqueue(filter);
-                            areas.RemoveAt(i);
-                            master.RemoveAt(i);
-                        }
-                    }
-                }
-                else
-                {
-                    areas.RemoveAt(i);
-                    master.RemoveAt(i);
-                }
-            }
+				if (filters.Count > 0)
+	                CombineMeshes(filters, area, compiler, colliderHelper);
+	        }
 
-            if (filters.Count > 0)
-                CombineMeshes(filters, area, compiler, colliderHelper);
-        }
+	        if (ignored > 0)
+	        {
+	            string msg = string.Format("{0}: Ignored {1} MeshFilters with a null mesh."
+	                , name, ignored);
 
-        if (colliderHelper != null)
-            colliderHelper.Dispose();
+	            context.Log(msg, this);
+	        }
 
-        if (ignored > 0)
-        {
-            string msg = string.Format("{0}: Ignored {1} MeshFilters with a null mesh."
-                , name, ignored);
-
-            context.Log(msg, this);
-        }
-
-        context.Log(string.Format("{0}: Compiled {1} MeshFilters.", name, count), this);
+	        context.Log(string.Format("{0}: Compiled {1} MeshFilters.", name, count), this);
+		}
     }
 
     private void CombineMeshes(Queue<MeshFilter> filters
@@ -218,6 +226,17 @@ public sealed class MeshCompiler
 			}
         }
 
+		if (helper != null)
+		{
+			Collider[] colliders = Object.FindObjectsOfType<Collider>();
+			foreach(Collider collider in colliders)
+			{
+				CombineInstance ci;
+				if (helper.Get(collider, out ci))
+					combineInstances.Enqueue(ci);
+			}
+		}
+		
         MeshUtil.CombineMeshes(combineInstances, area, compiler);
     }
 }

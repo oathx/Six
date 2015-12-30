@@ -65,9 +65,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/monster/monster.unity3d", DataURL);
+			return string.Format("{0}/resource/monster.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/monster/monster.unity3d", DataURL);
+			return string.Format("{0}/resource/monster.unity3d", DataURL);
 #endif
 		}
 	}
@@ -81,9 +81,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/arm/arm.unity3d", DataURL);
+			return string.Format("{0}/resource/arm.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/arm/arm.unity3d", DataURL);
+			return string.Format("{0}/resource/arm.unity3d", DataURL);
 #endif
 		}
 	}
@@ -93,9 +93,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/luaScript/luascript.unity3d", DataURL);
+			return string.Format("{0}/resource/luascript.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/luaScript/luascript.unity3d", DataURL);
+			return string.Format("{0}/resource/luascript.unity3d", DataURL);
 #endif
 		}
 	}
@@ -105,9 +105,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/navmesh/navmesh.unity3d", DataURL);
+			return string.Format("{0}/resource/navmesh.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/navmesh/navmesh.unity3d", DataURL);
+			return string.Format("{0}/resource/navmesh.unity3d", DataURL);
 #endif
 		}
 	}
@@ -121,9 +121,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/pass/pass.unity3d", DataURL);
+			return string.Format("{0}/resource/pass.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/pass/pass.unity3d", DataURL);
+			return string.Format("{0}/resource/pass.unity3d", DataURL);
 #endif
 		}
 	}
