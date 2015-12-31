@@ -282,8 +282,12 @@ public class IEntityShape : IEntity
 	/// <param name="assetBundle">Asset bundle.</param>
 	public void 		ChangeEquip(PartType part, GameObject equipMesh, StringHolder holder)
 	{	
+		SkinnedMeshRenderer skinMeshRender = equipMesh.GetComponent<SkinnedMeshRenderer>();
+		if (!skinMeshRender)
+			skinMeshRender = equipMesh.AddComponent<SkinnedMeshRenderer>();
+
 		m_dMesh [part] = new BoneBuffer (
-			equipMesh.GetComponent<SkinnedMeshRenderer>(), holder
+			skinMeshRender, holder
 			);
 		
 		// megre equip

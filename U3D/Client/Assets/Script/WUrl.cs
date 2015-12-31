@@ -35,7 +35,7 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return Application.dataPath + "/Temp/Win";
+			return Application.dataPath + "/Mid/Win";
 #elif UNITY_ANDROID
 			return Application.persistentDataPath;
 #elif UNITY_IPHONE
@@ -53,9 +53,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/model.unity3d", DataURL);
+			return string.Format("{0}/character.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/model.unity3d", DataURL);
+			return string.Format("{0}/character.unity3d", DataURL);
 #endif
 		}
 	}
@@ -65,9 +65,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/monster.unity3d", DataURL);
+			return string.Format("{0}/monster.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/monster.unity3d", DataURL);
+			return string.Format("{0}/monster.unity3d", DataURL);
 #endif
 		}
 	}
@@ -81,9 +81,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/weapon.unity3d", DataURL);
+			return string.Format("{0}/weapon.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/weapon.unity3d", DataURL);
+			return string.Format("{0}/weapon.unity3d", DataURL);
 #endif
 		}
 	}
@@ -93,9 +93,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/luascript.unity3d", DataURL);
+			return string.Format("{0}/luascript.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/luascript.unity3d", DataURL);
+			return string.Format("{0}/luascript.unity3d", DataURL);
 #endif
 		}
 	}
@@ -105,9 +105,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/navmesh.unity3d", DataURL);
+			return string.Format("{0}/navmesh.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/navmesh.unity3d", DataURL);
+			return string.Format("{0}/navmesh.unity3d", DataURL);
 #endif
 		}
 	}
@@ -121,9 +121,9 @@ public class WUrl
 		get
 		{
 #if UNITY_EDITOR || UNITY_STANDALONE
-			return string.Format("{0}/resource/pass.unity3d", DataURL);
+			return string.Format("{0}/pass.unity3d", DataURL);
 #else
-			return string.Format("{0}/resource/pass.unity3d", DataURL);
+			return string.Format("{0}/pass.unity3d", DataURL);
 #endif
 		}
 	}
