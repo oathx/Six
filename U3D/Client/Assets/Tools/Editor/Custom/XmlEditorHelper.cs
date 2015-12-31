@@ -17,7 +17,7 @@ public class XmlEditorHelper
 	{
 		get
 		{
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE && UNITY_EDITOR
 			return Application.streamingAssetsPath + "/Win";
 #elif UNITY_ANDROID
 			return Application.streamingAssetsPath + "Android";
@@ -34,7 +34,7 @@ public class XmlEditorHelper
 	public static string	MidPath
 	{
 		get{
-#if UNITY_STANDALONE || UNITY_EDITOR
+#if UNITY_STANDALONE && UNITY_EDITOR
 			return Application.dataPath + "/Mid/Win";
 #elif UNITY_ANDROID
 			return Application.dataPath + "/Mid/Android";

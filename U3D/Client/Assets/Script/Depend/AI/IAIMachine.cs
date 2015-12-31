@@ -284,7 +284,7 @@ public class IAIMachine
 				if (m_CurrentState)
 				{
 #if OPEN_DEBUG_LOG
-					Debug.Log("AI State event " + m_CurrentState.GetStateID() + " args " + buffer.evt.ID);
+					Debug.Log("AI State event " + m_CurrentState.StateID + " args " + buffer.evt.ID);
 #endif
 					bResult = m_CurrentState.OnEvent(buffer.evt);
 				}

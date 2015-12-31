@@ -146,16 +146,14 @@ public class ZipXmlStruct : XmlStruct
 			}
 		}
 
-		if (!Directory.Exists(Application.streamingAssetsPath))
-			Directory.CreateDirectory(Application.streamingAssetsPath);
-
-		string szTimeString = System.DateTime.Now.ToString ().Replace("/", string.Empty).Replace(" ", string.Empty).Replace(":", string.Empty);
-		XmlEditorHelper.CreateZipFile (XmlEditorHelper.MidPath, 
-		                             string.Format ("{0}/{1}.zip", Application.streamingAssetsPath, szTimeString), "*", SearchFileType.unity3d);
-
 		if (GenerateVersion)
 		{
-
+			if (!Directory.Exists(Application.streamingAssetsPath))
+				Directory.CreateDirectory(Application.streamingAssetsPath);
+			
+			string szTimeString = System.DateTime.Now.ToString ().Replace("/", string.Empty).Replace(" ", string.Empty).Replace(":", string.Empty);
+			XmlEditorHelper.CreateZipFile (XmlEditorHelper.MidPath, 
+			                               string.Format ("{0}/{1}.zip", Application.streamingAssetsPath, szTimeString), "*", SearchFileType.unity3d);
 		}
 	}
 
