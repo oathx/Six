@@ -20,7 +20,7 @@ public class XmlEditorHelper
 #if UNITY_STANDALONE && UNITY_EDITOR
 			return Application.streamingAssetsPath + "/Win";
 #elif UNITY_ANDROID
-			return Application.streamingAssetsPath + "Android";
+			return Application.streamingAssetsPath + "/Android";
 #elif UNITY_IPHONE
 			return Application.streamingAssetsPath + "/iOS";
 #endif
@@ -35,11 +35,11 @@ public class XmlEditorHelper
 	{
 		get{
 #if UNITY_STANDALONE && UNITY_EDITOR
-			return Application.dataPath + "/Mid/Win";
+			return Application.streamingAssetsPath + "/Resource/Win";
 #elif UNITY_ANDROID
-			return Application.dataPath + "/Mid/Android";
+			return Application.streamingAssetsPath + "/Resource/Android";
 #elif UNITY_IPHONE
-			return Application.dataPath + "/Mid/iOS";
+			return Application.streamingAssetsPath + "/Resource/iOS";
 #endif
 		}
 	}
