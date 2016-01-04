@@ -31,16 +31,5 @@ public class SceneRequest : SimpleSingleton<SceneRequest>
 	{
 		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_CHANGE_SCENE, nSceneID, nScriptID);
 	}
-
-	/// <summary>
-	/// Reqs the scene event.
-	/// </summary>
-	/// <param name="eventType">Event type.</param>
-	/// <param name="eventId">Event identifier.</param>
-	public void ReqSceneEvent(int nEventType, int nEventID)
-	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_SCENE_EVENT,
-		                    GlobalUserInfo.City == SceneType.SCENE_SINGLE, nEventType, nEventID);
-	}
 }
 
