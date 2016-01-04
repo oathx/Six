@@ -122,12 +122,12 @@ public class HumanEntityFactory : IEntityFactory
 		entity.MoveableController.radius	= sqlShape.Radius;
 		entity.MoveableController.height	= sqlShape.Height;
 
-		Dictionary<MountType, string> dmt = new Dictionary<MountType, string> ();
-		dmt.Add(MountType.DUMMY_WING, 		"Bone_Chibang");
-		dmt.Add(MountType.DUMMY_PICK, 		"Bone_Caiji");
-		dmt.Add(MountType.DUMMY_ARM, 		"Bone_Staff");
-		dmt.Add(MountType.DUMMY_GIDDINESS, 	"Bone_Yun");
-		dmt.Add(MountType.DUMMY_HORSE, 		"Bone_Zuoqi");
+		Dictionary<MountType, string[]> dmt = new Dictionary<MountType, string[]> ();
+		dmt.Add(MountType.DUMMY_WING, 		new string[]{"Bone_Chibang"});
+		dmt.Add(MountType.DUMMY_PICK, 		new string[]{"Bone_Caiji"});
+		dmt.Add(MountType.DUMMY_ARM, 		new string[]{"Bone_Staff", "Bone_Bow", "Bone_Sword"});
+		dmt.Add(MountType.DUMMY_GIDDINESS, 	new string[]{"Bone_Yun"});
+		dmt.Add(MountType.DUMMY_HORSE, 		new string[]{"Bone_Zuoqi"});
 		
 		// add the shape all moune
 		entity.InstallMount(dmt);

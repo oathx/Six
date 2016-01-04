@@ -142,6 +142,29 @@ public class IEntityShape : IEntity
 	}
 
 	/// <summary>
+	/// Installs the mount.
+	/// </summary>
+	/// <param name="dmt">Dmt.</param>
+	public void 		InstallMount(Dictionary<MountType, string[]> dmt)
+	{
+		Transform[] aryTransform = GetComponentsInChildren<Transform> ();
+		foreach(KeyValuePair<MountType, string[]> it in dmt)
+		{
+			foreach(Transform t in aryTransform)
+			{
+				foreach(string mount in it.Value)
+				{
+					if (mount == t.name && !m_dMount.ContainsKey(it.Key))
+					{
+						m_dMount.Add(it.Key, t);
+						break;
+					}
+				}
+			}
+		}
+	}
+
+	/// <summary>
 	/// Gets the mount.
 	/// </summary>
 	/// <returns>The mount.</returns>

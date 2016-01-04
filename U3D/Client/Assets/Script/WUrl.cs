@@ -16,7 +16,7 @@ public class WUrl
 	{
 		get
 		{
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR && UNITY_STANDALONE
 			return "file://" + Application.streamingAssetsPath + "/Win";
 #elif UNITY_ANDROID
 			return	"jar:file://" + Application.dataPath + "!/assets/android";
@@ -34,10 +34,10 @@ public class WUrl
 	{
 		get
 		{
-#if UNITY_EDITOR || UNITY_STANDALONE
-			return Application.dataPath + "/Mid/Win";
+#if UNITY_EDITOR && UNITY_STANDALONE
+			return Application.streamingAssetsPath + "/Resource/Win";
 #elif UNITY_ANDROID
-			return Application.persistentDataPath;
+			return Application.streamingAssetsPath + "/Resource/Android";
 #elif UNITY_IPHONE
 			return Application.persistentDataPath;
 #endif
