@@ -18,9 +18,9 @@ public class LoginObserver : IEventObserver
 		LoginPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LoginPlugin>();
 		if (plugin)
 		{
-			plugin.RegisterPackageFactory(TcpEvent.CMD_PUSH_LOGIN_SUCCESS, 
-			                              new DefaultNetMessageFactory<TcpEvent.SCNetLogin>());
-			plugin.RegisterPackageFactory(TcpEvent.CMD_PUSH_REGISTER_SUCCESS, 
+			plugin.RegisterPackageFactory(TcpEvent.CMD_REPLY_LOGIN_SUCCESS, 
+			                              new DefaultNetMessageFactory<TcpEvent.SCNetLoginReply>());
+			plugin.RegisterPackageFactory(TcpEvent.CMD_REPLY_REGISTER_SUCCESS, 
 			                              new DefaultNetMessageFactory<TcpEvent.SCNetRegisterSuccess>());
 		}
 
@@ -34,16 +34,16 @@ public class LoginObserver : IEventObserver
 	/// </summary>
 	void Start()
 	{
-		SubscribeEvent(CmdEvent.CMD_UI_LOGIN, 		OnLoginClicked);
-		SubscribeEvent(CmdEvent.CMD_UI_REGISTER,	OnRegisterClicked);
-		SubscribeEvent(CmdEvent.CMD_UI_REGBUTTON,	OnRegisterButtonClicked);
-		SubscribeEvent(CmdEvent.CMD_UI_REGRETURN,	OnRegisterReturnClicked);
+		SubscribeEvent(CmdEvent.CMD_UI_LOGIN, 		OnUILoginClicked);
+		SubscribeEvent(CmdEvent.CMD_UI_REGISTER,	OnUIRegisterClicked);
+		SubscribeEvent(CmdEvent.CMD_UI_REGBUTTON,	OnUIRegisterButtonClicked);
+		SubscribeEvent(CmdEvent.CMD_UI_REGRETURN,	OnUIRegisterReturnClicked);
 
 		// subscribe all net protocol
-		SubscribeEvent(TcpEvent.CMD_PUSH_LOGIN_SUCCESS,
-		               OnLoginSuccess);
-		SubscribeEvent(TcpEvent.CMD_PUSH_REGISTER_SUCCESS,
-		               OnRegisterSuccess);
+		SubscribeEvent(TcpEvent.CMD_REPLY_LOGIN_SUCCESS,
+		               OnNetLoginSuccess);
+		SubscribeEvent(TcpEvent.CMD_REPLY_REGISTER_SUCCESS,
+		               OnNetRegisterSuccess);
 	}
 
 	/// <summary>
@@ -110,7 +110,7 @@ public class LoginObserver : IEventObserver
 	/// Raises the login event event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool 			OnLoginClicked(IEvent evt)
+	protected bool 			OnUILoginClicked(IEvent evt)
 	{
 		CmdEvent.UILoginEventArgs v = evt.Args as CmdEvent.UILoginEventArgs;
 		if (string.IsNullOrEmpty(v.UserName) || string.IsNullOrEmpty(v.Password))
@@ -124,7 +124,7 @@ public class LoginObserver : IEventObserver
 				throw new System.NullReferenceException();
 
 #if LOCAL_SERVER
-			TcpEvent.SCNetLogin rep = new TcpEvent.SCNetLogin();
+			TcpEvent.SCNetLoginReply rep = new TcpEvent.SCNetLoginReply();
 			rep.GateIP		= string.Empty;
 			rep.Port		= 0;
 			rep.LoginCode	= string.Empty;
@@ -132,7 +132,7 @@ public class LoginObserver : IEventObserver
 			rep.UserID		= 0;
 
 			Dispatcher.SendEvent(
-				new IEvent(TcpEvent.CMD_PUSH_LOGIN_SUCCESS, rep)
+				new IEvent(TcpEvent.CMD_REPLY_LOGIN_SUCCESS, rep)
 				);
 #else
 			LoginRequest.GetSingleton().RequestLogin(sqlSystem.ServerVersion, 
@@ -148,7 +148,7 @@ public class LoginObserver : IEventObserver
 	/// Raises the register event event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool 			OnRegisterButtonClicked(IEvent evt)
+	protected bool 			OnUIRegisterButtonClicked(IEvent evt)
 	{
 		LoginPlugin plugin = GameEngine.GetSingleton().QueryPlugin<LoginPlugin>();
 		if (plugin)
@@ -178,7 +178,7 @@ public class LoginObserver : IEventObserver
 	/// Raises the register return event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool			OnRegisterReturnClicked(IEvent evt)
+	protected bool			OnUIRegisterReturnClicked(IEvent evt)
 	{
 		UISystem.GetSingleton().UnloadWidget(
 			ResourceDef.UI_REGISTER
@@ -191,7 +191,7 @@ public class LoginObserver : IEventObserver
 	/// Raises the register clicked event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool			OnRegisterClicked(IEvent evt)
+	protected bool			OnUIRegisterClicked(IEvent evt)
 	{
 		CmdEvent.UIRegisterEventArgs v = evt.Args as CmdEvent.UIRegisterEventArgs;
 
@@ -199,7 +199,7 @@ public class LoginObserver : IEventObserver
 		if (!sqlSystem)
 			throw new System.NullReferenceException();
 
-		return LoginRequest.GetSingleton().RequestRegister(v.UserName, v.Password, sqlSystem.ServerID);
+		return LoginRequest.GetSingleton().RequestRegisterAccount(v.UserName, v.Password, sqlSystem.ServerID);
 	}
 
 	/// <summary>
@@ -263,9 +263,9 @@ public class LoginObserver : IEventObserver
 	/// Raises the login success event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool			OnLoginSuccess(IEvent evt)
+	protected bool			OnNetLoginSuccess(IEvent evt)
 	{
-		TcpEvent.SCNetLogin v = evt.Args as TcpEvent.SCNetLogin;
+		TcpEvent.SCNetLoginReply v = evt.Args as TcpEvent.SCNetLoginReply;
 
 		// save global user info
 		GlobalUserInfo.UserID 			= v.UserID;
@@ -289,7 +289,7 @@ public class LoginObserver : IEventObserver
 	/// Raises the register success event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool			OnRegisterSuccess(IEvent evt)
+	protected bool			OnNetRegisterSuccess(IEvent evt)
 	{
 		UIRegister reg = UISystem.GetSingleton().LoadWidget<UIRegister>(ResourceDef.UI_REGISTER);
 		if (!reg)

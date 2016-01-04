@@ -31,7 +31,7 @@ public class CharacterRequest : SimpleSingleton<CharacterRequest>
 
 		// if current no conncet,then send the message to virtual server
 		m_pPlugin.SendEvent(
-			TcpEvent.CMD_REQ_REGISTER_ROLES, bVirtual,  nUserID, GlobalUserInfo.LoginTime, GlobalUserInfo.LoginCode
+			TcpEvent.CMD_REQ_CHARACTER_LIST, bVirtual, nUserID, GlobalUserInfo.LoginTime, GlobalUserInfo.LoginCode
 			);
 	}
 	
@@ -60,18 +60,6 @@ public class CharacterRequest : SimpleSingleton<CharacterRequest>
 
 		m_pPlugin.SendEvent(
 			TcpEvent.CMD_REQ_ENTER_WORLD, bVirtual, nPlayerID
-			);
-	}
-	
-	/// <summary>
-	/// Requests the character poperty.
-	/// </summary>
-	public void RequestCharacterPoperty()
-	{
-		bool bVirtual = !m_pPlugin.Connected;
-
-		m_pPlugin.SendEvent(
-			TcpEvent.CMD_REQ_CHAR_ATTRIBUTE, bVirtual
 			);
 	}
 }

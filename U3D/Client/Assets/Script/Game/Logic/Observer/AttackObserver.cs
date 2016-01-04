@@ -52,8 +52,6 @@ public class AttackObserver : IEventObserver
 	{
 		if (!AttackUI)
 			AttackUI = UISystem.GetSingleton().LoadWidget<UIAttack>(ResourceDef.UI_ATTACK);
-
-		AttackUI.NormalMagicID = 11001;
 	}
 
 	/// <summary>

@@ -27,7 +27,7 @@ public class LevelRequest : ScriptableSingleton<LevelRequest>
 	/// </summary>
 	public void 	RequestEnterLevel(int nLevelID)
 	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_ENTER_DUP, nLevelID);
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_ENTER_LEVEL, nLevelID);
 	}
 
 	/// <summary>
@@ -35,7 +35,7 @@ public class LevelRequest : ScriptableSingleton<LevelRequest>
 	/// </summary>
 	public void 	RequestLeaveLevel()
 	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_LEAVE_DUP);
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_LEAVE_LEVEL);
 	}
 }
 

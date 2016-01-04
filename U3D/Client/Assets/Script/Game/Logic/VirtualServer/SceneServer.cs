@@ -47,7 +47,7 @@ public class SceneServer : VirtualServer
 
 			VirtualNetPackage vp = evt.Args as VirtualNetPackage;
 
-			TcpEvent.SCNetCharacterSpawnInfo spawn = new TcpEvent.SCNetCharacterSpawnInfo ();
+			TcpEvent.SCNetEnterWorldReply spawn = new TcpEvent.SCNetEnterWorldReply ();
 			spawn.Position 	= new Vector3 (-81.0f, 2.0f, 100.0f);
 			spawn.Level 	= (short)item.Level;
 			spawn.MapID		= 3100;
@@ -55,7 +55,7 @@ public class SceneServer : VirtualServer
 			spawn.Name 		= GlobalUserInfo.MapID.ToString();
 			
 			m_Plugin.SendEvent (
-				new IEvent (EngineEventType.EVENT_NET, TcpEvent.CMD_PUSH_ENTER_WORLD_SUCCESS, spawn)
+				new IEvent (EngineEventType.EVENT_NET, TcpEvent.CMD_REPLY_ENTER_WORLD, spawn)
 				);
 
 		}
@@ -72,34 +72,7 @@ public class SceneServer : VirtualServer
 	private bool	OnReqSceneEvent(IEvent evt)
 	{
 		VirtualNetPackage vp = evt.Args as VirtualNetPackage;
-		
-		// reset current map id
-		GlobalUserInfo.MapID = SceneSupport.GetSingleton ().GetSceneID ();
-		
-		// protocol param
-		int nEventType 	= (int)vp.buffer [0];
-		int nGroupID 	= (int)vp.buffer [1];
-		
-		// get the scene monster gourp
-		List<MonsterStruct> aryResult = MonsterTable.GetSingleton ().GetGroupMonster (GlobalUserInfo.MapID, nGroupID);
-		for(int idx=0; idx<aryResult.Count; idx++)
-		{
-			SqlMonster sqlMonster = GameSqlLite.GetSingleton().Query<SqlMonster>(aryResult[idx].NpcID);
-			if (!sqlMonster)
-				throw new System.NullReferenceException();
-
-			TcpEvent.SCNetNPCSpawnInfo spawn = new TcpEvent.SCNetNPCSpawnInfo();
-			spawn.ID		= aryResult[idx].ID;
-			spawn.Hp		= sqlMonster.Durable;
-			spawn.Name		= sqlMonster.Name;
-			spawn.MonsterID	= aryResult[idx].NpcID;
-			spawn.Position	= aryResult[idx].Position;
-			
-			m_Plugin.SendEvent (
-				new IEvent (EngineEventType.EVENT_NET, TcpEvent.CMD_PUSH_NPC_ONLINE, spawn)
-				);
-		}
-		
+				
 		return true;
 	}
 }

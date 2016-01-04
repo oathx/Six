@@ -14,10 +14,10 @@ public class CharacterObserver : RuntimeObserver
 	{
 		base.Awake();
 
-		m_Logic.RegisterPackageFactory(TcpEvent.CMD_PUSH_ENTER_WORLD_SUCCESS, 
-		                               new DefaultNetMessageFactory<TcpEvent.SCNetCharacterSpawnInfo>());
-		m_Logic.RegisterPackageFactory(TcpEvent.CMD_PUSH_CREATE_ROLE,
-		                               new DefaultNetMessageFactory<TcpEvent.SCNetCreateRole>());
+		m_Logic.RegisterPackageFactory(TcpEvent.CMD_REPLY_ENTER_WORLD, 
+		                               new DefaultNetMessageFactory<TcpEvent.SCNetEnterWorldReply>());
+		m_Logic.RegisterPackageFactory(TcpEvent.CMD_REPLY_CREATE_ROLE,
+		                               new DefaultNetMessageFactory<TcpEvent.SCNetCreateRoleReply>());
 	}
 
 	/// <summary>
@@ -26,16 +26,16 @@ public class CharacterObserver : RuntimeObserver
 	protected override void Start()
 	{
 		// register net event
-		SubscribeEvent (TcpEvent.CMD_PUSH_ENTER_WORLD_SUCCESS, 	
-		                OnEnterWorldSuccess);
-		SubscribeEvent (TcpEvent.CMD_PUSH_CREATE_ROLE,   		
-		                OnCreateRoleSuccess);
+		SubscribeEvent (TcpEvent.CMD_REPLY_ENTER_WORLD, 	
+		                OnNetEnterWorldResult);
+		SubscribeEvent (TcpEvent.CMD_REPLY_CREATE_ROLE,   		
+		                OnNetCreateRoleResult);
 
 		// subscribe local gui event
-		SubscribeEvent(CmdEvent.CMD_UI_JOIN, 		OnJoinClicked);
-		SubscribeEvent(CmdEvent.CMD_UI_SELECTJOB, 	OnSelectJob);
-		SubscribeEvent(CmdEvent.CMD_UI_CREATEROLE,	OnCreateRole);
-		SubscribeEvent(CmdEvent.CMD_UI_CREATERAND,	OnCreateRand);
+		SubscribeEvent(CmdEvent.CMD_UI_JOIN, 		OnUIJoinClicked);
+		SubscribeEvent(CmdEvent.CMD_UI_SELECTJOB, 	OnUISelectJob);
+		SubscribeEvent(CmdEvent.CMD_UI_CREATEROLE,	OnUICreateRole);
+		SubscribeEvent(CmdEvent.CMD_UI_CREATERAND,	OnUICreateRand);
 	}
 
 	/// <summary>
@@ -45,7 +45,7 @@ public class CharacterObserver : RuntimeObserver
 	{
 		base.Active();
 
-		List<TcpEvent.CharacterInfo> aryCharInfo = CharacterTable.GetSingleton().ToArray();
+		List<TcpEvent.CharacterStruct> aryCharInfo = CharacterTable.GetSingleton().ToArray();
 		if (aryCharInfo.Count > 0)
 		{
 			// create character list
@@ -99,7 +99,7 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the join clicked event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnJoinClicked(IEvent evt)
+	protected bool		OnUIJoinClicked(IEvent evt)
 	{
 		CmdEvent.UIJoinEventArgs v = evt.Args as CmdEvent.UIJoinEventArgs;
 
@@ -113,7 +113,7 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the select job event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnSelectJob(IEvent evt)
+	protected bool		OnUISelectJob(IEvent evt)
 	{
 		CmdEvent.UISelectJobEventArgs v = evt.Args  as CmdEvent.UISelectJobEventArgs;
 		if (v.Index != 0)
@@ -133,7 +133,7 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the create role event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnCreateRole(IEvent evt)
+	protected bool		OnUICreateRole(IEvent evt)
 	{
 		CmdEvent.UICreateRoleEventArgs v = evt.Args as CmdEvent.UICreateRoleEventArgs;
 		
@@ -147,7 +147,7 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the create rand event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnCreateRand(IEvent evt)
+	protected bool		OnUICreateRand(IEvent evt)
 	{
 		CmdEvent.UIClickEventArgs v = evt.Args as CmdEvent.UIClickEventArgs;
 		if (v.Widget)
@@ -163,9 +163,9 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the enter world success event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnEnterWorldSuccess(IEvent evt)
+	protected bool		OnNetEnterWorldResult(IEvent evt)
 	{
-		TcpEvent.SCNetCharacterSpawnInfo spawn = evt.Args as TcpEvent.SCNetCharacterSpawnInfo;
+		TcpEvent.SCNetEnterWorldReply spawn = evt.Args as TcpEvent.SCNetEnterWorldReply;
 
 		GlobalUserInfo.Position = spawn.Position;
 		GlobalUserInfo.Level 	= spawn.Level;
@@ -189,14 +189,10 @@ public class CharacterObserver : RuntimeObserver
 	/// Raises the create role success event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	protected bool		OnCreateRoleSuccess(IEvent evt)
+	protected bool		OnNetCreateRoleResult(IEvent evt)
 	{
-		TcpEvent.SCNetCreateRole v = evt.Args as TcpEvent.SCNetCreateRole;
-		
-#if OPEN_DEBUG_LOG
-		Debug.Log("Create role succes " + v.PlayerID);
-#endif
-		
+		TcpEvent.SCNetCreateRoleReply v = evt.Args as TcpEvent.SCNetCreateRoleReply;
+
 		GlobalUserInfo.PlayerID = v.PlayerID;
 		GlobalUserInfo.Job 		= v.Occupation;
 		GlobalUserInfo.Name 	= v.PlayerName;

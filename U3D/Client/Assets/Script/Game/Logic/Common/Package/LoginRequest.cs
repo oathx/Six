@@ -40,14 +40,6 @@ public class LoginRequest : ScriptableSingleton<LoginRequest>
 	{
 		return SystemInfo.deviceUniqueIdentifier  + "$" +  SystemInfo.deviceModel + "$" +  SystemInfo.deviceType;
 	}
-
-	/// <summary>
-	/// Requests the new server.
-	/// </summary>
-	public void RequestNewServer()
-	{
-		m_pPlugin.SendEvent (TcpEvent.CMD_REQ_DEFAULT_SERER_INFO);
-	}
 	
 	/// <summary>
 	/// Requests the login.
@@ -65,12 +57,12 @@ public class LoginRequest : ScriptableSingleton<LoginRequest>
 	/// </summary>
 	/// <param name="szUserName">Size user name.</param>
 	/// <param name="szPassword">Size password.</param>
-	public bool RequestRegister(string szUserName, string szPassword, int nServerID)
+	public bool RequestRegisterAccount(string szUserName, string szPassword, int nServerID)
 	{
 		string deviceId 	= GetDeviceID();
 		string deviceInfo 	= GetDeviceInfo();
 		
-		m_pPlugin.SendEvent (TcpEvent.CMD_REQ_REGISTER, "DEBUG", szUserName, szPassword,
+		m_pPlugin.SendEvent (TcpEvent.CMD_REQ_REGISTER_ACCOUNT, szUserName, szPassword,
 		                     deviceId, deviceInfo, nServerID);
 
 		return true;

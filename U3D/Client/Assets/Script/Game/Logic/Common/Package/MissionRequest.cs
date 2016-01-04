@@ -21,21 +21,4 @@ public class MissionRequest : ScriptableSingleton<MissionRequest>
 		if (!m_pPlugin)
 			throw new System.NullReferenceException ();
 	}
-
-	/// <summary>
-	/// Reqs the mission list.
-	/// </summary>
-	public void ReqMissionList()
-	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_MISSION_LIST);
-	}
-
-	/// <summary>
-	/// Requests the accept mission.
-	/// </summary>
-	/// <param name="nMissionID">N mission I.</param>
-	public void ReqAcceptMission(int nMissionID)
-	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_ACCEPT_MISSION, nMissionID);
-	}
 }

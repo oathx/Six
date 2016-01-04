@@ -17,12 +17,10 @@ public class GateConnectObserver : IEventObserver
 		m_pLogic = GameEngine.GetSingleton ().QueryPlugin<LogicPlugin> ();
 		if (m_pLogic)
 		{
-			m_pLogic.RegisterPackageFactory(TcpEvent.CMD_PUSH_REGISTER_ROLES, 
-			                                new DefaultNetMessageFactory<TcpEvent.SCNetCharacterInfoList>());
-			m_pLogic.RegisterPackageFactory(TcpEvent.CMD_PUSH_ERROR, 
-			                                new DefaultNetMessageFactory<TcpEvent.SCNetError>());
-			m_pLogic.RegisterPackageFactory(TcpEvent.CMD_PUSH_HAS_LOGIN,
-			                                new DefaultNetMessageFactory<TcpEvent.SCNetHasLogin>());
+			m_pLogic.RegisterPackageFactory(TcpEvent.CMD_REPLY_CHARACTER_LIST, 
+			                                new DefaultNetMessageFactory<TcpEvent.SCNetCharacterListReply>());
+			m_pLogic.RegisterPackageFactory(TcpEvent.CMD_REPLY_ERROR, 
+			                                new DefaultNetMessageFactory<TcpEvent.SCNetErrorReply>());
 		}
 
 		// register session local event
@@ -36,9 +34,8 @@ public class GateConnectObserver : IEventObserver
 	/// </summary>
 	protected void 		Start()
 	{
-		SubscribeEvent (TcpEvent.CMD_PUSH_REGISTER_ROLES,	new EventCallback(OnPushCharacterInfoList));
-		SubscribeEvent (TcpEvent.CMD_PUSH_ERROR,   			new EventCallback(OnPushError));
-		SubscribeEvent (TcpEvent.CMD_PUSH_HAS_LOGIN,       	new EventCallback(OnPushHasLogin));
+		SubscribeEvent (TcpEvent.CMD_REPLY_CHARACTER_LIST,	new EventCallback(OnNetCharacterList));
+		SubscribeEvent (TcpEvent.CMD_REPLY_ERROR,   		new EventCallback(OnNetError));
 	}
 
 	/// <summary>
@@ -111,20 +108,18 @@ public class GateConnectObserver : IEventObserver
 	/// Raises the push character info list event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	private bool		OnPushCharacterInfoList(IEvent evt)
+	private bool		OnNetCharacterList(IEvent evt)
 	{
 		// character default resource
-		List<string> defaultResource = new List<string>();
+		List<string> 
+			defaultResource = new List<string>();
 		
-		TcpEvent.SCNetCharacterInfoList v = evt.Args as TcpEvent.SCNetCharacterInfoList;
-		if (v.CharacterList.Count > 0)
+		TcpEvent.SCNetCharacterListReply v = evt.Args as TcpEvent.SCNetCharacterListReply;
+		foreach(TcpEvent.CharacterStruct info in v.List)
 		{
-			foreach(TcpEvent.CharacterInfo info in v.CharacterList)
-			{
-				CharacterTable.GetSingleton().Add(info.PlayerID, info);
-			}
+			CharacterTable.GetSingleton().Add(info.PlayerID, info);
 		}
-		
+	
 		return LogicHelper.ChangeScene(SceneFlag.SCENE_CHARACTER);
 	}
 
@@ -132,20 +127,11 @@ public class GateConnectObserver : IEventObserver
 	/// Raises the push error event.
 	/// </summary>
 	/// <param name="evt">Evt.</param>
-	private bool		OnPushError(IEvent evt)
+	private bool		OnNetError(IEvent evt)
 	{
-		TcpEvent.SCNetError error = evt.Args as TcpEvent.SCNetError;
+		TcpEvent.SCNetErrorReply error = evt.Args as TcpEvent.SCNetErrorReply;
 
 		UISystem.GetSingleton().Box(error.ErrorCode.ToString());
 		return true;
-	}
-
-	/// <summary>
-	/// Raises the push has login event.
-	/// </summary>
-	/// <param name="evt">Evt.</param>
-	private bool		OnPushHasLogin(IEvent evt)
-	{
-		return RequestCharacterList();
 	}
 }

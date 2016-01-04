@@ -310,13 +310,13 @@ public class DebugObserver : IEventObserver
 				if (!sqlScene)
 					throw new System.NullReferenceException();
 
-				TcpEvent.SCNetSceneChange v = new TcpEvent.SCNetSceneChange();
+				TcpEvent.SCNetSceneChangeReply v = new TcpEvent.SCNetSceneChangeReply();
 				v.MapID 	= sqlScene.ID;
 				v.Position	= sqlScene.Born;
 				v.Angle		= 0;
 
 				GameEngine.GetSingleton().PostEvent(
-					new IEvent(EngineEventType.EVENT_NET, TcpEvent.CMD_PUSH_SCENE_CHANGE, v)
+					new IEvent(EngineEventType.EVENT_NET, TcpEvent.CMD_REPLY_SCENE_CHANGE, v)
 					);
 				break;
 			}
