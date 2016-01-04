@@ -37,7 +37,14 @@ namespace AI
 		/// <value>The target.</value>
 		public IEntity			Target
 		{ get; set; }
-		
+
+		/// <summary>
+		/// Gets or sets the leader.
+		/// </summary>
+		/// <value>The leader.</value>
+		public IEntity			Leader
+		{ get; set; }
+
 		/// <summary>
 		/// Gets the session.
 		/// </summary>

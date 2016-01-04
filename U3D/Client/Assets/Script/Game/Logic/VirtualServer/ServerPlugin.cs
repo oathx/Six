@@ -16,6 +16,7 @@ public class ServerPlugin : IGamePlugin
 		RegisterObserver<CharacterServer>(typeof(CharacterServer).Name);
 		RegisterObserver<SceneServer>(typeof(SceneServer).Name);
 		RegisterObserver<SyncServer>(typeof(SyncServer).Name);
+		RegisterObserver<TeamServer>(typeof(TeamServer).Name);
 	}
 	
 	/// <summary>
@@ -26,6 +27,7 @@ public class ServerPlugin : IGamePlugin
 		UnregisterObserver(typeof(CharacterServer).Name);
 		UnregisterObserver(typeof(SceneServer).Name);
 		UnregisterObserver(typeof(SyncServer).Name);
+		UnregisterObserver(typeof(TeamServer).Name);
 	}
 }
 

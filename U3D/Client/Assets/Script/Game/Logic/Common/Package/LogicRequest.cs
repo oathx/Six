@@ -68,7 +68,7 @@ public class LogicRequest : SimpleSingleton<LogicRequest>
 	/// </summary>
 	public void RequestEnterLevel(int nLevelID)
 	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_ENTER_LEVEL, nLevelID);
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_ENTER_LEVEL, !m_pPlugin.Connected, nLevelID);
 	}
 	
 	/// <summary>
@@ -76,7 +76,7 @@ public class LogicRequest : SimpleSingleton<LogicRequest>
 	/// </summary>
 	public void RequestLeaveLevel()
 	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_LEAVE_LEVEL);
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_LEAVE_LEVEL, !m_pPlugin.Connected);
 	}
 
 	/// <summary>
@@ -86,7 +86,16 @@ public class LogicRequest : SimpleSingleton<LogicRequest>
 	/// <param name="nScriptID">N script I.</param>
 	public void ReqChangeScene(int nSceneID, int nScriptID)
 	{
-		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_CHANGE_SCENE, nSceneID, nScriptID);
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_CHANGE_SCENE, !m_pPlugin.Connected, nSceneID, nScriptID);
+	}
+
+	/// <summary>
+	/// Reqs the team.
+	/// </summary>
+	/// <param name="nPlayerID">N player I.</param>
+	public void ReqTeam(int nPlayerID)
+	{
+		m_pPlugin.SendEvent(TcpEvent.CMD_REQ_TEAM, !m_pPlugin.Connected, nPlayerID);
 	}
 }
 

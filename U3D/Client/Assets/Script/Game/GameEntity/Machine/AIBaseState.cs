@@ -74,7 +74,7 @@ public class AIBaseState : IAIState
 	/// <param name="fElapsed">F elapsed.</param>
 	public override bool 	OnUpdate (float fElapsed)
 	{
-		return true;
+		return false;
 	}
 
 	/// <summary>

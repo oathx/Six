@@ -467,8 +467,8 @@ public class SceneObserver : IEventObserver
 	protected bool	OnLoadGameObserver(SqlScene sqlScene)
 	{
 		List<string> aryObserver = new List<string>(){
-			typeof(MainObserver).Name,
 			typeof(SyncObserver).Name,
+			typeof(MainObserver).Name,
 			typeof(PropertyObserver).Name
 		};
 

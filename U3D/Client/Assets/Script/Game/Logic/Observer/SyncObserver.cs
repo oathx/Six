@@ -33,7 +33,7 @@ public class SyncObserver : IEventObserver
 		if (!m_MonsterSyncManager)
 			throw new System.NullReferenceException();
 
-		RegisterTcpEventFactory();
+		RegisterNetEventFactory();
 	}
 
 	/// <summary>
@@ -41,20 +41,29 @@ public class SyncObserver : IEventObserver
 	/// </summary>
 	void Start()
 	{
+		SubscribeEvent(TcpEvent.CMD_REPLY_TEAM, OnTeamOnline);
+	}
 
+	/// <summary>
+	/// Active this instance.
+	/// </summary>
+	public override void Active ()
+	{
+		base.Active ();
 	}
 
 	/// <summary>
 	/// Registers the tcp event factory.
 	/// </summary>
 	/// <returns><c>true</c>, if tcp event factory was registered, <c>false</c> otherwise.</returns>
-	protected void 		RegisterTcpEventFactory()
+	protected void 		RegisterNetEventFactory()
 	{
 		LogicPlugin plugin = GameEngine.GetSingleton ().QueryPlugin<LogicPlugin> ();
-		if (plugin)
-		{
+		if (!plugin)
+			throw new System.NullReferenceException();
 
-		}
+		plugin.RegisterPackageFactory(TcpEvent.CMD_REPLY_TEAM,
+			new DefaultNetMessageFactory<TcpEvent.SCNetTeamReply>());
 	}
 
 	/// <summary>
@@ -81,5 +90,39 @@ public class SyncObserver : IEventObserver
 		GlobalUserInfo.Angle 	= v.Angle;
 
 		return LogicHelper.ChangeScene(GlobalUserInfo.MapID);;
-	}	
+	}
+
+	/// <summary>
+	/// Raises the team online event.
+	/// </summary>
+	/// <param name="evt">Evt.</param>
+	protected bool		OnTeamOnline(IEvent evt)
+	{
+		PlayerEntity player = m_PlayerManager.GetPlayer();
+		if (player)
+		{
+			TcpEvent.SCNetTeamReply v = evt.Args as TcpEvent.SCNetTeamReply;
+			foreach(TcpEvent.TeamStruct t in v.TeamList)
+			{
+				Vector3 vBorn = SceneSupport.GetSingleton().GetRandomPosition(player.GetPosition(), 2.5f);
+
+				// create team player
+				PlayerEntity entity = m_PlayerManager.CreateEntity(EntityType.ET_PLAYER.ToString(), 
+				                                                   EntityType.ET_PLAYER, 
+				                                                   t.PlayerID, 
+				                                                   string.Empty, 
+				                                                   vBorn, 
+				                                                   Vector3.one, 
+				                                                   Vector3.zero,
+				                                                   0, 
+				                                                   t.JobID) as PlayerEntity;
+				if (entity)
+				{
+
+				}
+			}
+		}
+
+		return true;
+	}
 }

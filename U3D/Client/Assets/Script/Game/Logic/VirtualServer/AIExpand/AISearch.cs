@@ -30,12 +30,26 @@ namespace AI
 			base.OnStart (context);
 			
 			AIEntityContext ec = context as AIEntityContext;
-			if (ec.Owner && !ec.Target)
+			if (ec.Owner)
 			{
-				IEntity[] aryTarget = ec.PlayerMgr.Select(ec.Owner.GetPosition(), Radius, Layer);
-				if (aryTarget.Length > 0)
+				bool bSetLeader = true;
+
+				if (!ec.Target)
 				{
-					ec.Target = aryTarget[0];
+					IEntity[] aryTarget = ec.PlayerMgr.Select(ec.Owner.GetPosition(), Radius, Layer);
+					if (aryTarget.Length > 0) 
+					{
+						ec.Target 	= aryTarget[0];
+					}
+					else
+					{
+						bSetLeader 	= false;
+					}
+				}
+
+				if (bSetLeader)
+				{
+					ec.Leader = ec.PlayerMgr.GetPlayer();
 				}
 			}
 		}
@@ -47,7 +61,7 @@ namespace AI
 		public override BehaviourStatus	OnUpdate(AIContext context)
 		{
 			AIEntityContext ec = context as AIEntityContext;
-			if (!ec.Owner && !ec.Target)
+			if (!ec.Owner && !ec.Target && !ec.Leader)
 				return BehaviourStatus.FAILURE;
 			
 			return BehaviourStatus.SUCCESS;

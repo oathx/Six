@@ -226,4 +226,58 @@ public class TcpEvent
 			Angle 		= package.GetFloat();
 		}
 	}
+
+	/// <summary>
+	/// The requeset team info
+	/// 
+	/// int 	PlayerID
+	/// </summary>
+	public const int CMD_REQ_TEAM					= 2012;
+	public const int CMD_REPLY_TEAM					= 2013;
+
+	public class TeamStruct
+		: IEventArgs
+	{
+		public int 		PlayerID;
+		public int 		JobID;
+		public int 		Level;
+		public string 	Name;
+		public int 		HP;
+		public int 		MaxHP;
+		public int 		MP;
+		public int 		MaxMP;
+
+		public void 	Decode(IPackage package)
+		{
+			PlayerID	= package.GetInt32();
+			JobID 		= package.GetInt32();
+			Level		= package.GetInt32();
+			Name		= package.GetString();
+			HP			= package.GetInt32();
+			MaxHP		= package.GetInt32();
+			MP			= package.GetInt32();
+			MaxMP		= package.GetInt32();
+		}
+	}
+
+	public class SCNetTeamReply
+		: IPackageArgs
+	{
+		public List<TeamStruct>	
+			TeamList = new List<TeamStruct>();
+		
+		public override void Decode(IPackage package)
+		{
+			int nCount = package.GetInt8();
+			for(int i=0; i<nCount; i++)
+			{
+				TeamStruct team = new TeamStruct();
+				team.Decode(
+					package
+					);
+
+				TeamList.Add(team);
+			}
+		}
+	}
 }

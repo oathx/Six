@@ -39,6 +39,13 @@ public class SqlJob : ISqlPackage
 	{ get; set; }
 
 	/// <summary>
+	/// Gets or sets A.
+	/// </summary>
+	/// <value>A.</value>
+	public string			Blueprint
+	{ get; set; }
+
+	/// <summary>
 	/// Gets the describe.
 	/// </summary>
 	/// <value>The describe.</value>
@@ -55,7 +62,7 @@ public class SqlJob : ISqlPackage
 		Name 		= System.Convert.ToString(sdr ["Name"]);
 		ShapeID 	= System.Convert.ToInt32(sdr ["ShapeID"]);
 		State 		= System.Convert.ToInt32(sdr ["State"]);
-
+		Blueprint	= System.Convert.ToString(sdr ["AI"]);
 		Describe	= System.Convert.ToString(sdr ["Describe"]);
 	}
 
@@ -70,6 +77,7 @@ public class SqlJob : ISqlPackage
 		Name 		= System.Convert.ToString(sdr ["Name"]);
 		ShapeID 	= System.Convert.ToInt32(sdr ["ShapeID"]);
 		State 		= System.Convert.ToInt32(sdr ["State"]);
+		Blueprint	= System.Convert.ToString(sdr ["AI"]);
 		Describe	= System.Convert.ToString(sdr ["Describe"]);
 	}
 }

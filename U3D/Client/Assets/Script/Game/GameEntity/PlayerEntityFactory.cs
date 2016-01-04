@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using AI;
 
 /// <summary>
 /// Human entity factory.
@@ -76,7 +77,31 @@ public class PlayerEntityFactory : HumanEntityFactory
 				);
 		}
 
+		if (nID != GlobalUserInfo.PlayerID)
+			CreateAITree(player, sqlJob.Blueprint);
+
 		return player;
+	}
+
+	/// <summary>
+	/// Creates the AI tree.
+	/// </summary>
+	/// <returns>The AI tree.</returns>
+	/// <param name="szBlueprintFile">Size blueprint file.</param>
+	public AIBehaviourTree	CreateAITree(PlayerEntity player, string szBlueprintFile)
+	{
+		if (!string.IsNullOrEmpty(szBlueprintFile))
+		{
+			TextAsset asset = Resources.Load<TextAsset>(szBlueprintFile);
+			if (!asset)
+				throw new System.NullReferenceException();
+			
+			// create the monster ai tree
+			return AIBehaviourTreeManager.GetSingleton().CreateAIBehaviourTree(
+				player.ID, new AIEntityContext(player), asset.text);
+		}
+		
+		return default(AIBehaviourTree);
 	}
 }
 

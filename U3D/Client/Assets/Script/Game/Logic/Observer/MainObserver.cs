@@ -66,6 +66,20 @@ public class MainObserver : IEventObserver
 			m_Joystick.Startup();
 		}
 
+		StartCoroutine(
+			OnWaitForEndOfFrameReqTeam()
+			);
+	}
+
+	/// <summary>
+	/// Raises the wati req team event.
+	/// </summary>
+	IEnumerator				OnWaitForEndOfFrameReqTeam()
+	{
+		yield return new WaitForEndOfFrame();
+
+		// request current team info
+		LogicRequest.GetSingleton().ReqTeam(GlobalUserInfo.PlayerID);
 	}
 
 	/// <summary>
