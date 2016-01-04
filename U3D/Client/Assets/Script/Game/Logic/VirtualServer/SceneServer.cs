@@ -21,7 +21,6 @@ public class SceneServer : VirtualServer
 	void Start ()
 	{
 		SubscribeEvent (TcpEvent.CMD_REQ_ENTER_WORLD, new EventCallback (OnReqEnterWorld));
-		SubscribeEvent (TcpEvent.CMD_REQ_SCENE_EVENT, new EventCallback (OnReqSceneEvent));
 	}
 	
 	// Update is called once per frame
@@ -61,18 +60,6 @@ public class SceneServer : VirtualServer
 		}
 
 
-		return true;
-	}
-
-
-	/// <summary>
-	/// Raises the req scene event event.
-	/// </summary>
-	/// <param name="evt">Evt.</param>
-	private bool	OnReqSceneEvent(IEvent evt)
-	{
-		VirtualNetPackage vp = evt.Args as VirtualNetPackage;
-				
 		return true;
 	}
 }

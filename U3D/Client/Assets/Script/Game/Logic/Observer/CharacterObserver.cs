@@ -104,7 +104,7 @@ public class CharacterObserver : RuntimeObserver
 		CmdEvent.UIJoinEventArgs v = evt.Args as CmdEvent.UIJoinEventArgs;
 
 		// requeset enter game world
-		CharacterRequest.GetSingleton().RequestEnterWorld(v.PlayerID);
+		LogicRequest.GetSingleton().RequestEnterWorld(v.PlayerID);
 
 		return true;
 	}
@@ -138,7 +138,7 @@ public class CharacterObserver : RuntimeObserver
 		CmdEvent.UICreateRoleEventArgs v = evt.Args as CmdEvent.UICreateRoleEventArgs;
 		
 		// requeset create character
-		CharacterRequest.GetSingleton ().RequestCreateRole (v.Name, (sbyte)(v.ID));
+		LogicRequest.GetSingleton ().RequestCreateRole (v.Name, (sbyte)(v.ID));
 
 		return true;
 	}
@@ -198,7 +198,7 @@ public class CharacterObserver : RuntimeObserver
 		GlobalUserInfo.Name 	= v.PlayerName;
 		
 		// requeset enter game world
-		CharacterRequest.GetSingleton ().RequestEnterWorld (v.PlayerID);
+		LogicRequest.GetSingleton ().RequestEnterWorld (v.PlayerID);
 
 		return true;
 	}

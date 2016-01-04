@@ -64,7 +64,7 @@ public class GateConnectObserver : IEventObserver
 	/// <returns><c>true</c>, if character list was requested, <c>false</c> otherwise.</returns>
 	private bool		RequestCharacterList()
 	{
-		CharacterRequest.GetSingleton().RequesetCharacterList(GlobalUserInfo.UserID);
+		LogicRequest.GetSingleton().RequesetCharacterList(GlobalUserInfo.UserID);
 		return true;
 	}
 

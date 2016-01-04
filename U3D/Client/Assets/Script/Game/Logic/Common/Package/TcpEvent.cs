@@ -225,5 +225,5 @@ public class TcpEvent
 			Position 	= package.GetVector3();
 			Angle 		= package.GetFloat();
 		}
-	}	
+	}
 }
