@@ -9,7 +9,7 @@ module("3100", package.seeall)
 --]]
 local function create_monster(nID, vPosition, nSqlID)
 	return lua_export.create_monster("ET_MONSTER", EntityType.ET_MONSTER, nID, 
-				vPosition, Vector3.one, Vector3.zero, 0, nSqlID)
+				vPosition, Vector3.one * 0.5, Vector3.zero, 0, nSqlID)
 end
 
 -- scene loading finish, game engine will call this function
@@ -18,7 +18,7 @@ function OnSceneStart()
 	-- start ai server
 	lua_export.start_ai_server()
 	
-	local vSource 	= Vector3(57, 2, 41)
+	local vSource 	= Vector3(57, 5, 41)
 	local vOut		= Vector3.zero
 	
 	for id=0, 5, 1 do

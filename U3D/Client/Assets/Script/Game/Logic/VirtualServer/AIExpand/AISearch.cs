@@ -39,7 +39,7 @@ namespace AI
 					IEntity[] aryTarget = ec.GetEntityManager().Select(ec.Owner.GetPosition(), Radius, Layer);
 					if (aryTarget.Length > 0) 
 					{
-						ec.Target = aryTarget[0];
+						ec.Target = aryTarget[Random.Range(0, aryTarget.Length)];
 					}
 
 					useLeader = aryTarget.Length != 0;
