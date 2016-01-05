@@ -39,10 +39,11 @@ public class TeamServer : VirtualServer
 			rep.TeamList.Add(team);
 		}
 
+		/*
 		m_Plugin.PostEvent(
 			new IEvent(EngineEventType.EVENT_NET, TcpEvent.CMD_REPLY_TEAM, rep)
 			);
-
+		*/
 		return true;
 	}
 }

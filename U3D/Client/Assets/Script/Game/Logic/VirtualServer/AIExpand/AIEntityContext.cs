@@ -64,6 +64,18 @@ namespace AI
 			// bind behaviour owner
 			Owner 			= owner;
 		}
+
+		/// <summary>
+		/// Gets the manager.
+		/// </summary>
+		/// <returns>The manager.</returns>
+		public IEntityManager	GetEntityManager()
+		{
+			if (Owner.Type == EntityType.ET_MONSTER)
+				return MonsterMgr;
+
+			return PlayerMgr;
+		}
 	}
 }
 

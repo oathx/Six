@@ -45,7 +45,7 @@ namespace AI
 				// construct find path event
 				CmdEvent.AIFindPathEventArgs v = new CmdEvent.AIFindPathEventArgs ();
 				v.Target 		= vTarget;
-				v.MinDistance 	= 1.0f;
+				v.MinDistance 	= fRadius;
 				v.DrawLine		= true;
 				v.LineWidth		= 0.1f;
 				
@@ -72,7 +72,11 @@ namespace AI
 				if (!Machine)
 					throw new System.NullReferenceException();
 
-				PuesueTarget(ec.Target.GetPosition(), 3.0f);
+				float fDistance = Vector3.Distance(ec.Owner.GetPosition(), ec.Target.GetPosition());
+				if (fDistance > MaxDistance)
+				{
+					PuesueTarget(ec.Target.GetPosition(), MaxDistance);
+				}
 			}
 		}
 

@@ -32,22 +32,20 @@ namespace AI
 			AIEntityContext ec = context as AIEntityContext;
 			if (ec.Owner)
 			{
-				bool bSetLeader = true;
+				bool useLeader = true;
 
 				if (!ec.Target)
 				{
-					IEntity[] aryTarget = ec.PlayerMgr.Select(ec.Owner.GetPosition(), Radius, Layer);
+					IEntity[] aryTarget = ec.GetEntityManager().Select(ec.Owner.GetPosition(), Radius, Layer);
 					if (aryTarget.Length > 0) 
 					{
-						ec.Target 	= aryTarget[0];
+						ec.Target = aryTarget[0];
 					}
-					else
-					{
-						bSetLeader 	= false;
-					}
+
+					useLeader = aryTarget.Length != 0;
 				}
 
-				if (bSetLeader)
+				if (useLeader)
 				{
 					ec.Leader = ec.PlayerMgr.GetPlayer();
 				}
