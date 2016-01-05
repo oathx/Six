@@ -22,8 +22,8 @@ function OnSceneStart()
 	local vOut		= Vector3.zero
 	
 	for id=0, 5, 1 do
-		local bResult = lua_export.get_random_position(vSource, 5, vOut)
-		if bResult then
+		local vOut = lua_export.get_random_position(vSource, 5)
+		if vOut ~= Vector3.zero then
 			create_monster(id * -1, vOut, 1000)
 		end
 	end

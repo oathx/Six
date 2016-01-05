@@ -350,8 +350,8 @@ local function lua_export_stop_ai_server()
 	end
 end
 
-local function lua_export_get_random_position(vStart, fRadius, vOut)
-	return game_scene:GetRandomPosition(vStart, fRadius, vOut)
+local function lua_export_get_random_position(vStart, fRadius)
+	return game_scene:GetRandomPosition(vStart, fRadius)
 end
 
 -- export interface
