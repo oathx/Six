@@ -1,595 +1,259 @@
 fileFormatVersion: 2
 guid: 6e0c0abb7f0540b43843949ae7820511
+timeCreated: 1451986805
+licenseType: Free
 ModelImporter:
+  serializedVersion: 18
   fileIDToRecycleName:
-    7400000: Take 001 //// BaiYanMoJun@Idle
-  serializedVersion: 10
+    100000: Bone06(mirrored)
+    100002: Bone05(mirrored)
+    100004: Bip01 Head
+    100006: Bip01 R Toe0Nub
+    100008: Bone11
+    100010: Bone19
+    100012: Bone25
+    100014: Bone05
+    100016: Bone14
+    100018: Bone32
+    100020: Bone23
+    100022: Bone15
+    100024: Bip01 R Toe0
+    100026: Bip01 R Foot
+    100028: Bip01 L Foot
+    100030: Bone12
+    100032: Bone32(mirrored)
+    100034: Bip01 R Finger1Nub
+    100036: Bip01 L Toe0Nub
+    100038: Bip01 L Thigh
+    100040: Bone26
+    100042: Bip01 R Thigh
+    100044: Bone06
+    100046: Bip01 Footsteps
+    100048: Bip01 L Finger1
+    100050: Bone08
+    100052: Bip01 R Forearm
+    100054: Bone29
+    100056: Bone30
+    100058: Bip01 R Finger01
+    100060: Bip01 R UpperArm
+    100062: Bip01
+    100064: Bip01 L Hand
+    100066: Bip01 L Forearm
+    100068: Bip01 R Finger0
+    100070: Bone27
+    100072: Bip01 Spine2
+    100074: Bone09
+    100076: Bone20
+    100078: Bip01 Neck
+    100080: Bip01 R Hand
+    100082: Bone17
+    100084: Bone24
+    100086: Bone18
+    100088: Bip01 L Calf
+    100090: Bone28
+    100092: Bone22
+    100094: Bone01
+    100096: Bip01 L Toe0
+    100098: Bip01 R Finger1
+    100100: Bone02
+    100102: Bone03
+    100104: Bip01 L Finger0
+    100106: Bip01 HeadNub
+    100108: Bone09(mirrored)
+    100110: Bone08(mirrored)
+    100112: //RootNode
+    100114: Bip01 R Finger11
+    100116: Bip01 R Finger0Nub
+    100118: Bip01 Pelvis
+    100120: Bip01 Spine
+    100122: Bip01 Spine1
+    100124: Bone04
+    100126: Bip01 R Calf
+    100128: Bone31
+    100130: Bone21
+    100132: Bip01 R Clavicle
+    100134: Bip01 L Finger1Nub
+    100136: Bip01 L Finger11
+    100138: Bip01 L Finger0Nub
+    100140: Bip01 L Finger01
+    100142: Bip01 L UpperArm
+    100144: Bone12(mirrored)
+    100146: Bone11(mirrored)
+    100148: Bip01 L Clavicle
+    100150: Bone18(mirrored)
+    100152: Bone17(mirrored)
+    100154: Bone15(mirrored)
+    100156: Bone14(mirrored)
+    400000: Bone06(mirrored)
+    400002: Bone05(mirrored)
+    400004: Bip01 Head
+    400006: Bip01 R Toe0Nub
+    400008: Bone11
+    400010: Bone19
+    400012: Bone25
+    400014: Bone05
+    400016: Bone14
+    400018: Bone32
+    400020: Bone23
+    400022: Bone15
+    400024: Bip01 R Toe0
+    400026: Bip01 R Foot
+    400028: Bip01 L Foot
+    400030: Bone12
+    400032: Bone32(mirrored)
+    400034: Bip01 R Finger1Nub
+    400036: Bip01 L Toe0Nub
+    400038: Bip01 L Thigh
+    400040: Bone26
+    400042: Bip01 R Thigh
+    400044: Bone06
+    400046: Bip01 Footsteps
+    400048: Bip01 L Finger1
+    400050: Bone08
+    400052: Bip01 R Forearm
+    400054: Bone29
+    400056: Bone30
+    400058: Bip01 R Finger01
+    400060: Bip01 R UpperArm
+    400062: Bip01
+    400064: Bip01 L Hand
+    400066: Bip01 L Forearm
+    400068: Bip01 R Finger0
+    400070: Bone27
+    400072: Bip01 Spine2
+    400074: Bone09
+    400076: Bone20
+    400078: Bip01 Neck
+    400080: Bip01 R Hand
+    400082: Bone17
+    400084: Bone24
+    400086: Bone18
+    400088: Bip01 L Calf
+    400090: Bone28
+    400092: Bone22
+    400094: Bone01
+    400096: Bip01 L Toe0
+    400098: Bip01 R Finger1
+    400100: Bone02
+    400102: Bone03
+    400104: Bip01 L Finger0
+    400106: Bip01 HeadNub
+    400108: Bone09(mirrored)
+    400110: Bone08(mirrored)
+    400112: //RootNode
+    400114: Bip01 R Finger11
+    400116: Bip01 R Finger0Nub
+    400118: Bip01 Pelvis
+    400120: Bip01 Spine
+    400122: Bip01 Spine1
+    400124: Bone04
+    400126: Bip01 R Calf
+    400128: Bone31
+    400130: Bone21
+    400132: Bip01 R Clavicle
+    400134: Bip01 L Finger1Nub
+    400136: Bip01 L Finger11
+    400138: Bip01 L Finger0Nub
+    400140: Bip01 L Finger01
+    400142: Bip01 L UpperArm
+    400144: Bone12(mirrored)
+    400146: Bone11(mirrored)
+    400148: Bip01 L Clavicle
+    400150: Bone18(mirrored)
+    400152: Bone17(mirrored)
+    400154: Bone15(mirrored)
+    400156: Bone14(mirrored)
+    7400000: Take 001
+    7400002: Idle
+    9500000: //RootNode
+    11100000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
     materialSearch: 1
   animations:
-    generateAnimations: 3
+    legacyGenerateAnimations: 3
     bakeSimulation: 0
-    splitAnimations: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
     animationCompression: 1
     animationRotationError: .5
     animationPositionError: .5
     animationScaleError: .5
     animationWrapMode: 2
-    clipAnimations: []
+    extraExposedTransformPaths: []
+    clipAnimations:
+    - serializedVersion: 16
+      name: Idle
+      takeName: 
+      firstFrame: 0
+      lastFrame: 50.0000038
+      wrapMode: 0
+      orientationOffsetY: 0
+      level: 0
+      cycleOffset: 0
+      loop: 0
+      loopTime: 1
+      loopBlend: 0
+      loopBlendOrientation: 1
+      loopBlendPositionY: 1
+      loopBlendPositionXZ: 0
+      keepOriginalOrientation: 1
+      keepOriginalPositionY: 1
+      keepOriginalPositionXZ: 1
+      heightFromFeet: 0
+      mirror: 0
+      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
+      curves: []
+      events: []
+      transformMask: []
+      maskType: 0
+      maskSource: {instanceID: 0}
+    isReadable: 1
   meshes:
     lODScreenPercentages: []
     globalScale: .00999999978
     meshCompression: 0
     addColliders: 0
+    importBlendShapes: 1
     swapUVChannels: 0
     generateSecondaryUV: 0
     useFileUnits: 1
-    optimizeMesh: 0
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
     secondaryUVAngleDistortion: 8
     secondaryUVAreaDistortion: 15.000001
     secondaryUVHardAngle: 88
     secondaryUVPackMargin: 4
+    useFileScale: 0
   tangentSpace:
     normalSmoothAngle: 60
     splitTangentsAcrossUV: 1
     normalImportMode: 0
     tangentImportMode: 1
-  textMetaNamesToFileIDs:
-    //RootNode:
-      data:
-        first: 1
-        second: 10870100
-      data:
-        first: 4
-        second: f01a0600
-      data:
-        first: 111
-        second: 605fa900
-    Bip01:
-      data:
-        first: 1
-        second: de860100
-      data:
-        first: 4
-        second: be1a0600
-    Bip01 Footsteps:
-      data:
-        first: 1
-        second: ce860100
-      data:
-        first: 4
-        second: ae1a0600
-    Bip01 Head:
-      data:
-        first: 1
-        second: a4860100
-      data:
-        first: 4
-        second: 841a0600
-    Bip01 HeadNub:
-      data:
-        first: 1
-        second: 0a870100
-      data:
-        first: 4
-        second: ea1a0600
-    Bip01 L Calf:
-      data:
-        first: 1
-        second: f8860100
-      data:
-        first: 4
-        second: d81a0600
-    Bip01 L Clavicle:
-      data:
-        first: 1
-        second: 34870100
-      data:
-        first: 4
-        second: 141b0600
-    Bip01 L Finger0:
-      data:
-        first: 1
-        second: 08870100
-      data:
-        first: 4
-        second: e81a0600
-    Bip01 L Finger01:
-      data:
-        first: 1
-        second: 2c870100
-      data:
-        first: 4
-        second: 0c1b0600
-    Bip01 L Finger0Nub:
-      data:
-        first: 1
-        second: 2a870100
-      data:
-        first: 4
-        second: 0a1b0600
-    Bip01 L Finger1:
-      data:
-        first: 1
-        second: d0860100
-      data:
-        first: 4
-        second: b01a0600
-    Bip01 L Finger11:
-      data:
-        first: 1
-        second: 28870100
-      data:
-        first: 4
-        second: 081b0600
-    Bip01 L Finger1Nub:
-      data:
-        first: 1
-        second: 26870100
-      data:
-        first: 4
-        second: 061b0600
-    Bip01 L Foot:
-      data:
-        first: 1
-        second: bc860100
-      data:
-        first: 4
-        second: 9c1a0600
-    Bip01 L Forearm:
-      data:
-        first: 1
-        second: e2860100
-      data:
-        first: 4
-        second: c21a0600
-    Bip01 L Hand:
-      data:
-        first: 1
-        second: e0860100
-      data:
-        first: 4
-        second: c01a0600
-    Bip01 L Thigh:
-      data:
-        first: 1
-        second: c6860100
-      data:
-        first: 4
-        second: a61a0600
-    Bip01 L Toe0:
-      data:
-        first: 1
-        second: 00870100
-      data:
-        first: 4
-        second: e01a0600
-    Bip01 L Toe0Nub:
-      data:
-        first: 1
-        second: c4860100
-      data:
-        first: 4
-        second: a41a0600
-    Bip01 L UpperArm:
-      data:
-        first: 1
-        second: 2e870100
-      data:
-        first: 4
-        second: 0e1b0600
-    Bip01 Neck:
-      data:
-        first: 1
-        second: ee860100
-      data:
-        first: 4
-        second: ce1a0600
-    Bip01 Pelvis:
-      data:
-        first: 1
-        second: 16870100
-      data:
-        first: 4
-        second: f61a0600
-    Bip01 R Calf:
-      data:
-        first: 1
-        second: 1e870100
-      data:
-        first: 4
-        second: fe1a0600
-    Bip01 R Clavicle:
-      data:
-        first: 1
-        second: 24870100
-      data:
-        first: 4
-        second: 041b0600
-    Bip01 R Finger0:
-      data:
-        first: 1
-        second: e4860100
-      data:
-        first: 4
-        second: c41a0600
-    Bip01 R Finger01:
-      data:
-        first: 1
-        second: da860100
-      data:
-        first: 4
-        second: ba1a0600
-    Bip01 R Finger0Nub:
-      data:
-        first: 1
-        second: 14870100
-      data:
-        first: 4
-        second: f41a0600
-    Bip01 R Finger1:
-      data:
-        first: 1
-        second: 02870100
-      data:
-        first: 4
-        second: e21a0600
-    Bip01 R Finger11:
-      data:
-        first: 1
-        second: 12870100
-      data:
-        first: 4
-        second: f21a0600
-    Bip01 R Finger1Nub:
-      data:
-        first: 1
-        second: c2860100
-      data:
-        first: 4
-        second: a21a0600
-    Bip01 R Foot:
-      data:
-        first: 1
-        second: ba860100
-      data:
-        first: 4
-        second: 9a1a0600
-    Bip01 R Forearm:
-      data:
-        first: 1
-        second: d4860100
-      data:
-        first: 4
-        second: b41a0600
-    Bip01 R Hand:
-      data:
-        first: 1
-        second: f0860100
-      data:
-        first: 4
-        second: d01a0600
-    Bip01 R Thigh:
-      data:
-        first: 1
-        second: ca860100
-      data:
-        first: 4
-        second: aa1a0600
-    Bip01 R Toe0:
-      data:
-        first: 1
-        second: b8860100
-      data:
-        first: 4
-        second: 981a0600
-    Bip01 R Toe0Nub:
-      data:
-        first: 1
-        second: a6860100
-      data:
-        first: 4
-        second: 861a0600
-    Bip01 R UpperArm:
-      data:
-        first: 1
-        second: dc860100
-      data:
-        first: 4
-        second: bc1a0600
-    Bip01 Spine:
-      data:
-        first: 1
-        second: 18870100
-      data:
-        first: 4
-        second: f81a0600
-    Bip01 Spine1:
-      data:
-        first: 1
-        second: 1a870100
-      data:
-        first: 4
-        second: fa1a0600
-    Bip01 Spine2:
-      data:
-        first: 1
-        second: e8860100
-      data:
-        first: 4
-        second: c81a0600
-    Bone01:
-      data:
-        first: 1
-        second: fe860100
-      data:
-        first: 4
-        second: de1a0600
-    Bone02:
-      data:
-        first: 1
-        second: 04870100
-      data:
-        first: 4
-        second: e41a0600
-    Bone03:
-      data:
-        first: 1
-        second: 06870100
-      data:
-        first: 4
-        second: e61a0600
-    Bone04:
-      data:
-        first: 1
-        second: 1c870100
-      data:
-        first: 4
-        second: fc1a0600
-    Bone05:
-      data:
-        first: 1
-        second: ae860100
-      data:
-        first: 4
-        second: 8e1a0600
-    Bone05(mirrored):
-      data:
-        first: 1
-        second: a2860100
-      data:
-        first: 4
-        second: 821a0600
-    Bone06:
-      data:
-        first: 1
-        second: cc860100
-      data:
-        first: 4
-        second: ac1a0600
-    Bone06(mirrored):
-      data:
-        first: 1
-        second: a0860100
-      data:
-        first: 4
-        second: 801a0600
-    Bone08:
-      data:
-        first: 1
-        second: d2860100
-      data:
-        first: 4
-        second: b21a0600
-    Bone08(mirrored):
-      data:
-        first: 1
-        second: 0e870100
-      data:
-        first: 4
-        second: ee1a0600
-    Bone09:
-      data:
-        first: 1
-        second: ea860100
-      data:
-        first: 4
-        second: ca1a0600
-    Bone09(mirrored):
-      data:
-        first: 1
-        second: 0c870100
-      data:
-        first: 4
-        second: ec1a0600
-    Bone11:
-      data:
-        first: 1
-        second: a8860100
-      data:
-        first: 4
-        second: 881a0600
-    Bone11(mirrored):
-      data:
-        first: 1
-        second: 32870100
-      data:
-        first: 4
-        second: 121b0600
-    Bone12:
-      data:
-        first: 1
-        second: be860100
-      data:
-        first: 4
-        second: 9e1a0600
-    Bone12(mirrored):
-      data:
-        first: 1
-        second: 30870100
-      data:
-        first: 4
-        second: 101b0600
-    Bone14:
-      data:
-        first: 1
-        second: b0860100
-      data:
-        first: 4
-        second: 901a0600
-    Bone14(mirrored):
-      data:
-        first: 1
-        second: 3c870100
-      data:
-        first: 4
-        second: 1c1b0600
-    Bone15:
-      data:
-        first: 1
-        second: b6860100
-      data:
-        first: 4
-        second: 961a0600
-    Bone15(mirrored):
-      data:
-        first: 1
-        second: 3a870100
-      data:
-        first: 4
-        second: 1a1b0600
-    Bone17:
-      data:
-        first: 1
-        second: f2860100
-      data:
-        first: 4
-        second: d21a0600
-    Bone17(mirrored):
-      data:
-        first: 1
-        second: 38870100
-      data:
-        first: 4
-        second: 181b0600
-    Bone18:
-      data:
-        first: 1
-        second: f6860100
-      data:
-        first: 4
-        second: d61a0600
-    Bone18(mirrored):
-      data:
-        first: 1
-        second: 36870100
-      data:
-        first: 4
-        second: 161b0600
-    Bone19:
-      data:
-        first: 1
-        second: aa860100
-      data:
-        first: 4
-        second: 8a1a0600
-    Bone20:
-      data:
-        first: 1
-        second: ec860100
-      data:
-        first: 4
-        second: cc1a0600
-    Bone21:
-      data:
-        first: 1
-        second: 22870100
-      data:
-        first: 4
-        second: 021b0600
-    Bone22:
-      data:
-        first: 1
-        second: fc860100
-      data:
-        first: 4
-        second: dc1a0600
-    Bone23:
-      data:
-        first: 1
-        second: b4860100
-      data:
-        first: 4
-        second: 941a0600
-    Bone24:
-      data:
-        first: 1
-        second: f4860100
-      data:
-        first: 4
-        second: d41a0600
-    Bone25:
-      data:
-        first: 1
-        second: ac860100
-      data:
-        first: 4
-        second: 8c1a0600
-    Bone26:
-      data:
-        first: 1
-        second: c8860100
-      data:
-        first: 4
-        second: a81a0600
-    Bone27:
-      data:
-        first: 1
-        second: e6860100
-      data:
-        first: 4
-        second: c61a0600
-    Bone28:
-      data:
-        first: 1
-        second: fa860100
-      data:
-        first: 4
-        second: da1a0600
-    Bone29:
-      data:
-        first: 1
-        second: d6860100
-      data:
-        first: 4
-        second: b61a0600
-    Bone30:
-      data:
-        first: 1
-        second: d8860100
-      data:
-        first: 4
-        second: b81a0600
-    Bone31:
-      data:
-        first: 1
-        second: 20870100
-      data:
-        first: 4
-        second: 001b0600
-    Bone32:
-      data:
-        first: 1
-        second: b2860100
-      data:
-        first: 4
-        second: 921a0600
-    Bone32(mirrored):
-      data:
-        first: 1
-        second: c0860100
-      data:
-        first: 4
-        second: a01a0600
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    human: []
+    skeleton: []
+    armTwist: .5
+    foreArmTwist: .5
+    upperLegTwist: .5
+    legTwist: .5
+    armStretch: .0500000007
+    legStretch: .0500000007
+    feetSpacing: 0
+    rootMotionBoneName: Bip01
+    hasTranslationDoF: 0
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

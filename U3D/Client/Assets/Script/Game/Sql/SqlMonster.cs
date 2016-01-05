@@ -35,21 +35,7 @@ public class SqlMonster : ISqlPackage
 	/// <value>The weapon.</value>
 	public string			Name
 	{ get; private set; }
-	
-	/// <summary>
-	/// Gets the describe.
-	/// </summary>
-	/// <value>The describe.</value>
-	public int				MapID
-	{ get; private set; }
-	
-	/// <summary>
-	/// Gets the level.
-	/// </summary>
-	/// <value>The level.</value>
-	public int 				Level
-	{ get; private set; }
-	
+		
 	/// <summary>
 	/// Gets the shape I.
 	/// </summary>
@@ -58,31 +44,11 @@ public class SqlMonster : ISqlPackage
 	{ get; private set; }
 	
 	/// <summary>
-	/// Gets the type.
+	/// Gets the level.
 	/// </summary>
-	/// <value>The type.</value>
-	public int 				Type
+	/// <value>The level.</value>
+	public int 				Level
 	{ get; private set; }
-	
-	/// <summary>
-	/// Gets the type of the sub.
-	/// </summary>
-	/// <value>The type of the sub.</value>
-	public int 				SubType
-	{ get; private set; }
-	
-	/// <summary>
-	/// Gets the durable.
-	/// </summary>
-	/// <value>The durable.</value>
-	public int 				Durable
-	{ get; private set; }
-
-	/// <summary>
-	/// The magic list.
-	/// </summary>
-	public List<MagicStruct> 
-		MagicList = new List<MagicStruct>();
 
 	/// <summary>
 	/// Gets or sets the AI blueprint.
@@ -97,33 +63,11 @@ public class SqlMonster : ISqlPackage
 	/// <param name="sdr">Sdr.</param>
 	public override void 	Decode (SqliteDataReader sdr)
 	{
-		ID 			= System.Convert.ToInt32(sdr ["id"]);
-		MapID		= System.Convert.ToInt32(sdr ["map"]);
-		Name 		= System.Convert.ToString(sdr ["name"]);
-		Level		= System.Convert.ToInt32(sdr ["level"]);
-		ShapeID 	= System.Convert.ToInt32(sdr ["Shape"]);
-		Type 		= System.Convert.ToInt32(sdr ["type"]);
-		SubType 	= System.Convert.ToInt32(sdr ["subType"]);
-		Durable		= System.Convert.ToInt32(sdr ["durable"]);
-		Blueprint	= System.Convert.ToString(sdr ["AIBlueprint"]);
-
-		string skill = System.Convert.ToString(sdr["defskill"]);
-		if (!string.IsNullOrEmpty (skill))
-		{
-			string[] arySkill = skill.Split('|');
-			foreach(string s in arySkill)
-			{
-				string[] aryStruct = s.Split(':');
-				if (aryStruct.Length == 2)
-				{
-					MagicStruct ms = new MagicStruct();
-					ms.ID 			= int.Parse(aryStruct[0]);
-					ms.Probability 	= int.Parse(aryStruct[1]);
-					
-					MagicList.Add(ms);
-				}
-			}
-		}
+		ID 			= System.Convert.ToInt32(sdr ["ID"]);
+		Name		= System.Convert.ToString(sdr ["Name"]);
+		ShapeID		= System.Convert.ToInt32(sdr ["Shape"]);
+		Level		= System.Convert.ToInt32(sdr ["Level"]);
+		Blueprint	= System.Convert.ToString(sdr ["AI"]);
 	}
 
 	/// <summary>
@@ -132,32 +76,10 @@ public class SqlMonster : ISqlPackage
 	/// <param name="sdr">Sdr.</param>
 	public override void 	Fill (DataRow sdr)
 	{
-		ID 			= System.Convert.ToInt32(sdr ["id"]);
-		MapID		= System.Convert.ToInt32(sdr ["map"]);
-		Name 		= System.Convert.ToString(sdr ["name"]);
-		Level		= System.Convert.ToInt32(sdr ["level"]);
-		ShapeID 	= System.Convert.ToInt32(sdr ["Shape"]);
-		Type 		= System.Convert.ToInt32(sdr ["type"]);
-		SubType 	= System.Convert.ToInt32(sdr ["subType"]);
-		Durable		= System.Convert.ToInt32(sdr ["durable"]);
-		Blueprint	= System.Convert.ToString(sdr ["AIBlueprint"]);
-
-		string skill = System.Convert.ToString(sdr["defskill"]);
-		if (!string.IsNullOrEmpty (skill))
-		{
-			string[] arySkill = skill.Split('|');
-			foreach(string s in arySkill)
-			{
-				string[] aryStruct = s.Split(':');
-				if (aryStruct.Length == 2)
-				{
-					MagicStruct ms = new MagicStruct();
-					ms.ID 			= int.Parse(aryStruct[0]);
-					ms.Probability 	= int.Parse(aryStruct[1]);
-					
-					MagicList.Add(ms);
-				}
-			}
-		}
+		ID 			= System.Convert.ToInt32(sdr ["ID"]);
+		Name		= System.Convert.ToString(sdr ["Name"]);
+		ShapeID		= System.Convert.ToInt32(sdr ["Shape"]);
+		Level		= System.Convert.ToInt32(sdr ["Level"]);
+		Blueprint	= System.Convert.ToString(sdr ["AI"]);
 	}
 }

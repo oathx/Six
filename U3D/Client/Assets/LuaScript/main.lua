@@ -350,6 +350,10 @@ local function lua_export_stop_ai_server()
 	end
 end
 
+local function lua_export_get_random_position(vStart, fRadius, vOut)
+	return game_scene:GetRandomPosition(vStart, fRadius, vOut)
+end
+
 -- export interface
 lua_export = {
 	print_table	= lua_export_print_table,
@@ -376,6 +380,7 @@ lua_export = {
 	create_ai_tree = lua_export_create_ai_tree,
 	destroy_ai_tree = lua_export_destroy_ai_tree,
 	stop_ai_server = lua_export_stop_ai_server,
+	get_random_position = lua_export_get_random_position,
 }
 
 Debug.Log("------------------------------------ Register lua function -------------------------")

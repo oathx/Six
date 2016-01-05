@@ -483,41 +483,41 @@ public class XmlEditorHelper
 	/// <returns>The skeleton.</returns>
 	/// <param name="resource">Resource.</param>
 	/// <param name="szOutPath">Size out path.</param>
-	public static GameObject	ExtractSkeleton(Object resource, string szOutPath)
+	public static GameObject	ExtractSkeleton(Object resource, string szOutPath, bool bSplit)
 	{
 		GameObject fbx = GameObject.Instantiate(resource) as GameObject;
 		if (!fbx)
 			throw new System.NullReferenceException();
 
-		// destroy all mesh render object
-		Transform[] aryTransform = fbx.GetComponentsInChildren<Transform>();
-		foreach(Transform t in aryTransform)
+		if (bSplit)
 		{
-			MeshRenderer render = t.GetComponent<MeshRenderer>();
-			if (render)
-				GameObject.DestroyImmediate(t.gameObject);
-		}
-		
-		// destroy all skinned mesh render
-		foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>())
-		{
-			GameObject.DestroyImmediate(mesh.gameObject);
+			// destroy all mesh render object
+			Transform[] aryTransform = fbx.GetComponentsInChildren<Transform>();
+			foreach(Transform t in aryTransform)
+			{
+				MeshRenderer render = t.GetComponent<MeshRenderer>();
+				if (render)
+					GameObject.DestroyImmediate(t.gameObject);
+			}
+			
+			// destroy all skinned mesh render
+			foreach(SkinnedMeshRenderer mesh in fbx.GetComponentsInChildren<SkinnedMeshRenderer>())
+			{
+				GameObject.DestroyImmediate(mesh.gameObject);
+			}
 		}
 
-		SkinnedMeshRenderer skin = fbx.AddComponent<SkinnedMeshRenderer>();
-		if (skin)
-		{
-			GameObject prefab = CreateEmptyPrefab(fbx, szOutPath);
-			if (!prefab)
-				throw new System.NullReferenceException();
+		SkinnedMeshRenderer skin = fbx.GetComponent<SkinnedMeshRenderer>();
+		if (!skin)
+			skin = fbx.AddComponent<SkinnedMeshRenderer>();
 
-			GameObject.DestroyImmediate(fbx);
-
-			return prefab;
-		}
+		GameObject prefab = CreateEmptyPrefab(fbx, szOutPath);
+		if (!prefab)
+			throw new System.NullReferenceException();
 
 		GameObject.DestroyImmediate(fbx);
-		return default(GameObject);
+
+		return prefab;
 	}
 
 	public enum SkinMeshType {

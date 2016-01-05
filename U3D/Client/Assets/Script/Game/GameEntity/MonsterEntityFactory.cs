@@ -63,6 +63,18 @@ public class MonsterEntityFactory : HumanEntityFactory
 
 		monster.CreateTitle(nID, nStyle, szName);
 
+		// create player machine
+		IAIMachine machine = CreateMachine(monster);
+		if (machine)
+		{
+			monster.SetMachine(machine);
+			
+			// change to default state
+			machine.ChangeState(
+				machine.HasState(AITypeID.AI_BORN) ? AITypeID.AI_BORN : AITypeID.AI_IDLE
+				);
+		}
+
 		// create ai tress
 		CreateAITree(monster, sqlMonster.Blueprint);
 

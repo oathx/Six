@@ -13,17 +13,10 @@ using System.Text;
 public class UnitStruct : XmlStruct
 {
 	/// <summary>
-	/// Gets or sets a value indicating whether this <see cref="UnitXmlStruct"/> out skeleton.
+	/// Gets or sets a value indicating whether this <see cref="UnitStruct"/> split skin mesh render.
 	/// </summary>
-	/// <value><c>true</c> if out skeleton; otherwise, <c>false</c>.</value>
-	public bool				OutSkeleton
-	{ get; set; }
-	
-	/// <summary>
-	/// Gets or sets a value indicating whether this <see cref="UnitXmlStruct"/> out skin.
-	/// </summary>
-	/// <value><c>true</c> if out skin; otherwise, <c>false</c>.</value>
-	public bool				OutSkin
+	/// <value><c>true</c> if split skin mesh render; otherwise, <c>false</c>.</value>
+	public bool				SplitSkinMeshRender
 	{ get; set; }
 
 	/// <summary>
@@ -45,9 +38,8 @@ public class UnitStruct : XmlStruct
 	/// </summary>
 	public UnitStruct()
 	{
-		SkinPath 	= new DirectoryStruct();
-		OutSkin		= true;
-		OutSkeleton	= true;
+		SkinPath 				= new DirectoryStruct();
+		SplitSkinMeshRender		= true;
 	}
 }
 
@@ -88,6 +80,105 @@ public class UnitXmlStruct : XmlStruct
 	}
 
 	/// <summary>
+	/// Generates the animatior.
+	/// </summary>
+	/// <returns>The animatior.</returns>
+	/// <param name="unit">Unit.</param>
+	/// <param name="szFileName">Size file name.</param>
+	/// <param name="aryClip">Ary clip.</param>
+	public GameObject		GenerateAnimatior(UnitStruct unit, string szFileName, List<string> aryClip, List<string> arySkin)
+	{
+		UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath(szFileName, typeof(GameObject));
+		if (!resource)
+			throw new System.NullReferenceException();
+		
+		string[] arySplit = unit.SkinPath.Path.Split('/');
+		if (arySplit.Length == 0)
+			throw new System.NullReferenceException();
+
+		string szOutPath = string.Format("{0}/{1}", unit.SkinPath.FullPath, arySplit[arySplit.Length - 1]);
+		if (Directory.Exists(szOutPath))
+		{
+			// clear old file
+			string[] aryDelete = System.IO.Directory.GetFiles(
+				szOutPath, "*.*", SearchOption.AllDirectories
+				);
+			foreach(string delete in aryDelete)
+			{
+				File.Delete(delete);
+			}
+		}
+		else
+		{
+			Directory.CreateDirectory(szOutPath);
+		}
+		
+		// extract skeleton
+		string szSkeletonPath = string.Format("{0}/{1}.prefab", 
+		                                      szOutPath, arySplit[arySplit.Length - 1]);
+		GameObject skeleton = XmlEditorHelper.ExtractSkeleton(resource, szSkeletonPath, unit.SplitSkinMeshRender);
+		if (!skeleton)
+			throw new System.NullReferenceException();
+
+		// create the unit animator
+		XmlEditorHelper.CreateAnimator(skeleton, aryClip, szFileName);
+
+		// extract skin mesh
+		if (unit.SplitSkinMeshRender && arySkin.Count > 0)
+		{
+			// extract skin
+			List<UnityEngine.Object> 
+				aryResource = new List<UnityEngine.Object>();
+			foreach(string skin in arySkin)
+			{
+				aryResource.Add
+					(AssetDatabase.LoadAssetAtPath(skin, typeof(GameObject))
+					 );
+			}
+			
+			// extract skin mesh
+			string szMeshPath = string.Format("{0}/{1}", 
+			                                  szOutPath, arySplit[arySplit.Length - 1]);
+			XmlEditorHelper.ExtractSkinMesh(
+				aryResource.ToArray(), szOutPath
+				);
+		}
+
+		return skeleton;
+
+	}
+
+	/// <summary>
+	/// Invalidate the specified animator and arySkin.
+	/// </summary>
+	/// <param name="animator">Animator.</param>
+	/// <param name="arySkin">Ary skin.</param>
+	public void 			Invalidate(Animator refAnimatior, List<string> arySkin)
+	{ 
+		foreach(string skin in arySkin)
+		{
+			if (skin.ToLower().Contains(SearchFileType.prefab.ToString()))
+			{
+				// Extract the model skeleton
+				UnityEngine.GameObject resource = AssetDatabase.LoadAssetAtPath(skin, typeof(GameObject)) as UnityEngine.GameObject;
+				if (!resource)
+					throw new System.NullReferenceException();
+				
+				Animator animator = resource.GetComponent<Animator>();
+				if (!animator)
+					animator = resource.AddComponent<Animator>();
+				
+				animator.runtimeAnimatorController 	= refAnimatior.runtimeAnimatorController;
+				animator.avatar						= refAnimatior.avatar;
+				
+				Animation old = resource.GetComponent<Animation>();
+				if (old)
+					GameObject.DestroyImmediate(old, true);
+			}
+		}
+	}
+	
+	/// <summary>
 	/// Raises the generate clicked event.
 	/// </summary>
 	/// <param name="target">Target.</param>
@@ -117,56 +208,25 @@ public class UnitXmlStruct : XmlStruct
 			// if current have a skin
 			if (arySkin.Count > 0)
 			{
-				// Extract the model skeleton
-				UnityEngine.Object resource = AssetDatabase.LoadAssetAtPath(arySkin[0], typeof(GameObject));
-				if (!resource)
-					throw new System.NullReferenceException();
-		
-				string[] arySplit = unit.SkinPath.Path.Split('/');
-				if (arySplit.Length != 0)
+				GameObject skeleton = default(GameObject);
+
+				foreach(string skin in arySkin)
 				{
-					string szOutPath = string.Format("{0}/{1}", unit.SkinPath.FullPath, arySplit[arySplit.Length - 1]);
-					if (Directory.Exists(szOutPath))
+					string x = skin.ToLower();
+					if (skin.ToLower().Contains(SearchFileType.fbx.ToString()))
 					{
-						// clear old file
-						string[] aryDelete = System.IO.Directory.GetFiles(
-							szOutPath, "*.*", SearchOption.AllDirectories
-							);
-						foreach(string delete in aryDelete)
-						{
-							File.Delete(delete);
-						}
+						skeleton = GenerateAnimatior(unit, skin, aryClip, arySkin);
+						break;
 					}
-					else
-					{
-						Directory.CreateDirectory(szOutPath);
-					}
+				}
 
-					// extract skeleton
-					string szSkeletonPath = string.Format("{0}/{1}.prefab", 
-					                                      szOutPath, arySplit[arySplit.Length - 1]);
-					GameObject skeleton = XmlEditorHelper.ExtractSkeleton(resource, szSkeletonPath);
-					if (skeleton)
-					{
-						XmlEditorHelper.CreateAnimator(skeleton, aryClip, arySkin[0]);
-					}
+				if (skeleton)
+				{
+					Animator refAnimatior = skeleton.GetComponent<Animator>();
+					if (!refAnimatior)
+						throw new System.NullReferenceException();
 
-					// extract skin
-					List<UnityEngine.Object> 
-						aryResource = new List<UnityEngine.Object>();
-					foreach(string skin in arySkin)
-					{
-						aryResource.Add
-							(AssetDatabase.LoadAssetAtPath(skin, typeof(GameObject))
-							 );
-					}
-
-					// extract skin mesh
-					string szMeshPath = string.Format("{0}/{1}", 
-					                                      szOutPath, arySplit[arySplit.Length - 1]);
-					XmlEditorHelper.ExtractSkinMesh(
-						aryResource.ToArray(), szOutPath
-						);
+					Invalidate(refAnimatior, arySkin);
 				}
 			}
 		}
