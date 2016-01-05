@@ -45,7 +45,7 @@ namespace AI
 				// construct find path event
 				CmdEvent.AIFindPathEventArgs v = new CmdEvent.AIFindPathEventArgs ();
 				v.Target 		= vTarget;
-				v.MinDistance 	= fRadius;
+				v.MinDistance 	= 1.0f;
 				v.DrawLine		= true;
 				v.LineWidth		= 0.1f;
 				

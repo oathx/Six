@@ -21,13 +21,6 @@ namespace AI
 		{ get; private set; }
 
 		/// <summary>
-		/// Gets or sets the current target.
-		/// </summary>
-		/// <value>The current target.</value>
-		public IEntity					CurTarget
-		{ get; set; }
-		
-		/// <summary>
 		/// Initializes a new instance of the <see cref="IRandomSelector"/> class.
 		/// </summary>
 		public AIPatrol()
@@ -53,16 +46,15 @@ namespace AI
 				throw new System.NullReferenceException();
 
 			// set current patrol target
-			CurTarget = ec.Target ? ec.Target : ec.Leader;
-			if (CurTarget)
+			if (ec.Leader)
 			{
-				float fDistance = Vector3.Distance(ec.Owner.GetPosition(), CurTarget.GetPosition());
-				if (fDistance > 3)
+				float fDistance = Vector3.Distance(ec.Owner.GetPosition(), ec.Leader.GetPosition());
+				if (fDistance > Radius)
 				{
 					Vector3 vTarget = Vector3.zero;
 					
 					// get random target point
-					if (SceneSupport.GetSingleton().GetRandomPosition(CurTarget.GetPosition(), Radius, ref vTarget))
+					if (SceneSupport.GetSingleton().GetRandomPosition(ec.Leader.GetPosition(), Radius, ref vTarget))
 					{
 						// change to find path state
 						IAIState curState = Machine.GetCurrentState ();
@@ -92,7 +84,7 @@ namespace AI
 		public override BehaviourStatus	OnUpdate(AIContext context)
 		{
 			AIEntityContext ec = context as AIEntityContext;
-			if (!ec.Owner || !CurTarget)
+			if (!ec.Owner || !ec.Leader)
 				return BehaviourStatus.FAILURE;
 
 			IAIState curState = Machine.GetCurrentState();

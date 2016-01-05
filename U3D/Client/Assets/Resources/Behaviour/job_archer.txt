@@ -1,0 +1,8 @@
+AISelector
+	AIParallel
+		AISequence
+			AISearch Radius=10 Layer=15
+			AIPatrol Radius=9 ErrorRange=1
+	AISequence	
+		AIWaitForTime MinWaitTime=10 MaxWaitTime=10
+		

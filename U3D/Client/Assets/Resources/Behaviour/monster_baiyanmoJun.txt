@@ -1,0 +1,9 @@
+AISelector
+	AIParallel
+		AISequence
+			AISearch Radius=10 Layer=15
+			AISelector
+				AIPursue MaxDistance=2
+	AISequence	
+		AIWaitForTime MinWaitTime=10 MaxWaitTime=10
+		
