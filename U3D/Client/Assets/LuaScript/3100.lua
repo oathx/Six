@@ -18,6 +18,7 @@ function OnSceneStart()
 	-- start ai server
 	lua_export.start_ai_server()
 	
+	--[[
 	local vSource 	= Vector3(57, 5, 41)
 	local vOut		= Vector3.zero
 	
@@ -27,6 +28,7 @@ function OnSceneStart()
 			create_monster(id * -1, vOut, 1000)
 		end
 	end
+	--]]
 end
 
 --[[

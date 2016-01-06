@@ -259,6 +259,12 @@ public class SceneSupport : MonoBehaviourSingleton<SceneSupport>
 	/// <param name="fRadius">F radius.</param>
 	public virtual bool	GetRandomPosition(Vector3 vStart, float fRadius, ref Vector3 vOut)
 	{
+		if (fRadius <= 0)
+		{
+			vOut = vStart;
+			return true;
+		}
+
 		// set query filter
 		NavmeshQueryFilter filter = new NavmeshQueryFilter();
 		filter.IncludeFlags = 0xffff;
@@ -307,7 +313,7 @@ public class SceneSupport : MonoBehaviourSingleton<SceneSupport>
 		
 		return vResult;
 	}
-	
+
 	/// <summary>
 	/// Points the in navmesh.
 	/// </summary>

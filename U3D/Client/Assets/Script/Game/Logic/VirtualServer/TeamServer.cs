@@ -24,7 +24,7 @@ public class TeamServer : VirtualServer
 	protected bool OnTeamReplay(IEvent evt)
 	{
 		TcpEvent.SCNetTeamReply rep = new TcpEvent.SCNetTeamReply();
-		for(int i=1; i<=4; i++)
+		for(int i=1; i<=1; i++)
 		{
 			TcpEvent.TeamStruct team = new TcpEvent.TeamStruct();
 			team.PlayerID	= i;
