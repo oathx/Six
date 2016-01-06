@@ -148,7 +148,7 @@ public class MathfEx
 		List<T> 
 			aryReturn = new List<T>();
 
-		Collider[] aryCollider = Physics.OverlapSphere(vCenter, fRadius, 1 << nLayerMask);
+		Collider[] aryCollider = Physics.OverlapSphere(vCenter, fRadius, nLayerMask);
 		foreach(Collider c in aryCollider)
 		{
 			T cmp = c.GetComponent<T>();

@@ -28,6 +28,39 @@ namespace AI
 		{
 			
 		}
+
+		/// <summary>
+		/// Frees the patrol.
+		/// </summary>
+		/// <returns><c>true</c>, if patrol was freed, <c>false</c> otherwise.</returns>
+		/// <param name="ec">Ec.</param>
+		public virtual bool				FreePatrol(AIEntityContext ec)
+		{
+			Vector3 vTarget = Vector3.zero;
+
+			// get random target point
+			if (!SceneSupport.GetSingleton().GetRandomPosition(ec.Owner.GetPosition(), Radius, ref vTarget))
+				return false;
+
+			// change to find path state
+			IAIState curState = Machine.GetCurrentState ();
+			if (curState.StateID != AITypeID.AI_PATH)
+				Machine.ChangeState (AITypeID.AI_PATH);
+			
+			// construct find path event
+			CmdEvent.AIFindPathEventArgs v = new CmdEvent.AIFindPathEventArgs ();
+			v.Target 		= vTarget;
+			v.MinDistance 	= ErrorRange;
+			v.DrawLine		= true;
+			v.LineWidth		= 0.05f;
+			
+			// post the find path event to machine
+			Machine.PostEvent(
+				new IEvent(EngineEventType.EVENT_AI, CmdEvent.CMD_LOGIC_AIFINDPATH, v)
+				);
+
+			return true;
+		}
 		
 		/// <summary>
 		/// Raises the start event.
@@ -45,35 +78,9 @@ namespace AI
 			if (!Machine)
 				throw new System.NullReferenceException();
 
-			// set current patrol target
-			if (ec.Leader)
+			if (!ec.Target)
 			{
-				float fDistance = Vector3.Distance(ec.Owner.GetPosition(), ec.Leader.GetPosition());
-				if (fDistance > Radius)
-				{
-					Vector3 vTarget = Vector3.zero;
-					
-					// get random target point
-					if (SceneSupport.GetSingleton().GetRandomPosition(ec.Leader.GetPosition(), Radius, ref vTarget))
-					{
-						// change to find path state
-						IAIState curState = Machine.GetCurrentState ();
-						if (curState.StateID != AITypeID.AI_PATH)
-							Machine.ChangeState (AITypeID.AI_PATH);
-						
-						// construct find path event
-						CmdEvent.AIFindPathEventArgs v = new CmdEvent.AIFindPathEventArgs ();
-						v.Target 		= vTarget;
-						v.MinDistance 	= ErrorRange;
-						v.DrawLine		= true;
-						v.LineWidth		= 0.05f;
-						
-						// post the find path event to machine
-						Machine.PostEvent(
-							new IEvent(EngineEventType.EVENT_AI, CmdEvent.CMD_LOGIC_AIFINDPATH, v)
-							);
-					}
-				}
+				FreePatrol(ec);
 			}
 		}
 		
@@ -84,7 +91,10 @@ namespace AI
 		public override BehaviourStatus	OnUpdate(AIContext context)
 		{
 			AIEntityContext ec = context as AIEntityContext;
-			if (!ec.Owner || !ec.Leader)
+			if (!ec.Owner)
+				return BehaviourStatus.FAILURE;
+
+			if (ec.Target)
 				return BehaviourStatus.FAILURE;
 
 			IAIState curState = Machine.GetCurrentState();

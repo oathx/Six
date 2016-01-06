@@ -9,7 +9,7 @@ using System.Xml;
 /// </summary>
 public class TeamServer : VirtualServer
 {
-	public const int TEAM_MAXUNIT	= 4;
+	public const int TEAM_MAXUNIT	= 0;
 
 	/// <summary>
 	/// Start this instance.

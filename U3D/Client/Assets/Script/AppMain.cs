@@ -33,6 +33,16 @@ public class AppMain : MonoBehaviour {
 	/// </summary>
 	void Start () 
 	{
+#if UNITY_EDITOR
+		Debug.Log(EntityLayer.MAIN);
+		Debug.Log(EntityLayer.MONSTER);
+		Debug.Log(EntityLayer.PLAYER);
+		Debug.Log(EntityLayer.NPC);
+		Debug.Log(EntityLayer.TRIGGER);
+
+		Debug.Log( (1 << EntityLayer.MAIN) | (1 << EntityLayer.PLAYER));
+#endif
+
 		// install version update observer
 		IGlobalPlugin global = GameEngine.GetSingleton().QueryPlugin<IGlobalPlugin>();
 		if (global)
