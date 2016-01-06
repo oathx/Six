@@ -2,7 +2,7 @@ AISelector
 	AIParallel
 		AISequence
 			AISearch Radius=10 Layer=15
-			AIFollow Radius=2 Distance=5 ErrorRange=1
+			AIFollow Radius=3 Distance=0 ErrorRange=1
 	AISequence	
 		AIWaitForTime MinWaitTime=10 MaxWaitTime=10
 		

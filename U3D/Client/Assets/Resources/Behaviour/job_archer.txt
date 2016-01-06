@@ -1,8 +1,16 @@
 AISelector
 	AIParallel
 		AISequence
+			; 搜索跟随目标
+			; Radius		搜索半径
+			; Layer			搜索层
 			AISearch Radius=10 Layer=15
-			AIFollow Radius=2 Distance=5 ErrorRange=1
+			
+			; Radius 		跟随半径即以跟随目标为圆心，如果为0那么将移动到跟随目标位置
+			; Distance		保持距离，永远保持与跟随目标直接的距离，如果为0则以Radius为准
+			; ErrorRange 	移动过程中允许的误差范围
+			AIFollow Radius=1 Distance=6 ErrorRange=1
+			
 	AISequence	
 		AIWaitForTime MinWaitTime=10 MaxWaitTime=10
 		

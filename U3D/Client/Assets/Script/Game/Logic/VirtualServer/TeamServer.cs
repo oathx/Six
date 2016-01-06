@@ -9,6 +9,8 @@ using System.Xml;
 /// </summary>
 public class TeamServer : VirtualServer
 {
+	public const int TEAM_MAXUNIT	= 4;
+
 	/// <summary>
 	/// Start this instance.
 	/// </summary>
@@ -23,17 +25,21 @@ public class TeamServer : VirtualServer
 	/// <param name="evt">Evt.</param>
 	protected bool OnTeamReplay(IEvent evt)
 	{
+		int[] aryDefault = {
+			4, 3, 2, 5
+		};
+
 		TcpEvent.SCNetTeamReply rep = new TcpEvent.SCNetTeamReply();
-		for(int i=1; i<=1; i++)
+		for(int idx=0; idx<TEAM_MAXUNIT; idx++)
 		{
 			TcpEvent.TeamStruct team = new TcpEvent.TeamStruct();
-			team.PlayerID	= i;
+			team.PlayerID	= idx + 1;
 			team.HP			= 100;
 			team.MaxHP		= 100;
 			team.MP			= 100;
 			team.MaxMP		= 100;
-			team.JobID		= Random.Range(1, 6);
-			team.Level		= 1;
+			team.JobID		= aryDefault[idx];
+			team.Level		= idx;
 			team.Name		= string.Empty;
 
 			rep.TeamList.Add(team);
