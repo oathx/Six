@@ -95,7 +95,7 @@ namespace AI
 				return BehaviourStatus.FAILURE;
 
 			if (ec.Target)
-				return BehaviourStatus.FAILURE;
+				return BehaviourStatus.SUCCESS;
 
 			IAIState curState = Machine.GetCurrentState();
 			if (curState.StateID != AITypeID.AI_PATH)
@@ -104,6 +104,15 @@ namespace AI
 			}
 	
 			return BehaviourStatus.RUNNING;
+		}
+
+		/// <summary>
+		/// Raises the exit event.
+		/// </summary>
+		/// <param name="context">Context.</param>
+		public override void 			OnExit(AIContext context)
+		{
+			base.OnExit(context);
 		}
 	}
 }
