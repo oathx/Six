@@ -39,6 +39,6 @@ public class PlayerManager : IEntityManager
 	/// <param name="nPlayerID">N player I.</param>
 	public bool				IsSelf(int nPlayerID)
 	{
-		return MainPlayer.ID == nPlayerID;
+		return MainPlayer.EntityID == nPlayerID;
 	}
 }

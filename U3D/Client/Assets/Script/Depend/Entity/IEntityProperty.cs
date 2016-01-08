@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class EntityStyle
 {
@@ -37,7 +38,7 @@ public enum EntityType
 /// </summary>
 public class IEntityProperty : MonoBehaviour
 {
-	public int 			ID;
+	public int 			EntityID;
 	public EntityType	Type;
 	public int			Style;
 	public float 		Gravity;

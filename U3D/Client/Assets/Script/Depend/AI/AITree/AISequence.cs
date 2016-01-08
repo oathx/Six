@@ -44,13 +44,13 @@ namespace AI
 			while(Index < Children.Length)
 			{
 				BehaviourStatus status = Children[Index].Run(context);
-				if (status == BehaviourStatus.RUNNING || status == BehaviourStatus.FAILURE)
+				if (status == BehaviourStatus.RUNNING || status == BehaviourStatus.SUCCESS)
 					return status;
 				
 				Index ++;
 			}
 			
-			return BehaviourStatus.SUCCESS;
+			return BehaviourStatus.FAILURE;
 		}
 		
 		/// <summary>

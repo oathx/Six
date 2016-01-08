@@ -34,7 +34,7 @@ public class WUrl
 	{
 		get
 		{
-#if UNITY_EDITOR || UNITY_STANDALONE
+#if UNITY_EDITOR && UNITY_STANDALONE
 			return Application.streamingAssetsPath + "/Resource/Win";
 #elif UNITY_ANDROID
 			return Application.streamingAssetsPath + "/Resource/Android";

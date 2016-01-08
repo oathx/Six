@@ -53,7 +53,7 @@ public class MonsterEntityFactory : HumanEntityFactory
 		if (!monster)
 			throw new System.NullReferenceException();
 
-		monster.ID 				= nID;
+		monster.EntityID 		= nID;
 		monster.Name 			= string.IsNullOrEmpty(szName) ? sqlShape.Name : szName;
 		monster.Style 			= nStyle;
 		monster.Type 			= type;
@@ -110,7 +110,7 @@ public class MonsterEntityFactory : HumanEntityFactory
 			
 			// create the monster ai tree
 			return AIBehaviourTreeManager.GetSingleton().CreateAIBehaviourTree(
-				monster.ID, new AIEntityContext(monster), asset.text);
+				monster.EntityID, new AIEntityContext(monster), asset.text);
 		}
 
 		return default(AIBehaviourTree);

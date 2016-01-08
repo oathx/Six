@@ -232,76 +232,7 @@ public class CmdEvent
 	public const int CMD_LOGIC_ATTACK	= -52000;
 	public class AttackEventArgs : IEventArgs
 	{
-		/// <summary>
-		/// Gets or sets the skill ID.
-		/// </summary>
-		/// <value>The skill I.</value>
-		public int 			MagicID
-		{ get; set; }
-		
-		/// <summary>
-		/// Gets or sets the source ID.
-		/// </summary>
-		/// <value>The source I.</value>
-		public int 			SourceID
-		{ get; set; }
-		
-		/// <summary>
-		/// Gets or sets the target ID.
-		/// </summary>
-		/// <value>The target I.</value>
-		public int 			TargetID
-		{ get; set; }
-		
-		/// <summary>
-		/// Gets or sets the state I.
-		/// </summary>
-		/// <value>The state I.</value>
-		public int 			SkillID
-		{ get; set; }
-		
-		/// <summary>
-		/// Gets or sets a value indicating whether this instance is player.
-		/// </summary>
-		/// <value><c>true</c> if this instance is player; otherwise, <c>false</c>.</value>
-		public bool			IsTargetPlayer
-		{ get; set; }
-		
-		/// <summary>
-		/// Gets or sets a value indicating whether this instance is attacker player.
-		/// </summary>
-		/// <value><c>true</c> if this instance is attacker player; otherwise, <c>false</c>.</value>
-		public bool			IsAttackerPlayer
-		{ get; set; }
-	}
-
-	public const int CMD_LOGIC_TRIGGER	= -52001;
-	public class TriggerEventArgs : IEventArgs
-	{
-		public IEntity		Source
-		{ get; set; }
-		
-		public IEntity		Target
-		{ get; set; }
-		
-		public float		TriggerTime
-		{ get; set; }
-		
-		public SqlSkill		sqlSkill
-		{ get; set; }
-	}
-
-	public const int CMD_LOGIC_HIT 		= -52002;
-	public class AIHitEventArgs : IEventArgs
-	{
-		public IEntity		Source
-		{ get; set; }
-		
-		public IEntity		Target
-		{ get; set; }
-		
-		public SqlSkill		sqlSkill
-		{ get; set; }
+		public int 			MagicID;
 	}
 }
 

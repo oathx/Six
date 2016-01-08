@@ -16,16 +16,19 @@ public class SqlMagic : ISqlPackage
 	public string			Name
 	{ get; set; }
 
-	public int 				Level
-	{ get; set; }
-
-	public int 				Type
-	{ get; set; }
-
 	public int 				SelfActionID
+	{ get; set; }
+
+	public int 				SelfBuffID
 	{ get; set; }
 	
 	public int 				TargetActionID
+	{ get; set; }
+
+	public int 				TargetBuffID
+	{ get; set; }
+
+	public float 			AttackDistance
 	{ get; set; }
 
 	/// <summary>
@@ -36,11 +39,11 @@ public class SqlMagic : ISqlPackage
 	{
 		ID 					= System.Convert.ToInt32(sdr ["ID"]);
 		Name 				= System.Convert.ToString(sdr ["Name"]);
-		Level 				= System.Convert.ToInt32(sdr ["Level"]);
-		Type 				= System.Convert.ToInt32(sdr ["Type"]);
+		SelfBuffID 			= System.Convert.ToInt32(sdr ["SelfBuffID"]);
+		TargetBuffID 		= System.Convert.ToInt32(sdr ["TargetBuffID"]);
 		SelfActionID 		= System.Convert.ToInt32(sdr ["SelfActionID"]);
 		TargetActionID		= System.Convert.ToInt32(sdr ["TargetActionID"]);
-
+		AttackDistance		= System.Convert.ToSingle(sdr ["AttackDistance"]);
 	}
 
 	/// <summary>
@@ -52,10 +55,11 @@ public class SqlMagic : ISqlPackage
 	{
 		ID 					= System.Convert.ToInt32(sdr ["ID"]);
 		Name 				= System.Convert.ToString(sdr ["Name"]);
-		Level 				= System.Convert.ToInt32(sdr ["Level"]);
-		Type 				= System.Convert.ToInt32(sdr ["Type"]);
+		SelfBuffID 			= System.Convert.ToInt32(sdr ["SelfBuffID"]);
+		TargetBuffID 		= System.Convert.ToInt32(sdr ["TargetBuffID"]);
 		SelfActionID 		= System.Convert.ToInt32(sdr ["SelfActionID"]);
 		TargetActionID		= System.Convert.ToInt32(sdr ["TargetActionID"]);
+		AttackDistance		= System.Convert.ToSingle(sdr ["AttackDistance"]);
 	}
 }
 

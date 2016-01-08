@@ -59,10 +59,13 @@ namespace AI
 		public override BehaviourStatus	OnUpdate(AIContext context)
 		{
 			AIEntityContext ec = context as AIEntityContext;
-			if (!ec.Owner && !ec.Target && !ec.Leader)
-				return BehaviourStatus.FAILURE;
-			
-			return BehaviourStatus.SUCCESS;
+			if (ec.Owner)
+			{
+				if (ec.Leader || ec.Target)
+					return BehaviourStatus.SUCCESS;
+			}
+
+			return BehaviourStatus.FAILURE;
 		}
 	}
 }

@@ -50,7 +50,7 @@ public class IEntity : IEntityProperty
 	/// <returns>The I.</returns>
 	public int 				GetID()
 	{
-		return ID;
+		return EntityID;
 	}
 
 	/// <summary>

@@ -27,6 +27,12 @@ namespace AI
 		public override void 			OnStart(AIContext context)
 		{
 			base.OnStart (context);
+
+			AIEntityContext ec = context as AIEntityContext;
+			if (ec.Owner && ec.Target)
+			{
+
+			}
 		}
 		
 		/// <summary>

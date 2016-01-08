@@ -1,10 +1,12 @@
-AISelector
-	AIParallel
+;一 FALSE 则返回 FALSE，全 TRUE 才返回 TRUE
+AIParallel
+	AISelector
+		AISearch Radius=10 Layer=294912
 		AISequence
-			AISearch Radius=10 Layer=294912
-			AIPatrol Radius=6 ErrorRange=1
-			AISelector
-				AIPursue MaxDistance=2
-	AISequence	
-		AIWaitForTime MinWaitTime=10 MaxWaitTime=10
+			AIAttack
+		AIPursue MaxDistance=2
+	AISelector
+		AIPatrol Radius=6 ErrorRange=1
+		AIWaitForTime MinWaitTime=1 MaxWaitTime=5
+
 		
