@@ -1,9 +1,8 @@
 ;一 FALSE 则返回 FALSE，全 TRUE 才返回 TRUE
-AIParallel
+AISequence
 	AISelector
 		AISearch Radius=10 Layer=294912
-		AISequence
-			AIAttack
+		AIAttack
 		AIPursue MaxDistance=2
 	AISelector
 		AIPatrol Radius=6 ErrorRange=1

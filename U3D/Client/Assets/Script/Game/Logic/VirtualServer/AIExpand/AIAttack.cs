@@ -10,7 +10,14 @@ namespace AI
 	public class AIAttack : AIBehaviour
 	{
 		public string					Return;
-		
+
+		/// <summary>
+		/// Gets the machine.
+		/// </summary>
+		/// <value>The machine.</value>
+		public IAIMachine				Machine
+		{ get; private set; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IRandomSelector"/> class.
 		/// </summary>
@@ -31,7 +38,13 @@ namespace AI
 			AIEntityContext ec = context as AIEntityContext;
 			if (ec.Owner && ec.Target)
 			{
+				// get owner character ctrl machine
+				Machine = ec.Owner.GetMachine();
+				if (!Machine)
+					throw new System.NullReferenceException();
 
+				if (!Machine.IsCurrentState(AITypeID.AI_BATTLE))
+					Machine.ChangeState(AITypeID.AI_BATTLE);
 			}
 		}
 		
@@ -44,6 +57,8 @@ namespace AI
 			AIEntityContext ec = context as AIEntityContext;
 			if (!ec.Owner || !ec.Target)
 				return BehaviourStatus.FAILURE;
+
+
 
 			return BehaviourStatus.SUCCESS;
 		}

@@ -21,7 +21,14 @@ namespace AI
 		/// <value>The start time.</value>
 		public int						Repeat
 		{ get; private set; }
-		
+
+		/// <summary>
+		/// Gets a value indicating whether this <see cref="AI.AIRepeat"/> is forever.
+		/// </summary>
+		/// <value><c>true</c> if forever; otherwise, <c>false</c>.</value>
+		public bool						Forever
+		{ get; private set; }
+
 		/// <summary>
 		/// Initializes a new instance of the <see cref="IRandomSelector"/> class.
 		/// </summary>
@@ -40,7 +47,7 @@ namespace AI
 			base.OnStart (context);
 
 			// reset current repeat count
-			Repeat = 0;
+			Repeat 	= 0;
 		}
 
 		/// <summary>
@@ -52,11 +59,9 @@ namespace AI
 			if (Children.Length <= 0)
 				return BehaviourStatus.FAILURE;
 
-			while(Repeat < Count)
-			{
-				while(Index < Children.Length)
-				{
-					BehaviourStatus status = Children[Index].Run(context);
+			do {
+				while (Index < Children.Length) {
+					BehaviourStatus status = Children [Index].Run (context);
 					if (status != BehaviourStatus.RUNNING)
 						Index ++;
 				}
@@ -64,9 +69,22 @@ namespace AI
 				Index = 0;
 				Repeat ++;
 
-			}
+			} while( Count == 0 ? true : Repeat < Count);
 
 			return BehaviourStatus.SUCCESS;
+		}
+
+		/// <summary>
+		/// Raises the start event.
+		/// </summary>
+		/// <param name="context">Context.</param>
+		public override void 			OnExit(AIContext context)
+		{
+			base.OnExit (context);
+
+			// reset loop value
+			Repeat 	= 0;
+			Index 	= 0;
 		}
 	}
 }

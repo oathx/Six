@@ -191,7 +191,7 @@ ModelImporter:
       name: Attack2
       takeName: 
       firstFrame: 0
-      lastFrame: 50.0000038
+      lastFrame: 50
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
